@@ -61,9 +61,12 @@ export default function Navbar() {
       onClick={toggleTheme}
       aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
       title={dark ? "Light mode" : "Dark mode"}
-      className={`grid h-10 w-10 place-items-center rounded-xl border-2 border-blue-500 text-blue-600 transition-all duration-300 hover:-translate-y-0.5 hover:bg-blue-50 dark:border-blue-400 dark:text-blue-300 dark:hover:bg-white/10 ${className}`}
+      className={`group grid h-10 w-10 place-items-center rounded-xl border-2 border-brand-600 text-brand-600 transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-50 dark:border-blue-400 dark:text-blue-300 dark:hover:bg-white/10 ${className}`}
     >
-      {dark ? <IconSun className="h-5 w-5" /> : <IconMoon className="h-5 w-5" />}
+      <span className="relative h-[17px] w-[17px] transition-transform duration-500 ease-apple group-hover:rotate-45">
+        <IconSun className={`absolute inset-0 h-[17px] w-[17px] transition-all duration-500 ease-apple ${dark ? "rotate-0 scale-100 opacity-100" : "-rotate-90 scale-0 opacity-0"}`} />
+        <IconMoon className={`absolute inset-0 h-[17px] w-[17px] transition-all duration-500 ease-apple ${dark ? "rotate-90 scale-0 opacity-0" : "rotate-0 scale-100 opacity-100"}`} />
+      </span>
     </button>
   );
 
@@ -100,7 +103,7 @@ export default function Navbar() {
               <button onClick={logout} className="btn-primary rounded-full px-7 py-2.5">Log out</button>
             </>
           ) : (
-            <Link to="/login" className="btn-glow-strong inline-flex items-center rounded-xl border-2 border-blue-500 bg-white px-8 py-2.5 text-sm font-bold tracking-wide text-blue-600 transition-all duration-300 hover:-translate-y-0.5 hover:scale-105 hover:bg-blue-50 hover:text-blue-700">LOGIN</Link>
+            <Link to="/login" className="btn-glow-strong inline-flex items-center rounded-xl border-2 border-blue-500 bg-white px-8 py-2.5 text-sm font-bold tracking-wide text-brand-600 transition-all duration-300 hover:-translate-y-0.5 hover:scale-105 hover:bg-brand-50 hover:text-brand-700">LOGIN</Link>
           )}
         </div>
 
@@ -127,7 +130,7 @@ export default function Navbar() {
               </li>
             ))}
             <li className="mt-3">
-              <Link to="/login" className="btn-glow-strong block w-full rounded-xl border-2 border-blue-500 bg-white py-2.5 text-center text-sm font-bold tracking-wide text-blue-600" onClick={() => setOpen(false)}>LOGIN</Link>
+              <Link to="/login" className="btn-glow-strong block w-full rounded-xl border-2 border-blue-500 bg-white py-2.5 text-center text-sm font-bold tracking-wide text-brand-600" onClick={() => setOpen(false)}>LOGIN</Link>
             </li>
           </ul>
         </div>
