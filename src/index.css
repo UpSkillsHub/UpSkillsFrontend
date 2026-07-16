@@ -1,0 +1,111 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-white font-sans text-slate-700 antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection {
+    @apply bg-brand-200 text-brand-900;
+  }
+  h1, h2, h3 {
+    @apply tracking-tight text-brand-dark;
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto max-w-7xl px-5 sm:px-6 lg:px-8;
+  }
+
+  /* Buttons — one system, everywhere */
+  .btn {
+    @apply inline-flex select-none items-center justify-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold transition-all duration-300 ease-apple focus:outline-none focus-visible:ring-4 focus-visible:ring-brand-200 active:scale-[0.97];
+  }
+  .btn-primary {
+    @apply btn bg-brand-600 text-white shadow-glow hover:-translate-y-0.5 hover:bg-brand-700;
+  }
+  .btn-secondary {
+    @apply btn border border-slate-200 bg-white text-slate-700 shadow-soft hover:-translate-y-0.5 hover:border-brand-300 hover:text-brand-700;
+  }
+  .btn-ghost {
+    @apply btn bg-brand-50 text-brand-700 hover:bg-brand-100;
+  }
+  /* legacy aliases so older markup still styles correctly */
+  .btn-accent { @apply btn-primary; }
+  .btn-outline { @apply btn-secondary; }
+
+  /* Inputs — one system, everywhere */
+  .input {
+    @apply w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-800 shadow-sm transition-all duration-200 ease-apple placeholder:text-slate-400 focus:border-brand-500 focus:outline-none focus:ring-4 focus:ring-brand-100;
+  }
+  .label {
+    @apply mb-1.5 block text-sm font-medium text-slate-600;
+  }
+
+  /* Cards */
+  .card {
+    @apply rounded-2xl border border-slate-100 bg-white shadow-soft;
+  }
+  .card-hover {
+    @apply transition-all duration-500 ease-apple hover:-translate-y-1.5 hover:shadow-lift;
+  }
+
+  .badge {
+    @apply inline-flex items-center rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-brand-700;
+  }
+
+  .link-underline {
+    @apply relative after:absolute after:-bottom-0.5 after:left-0 after:h-0.5 after:w-0 after:bg-brand-600 after:transition-all after:duration-300 after:ease-apple hover:after:w-full;
+  }
+}
+
+/* Reveal-on-scroll (paired with the Reveal component) */
+section[id] {
+  scroll-margin-top: 5rem;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Auth-page entrance animations (strong, layered) */
+@keyframes authSlideL { from { opacity: 0; transform: translateX(-48px); } to { opacity: 1; transform: none; } }
+@keyframes authSlideR { from { opacity: 0; transform: translateX(48px); } to { opacity: 1; transform: none; } }
+@keyframes authPop { 0% { opacity: 0; transform: scale(.88) translateY(28px); } 100% { opacity: 1; transform: none; } }
+@keyframes authRise { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+.anim-slide-left { animation: authSlideL 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.anim-slide-right { animation: authSlideR 0.8s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.anim-pop { animation: authPop 0.7s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.anim-rise { animation: authRise 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
+@keyframes drift { 0% { transform: translate(0,0) scale(1); } 50% { transform: translate(30px,-20px) scale(1.08); } 100% { transform: translate(0,0) scale(1); } }
+@keyframes driftB { 0% { transform: translate(0,0) scale(1); } 50% { transform: translate(-24px,24px) scale(1.05); } 100% { transform: translate(0,0) scale(1); } }
+.anim-drift { animation: drift 14s ease-in-out infinite; }
+.anim-drift-b { animation: driftB 18s ease-in-out infinite; }
+
+/* Scrolling ticker (TV-style, moves left → right) */
+@keyframes tickerMove { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+.ticker-track { display: flex; width: max-content; animation: tickerMove 28s linear infinite; }
+.ticker-track.ticker-fast { animation-duration: 14s; }
+.ticker-wrap:hover .ticker-track { animation-play-state: paused; }
+
+/* Pulsing glow for the header Login button */
+@keyframes glowPulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(27,42,74,0); } 50% { box-shadow: 0 0 0 6px rgba(27,42,74,0.12); } }
+.btn-glow { animation: glowPulse 2.6s ease-in-out infinite; }
+
+/* Refined scrollbar */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: #cbd2f0; border-radius: 999px; border: 2px solid #fff; }
+::-webkit-scrollbar-thumb:hover { background: #9fb0f7; }

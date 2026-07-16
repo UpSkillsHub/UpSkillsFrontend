@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" role="img" aria-label="Up Skills Hub">
+  <defs>
+    <path id="ring" d="M50,50 m-37,0 a37,37 0 1,1 74,0 a37,37 0 1,1 -74,0" />
+  </defs>
+  <!-- outer navy disc -->
+  <circle cx="50" cy="50" r="49" fill="#1b2a4a"/>
+  <!-- gold ring -->
+  <circle cx="50" cy="50" r="41" fill="none" stroke="#c9a24b" stroke-width="1.5"/>
+  <!-- inner light field -->
+  <circle cx="50" cy="50" r="30" fill="#f0f3f9"/>
+  <!-- curved wordmark -->
+  <text fill="#f0f3f9" font-family="Inter, Arial, sans-serif" font-size="8.6" font-weight="700" letter-spacing="1.4">
+    <textPath href="#ring" startOffset="1%">UP&#160;SKILLS&#160;HUB&#160;&#160;&#8226;&#160;&#160;TRAINING&#160;HUB&#160;&#160;&#8226;&#160;&#160;</textPath>
+  </text>
+  <!-- graduation cap emblem -->
+  <g fill="#1b2a4a">
+    <path d="M50 33 L69 41 L50 49 L31 41 Z"/>
+    <path d="M37 45 v8 c0 4 26 4 26 0 v-8 l-13 5.5 Z"/>
+    <rect x="68.2" y="41" width="1.6" height="10" rx="0.8"/>
+    <circle cx="69" cy="52.5" r="2.2"/>
+  </g>
+  <!-- open book base -->
+  <g fill="#c9a24b">
+    <path d="M31 60 c6 -2 12 -2 19 1 c7 -3 13 -3 19 -1 v6 c-6 -2 -12 -2 -19 1 c-7 -3 -13 -3 -19 -1 Z"/>
+  </g>
+</svg>
