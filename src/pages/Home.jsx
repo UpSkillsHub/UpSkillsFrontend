@@ -98,7 +98,7 @@ export default function Home() {
   return (
     <>
       {/* HERO / HOME */}
-      <section id="home" className="relative overflow-hidden bg-white">
+      <section id="home" className="relative overflow-hidden bg-white dark:bg-brand-dark">
         <div className="pointer-events-none absolute -right-24 -top-24 h-96 w-96 animate-float rounded-full bg-brand-100/60 blur-3xl" />
         <div className="pointer-events-none absolute -left-20 top-40 h-72 w-72 animate-float rounded-full bg-brand-200/40 blur-3xl" style={{ animationDelay: "2s" }} />
         <div className="container-page relative grid items-start gap-12 pb-8 pt-4 lg:grid-cols-2 lg:pb-10 lg:pt-6">
@@ -187,7 +187,7 @@ export default function Home() {
       </section>
 
       {/* ABOUT US — What is Up Skills Hub? */}
-      <section id="about" className="bg-slate-50/70 pb-16 pt-8 sm:pb-24 sm:pt-10">
+      <section id="about" className="bg-slate-50/70 pb-16 pt-8 sm:pb-24 sm:pt-10 dark:bg-transparent">
         <div className="container-page">
           <Reveal className="mx-auto max-w-3xl text-center">
             <h2 className="inline-block text-3xl font-extrabold text-brand-dark sm:text-4xl">
@@ -289,8 +289,20 @@ export default function Home() {
       </section>
 
       {/* CONTACT */}
-      <section id="contact" className="bg-slate-50/70 pb-16 pt-8 sm:pb-24 sm:pt-10">
-        <div className="container-page">
+      <section id="contact" className="relative overflow-hidden bg-slate-50/70 pb-16 pt-8 sm:pb-24 sm:pt-10 dark:bg-transparent">
+        {/* Live animated background — soft, professional, light */}
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          <div className="absolute inset-0 animate-gradient bg-[length:200%_200%] bg-gradient-to-br from-blue-50 via-white to-brand-50 opacity-90 dark:from-brand-900 dark:via-brand-dark dark:to-brand-900 dark:opacity-60" />
+          <div className="anim-drift absolute -left-20 top-6 h-72 w-72 rounded-full bg-blue-300/30 blur-3xl" />
+          <div className="anim-drift-b absolute right-0 top-1/3 h-80 w-80 rounded-full bg-brand-300/25 blur-3xl" />
+          <div className="anim-drift absolute -bottom-10 left-1/3 h-64 w-64 rounded-full bg-blue-200/40 blur-3xl" style={{ animationDelay: "3s" }} />
+          <div className="anim-drift-b absolute bottom-10 right-1/4 h-56 w-56 rounded-full bg-brand-200/30 blur-3xl" style={{ animationDelay: "5s" }} />
+          <div className="animate-float absolute left-[12%] top-[24%] h-3 w-3 rounded-full bg-blue-400/50" />
+          <div className="animate-float absolute right-[16%] top-[30%] h-2 w-2 rounded-full bg-brand-400/50" style={{ animationDelay: "1.2s" }} />
+          <div className="animate-float absolute bottom-[22%] left-[26%] h-2.5 w-2.5 rounded-full bg-blue-300/60" style={{ animationDelay: "2.4s" }} />
+          <div className="animate-float absolute bottom-[28%] right-[30%] h-2 w-2 rounded-full bg-brand-300/50" style={{ animationDelay: "0.6s" }} />
+        </div>
+        <div className="container-page relative z-10">
           <Reveal className="mx-auto max-w-2xl text-center">
             <h2 className="inline-block text-3xl font-extrabold text-brand-dark sm:text-4xl">
               Get in Touch

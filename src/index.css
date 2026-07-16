@@ -130,3 +130,17 @@ section[id] {
 ::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-thumb { background: #cbd2f0; border-radius: 999px; border: 2px solid #fff; }
 ::-webkit-scrollbar-thumb:hover { background: #9fb0f7; }
+
+/* ---------- Dark mode (class strategy, default is light) ---------- */
+.dark body { background-color: #0b1020; color: #cbd5e1; }
+.dark h1, .dark h2, .dark h3 { color: #f1f5f9; }
+.dark .text-slate-500 { color: #94a3b8; }
+.dark .text-slate-600 { color: #a7b4c8; }
+.dark .text-slate-400 { color: #7c8aa3; }
+.dark .bg-brand-50 { background-color: #131d33; }
+.dark .ring-brand-100 { --tw-ring-color: rgba(255,255,255,0.08); }
+.dark .card { background-color: #131d33; border-color: rgba(255,255,255,0.08); }
+.dark .input { background-color: #0f1830; border-color: rgba(255,255,255,0.12); color: #e2e8f0; }
+.dark .input::placeholder { color: #64748b; }
+.dark .btn-secondary { background-color: #131d33; border-color: rgba(255,255,255,0.14); color: #cbd5e1; }
+.dark .badge { background-color: rgba(59,130,246,0.16); color: #93c5fd; }

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
 import Logo from "./Logo.jsx";
+import { IconSun, IconMoon } from "./icons.jsx";
 
 // The header menu items are sections of the single-page home.
 const sections = [
@@ -15,6 +16,9 @@ const sections = [
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [dark, setDark] = useState(
+    () => typeof document !== "undefined" && document.documentElement.classList.contains("dark")
+  );
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -25,6 +29,15 @@ export default function Navbar() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Toggle light/dark; persist the choice so it survives reloads. Default is light.
+  const toggleTheme = () => {
+    const root = document.documentElement;
+    const next = !root.classList.contains("dark");
+    root.classList.toggle("dark", next);
+    try { localStorage.setItem("theme", next ? "dark" : "light"); } catch (e) {}
+    setDark(next);
+  };
 
   // Smooth-scroll to a section; if we're on another route, go home first.
   const go = (id) => (e) => {
@@ -43,10 +56,23 @@ export default function Navbar() {
     }
   };
 
+  const ThemeToggle = ({ className = "" }) => (
+    <button
+      onClick={toggleTheme}
+      aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
+      title={dark ? "Light mode" : "Dark mode"}
+      className={`grid h-10 w-10 place-items-center rounded-xl border-2 border-blue-500 text-blue-600 transition-all duration-300 hover:-translate-y-0.5 hover:bg-blue-50 dark:border-blue-400 dark:text-blue-300 dark:hover:bg-white/10 ${className}`}
+    >
+      {dark ? <IconSun className="h-5 w-5" /> : <IconMoon className="h-5 w-5" />}
+    </button>
+  );
+
   return (
     <header
       className={`sticky top-0 z-40 transition-all duration-300 ease-apple ${
-        scrolled ? "border-b border-slate-100 bg-white/85 shadow-soft backdrop-blur-xl" : "border-b border-transparent bg-white"
+        scrolled
+          ? "border-b border-slate-100 bg-white/85 shadow-soft backdrop-blur-xl dark:border-white/10 dark:bg-brand-dark/85"
+          : "border-b border-transparent bg-white dark:bg-brand-dark"
       }`}
     >
       <nav className="container-page flex h-[72px] items-center justify-between">
@@ -58,7 +84,7 @@ export default function Navbar() {
               <a
                 href={`#${s.id}`}
                 onClick={go(s.id)}
-                className="link-underline text-sm font-semibold text-brand-dark transition-colors duration-200 hover:text-brand-600"
+                className="link-underline text-sm font-semibold text-brand-dark transition-colors duration-200 hover:text-brand-600 dark:text-slate-200 dark:hover:text-blue-400"
               >
                 {s.label}
               </a>
@@ -67,9 +93,10 @@ export default function Navbar() {
         </ul>
 
         <div className="hidden items-center gap-3 md:flex">
+          <ThemeToggle />
           {user ? (
             <>
-              <Link to="/dashboard" className="text-sm font-semibold text-brand-dark hover:text-brand-600">Dashboard</Link>
+              <Link to="/dashboard" className="text-sm font-semibold text-brand-dark hover:text-brand-600 dark:text-slate-200">Dashboard</Link>
               <button onClick={logout} className="btn-primary rounded-full px-7 py-2.5">Log out</button>
             </>
           ) : (
@@ -77,21 +104,24 @@ export default function Navbar() {
           )}
         </div>
 
-        <button className="md:hidden" onClick={() => setOpen((o) => !o)} aria-label="Toggle menu">
-          <div className="space-y-1.5">
-            <span className={`block h-0.5 w-6 bg-brand-dark transition-all duration-300 ${open ? "translate-y-2 rotate-45" : ""}`} />
-            <span className={`block h-0.5 w-6 bg-brand-dark transition-all duration-300 ${open ? "opacity-0" : ""}`} />
-            <span className={`block h-0.5 w-6 bg-brand-dark transition-all duration-300 ${open ? "-translate-y-2 -rotate-45" : ""}`} />
-          </div>
-        </button>
+        <div className="flex items-center gap-2 md:hidden">
+          <ThemeToggle />
+          <button onClick={() => setOpen((o) => !o)} aria-label="Toggle menu">
+            <div className="space-y-1.5">
+              <span className={`block h-0.5 w-6 bg-brand-dark transition-all duration-300 dark:bg-white ${open ? "translate-y-2 rotate-45" : ""}`} />
+              <span className={`block h-0.5 w-6 bg-brand-dark transition-all duration-300 dark:bg-white ${open ? "opacity-0" : ""}`} />
+              <span className={`block h-0.5 w-6 bg-brand-dark transition-all duration-300 dark:bg-white ${open ? "-translate-y-2 -rotate-45" : ""}`} />
+            </div>
+          </button>
+        </div>
       </nav>
 
       {open && (
-        <div className="animate-fadeIn border-t border-slate-100 bg-white md:hidden">
+        <div className="animate-fadeIn border-t border-slate-100 bg-white md:hidden dark:border-white/10 dark:bg-brand-dark">
           <ul className="container-page flex flex-col py-3">
             {sections.map((s) => (
               <li key={s.id}>
-                <a href={`#${s.id}`} onClick={go(s.id)} className="block py-2.5 text-sm font-semibold text-brand-dark">
+                <a href={`#${s.id}`} onClick={go(s.id)} className="block py-2.5 text-sm font-semibold text-brand-dark dark:text-slate-200">
                   {s.label}
                 </a>
               </li>
