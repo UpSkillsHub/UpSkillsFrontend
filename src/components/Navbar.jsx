@@ -73,7 +73,7 @@ export default function Navbar() {
               <button onClick={logout} className="btn-primary rounded-full px-7 py-2.5">Log out</button>
             </>
           ) : (
-            <Link to="/login" className="btn-primary btn-glow rounded-xl px-8 py-2.5 transition-all duration-300 hover:-translate-y-0.5 hover:scale-105 hover:shadow-lift">LOGIN</Link>
+            <Link to="/login" className="btn-glow-strong inline-flex items-center rounded-xl border-2 border-blue-500 bg-white px-8 py-2.5 text-sm font-bold tracking-wide text-blue-600 transition-all duration-300 hover:-translate-y-0.5 hover:scale-105 hover:bg-blue-50 hover:text-blue-700">LOGIN</Link>
           )}
         </div>
 
@@ -97,7 +97,7 @@ export default function Navbar() {
               </li>
             ))}
             <li className="mt-3">
-              <Link to="/login" className="btn-primary w-full rounded-xl py-2.5" onClick={() => setOpen(false)}>LOGIN</Link>
+              <Link to="/login" className="btn-glow-strong block w-full rounded-xl border-2 border-blue-500 bg-white py-2.5 text-center text-sm font-bold tracking-wide text-blue-600" onClick={() => setOpen(false)}>LOGIN</Link>
             </li>
           </ul>
         </div>

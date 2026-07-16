@@ -39,7 +39,7 @@ export function AuthShell({ brandTitle, brandText, features = [], ctaText, ctaLa
               Up Skills Hub
             </Link>
             <div className="relative">
-              <h2 className="text-4xl font-extrabold leading-tight">{brandTitle}</h2>
+              <h2 className="animate-gradient bg-gradient-to-r from-white via-blue-300 to-white bg-[length:200%_auto] bg-clip-text text-4xl font-extrabold leading-tight text-transparent">{brandTitle}</h2>
               <p className="mt-4 max-w-xs text-brand-100">{brandText}</p>
               <ul className="mt-8 space-y-3 text-sm text-brand-50">
                 {features.map((f) => (
