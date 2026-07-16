@@ -73,7 +73,7 @@ export default function Navbar() {
               <button onClick={logout} className="btn-primary rounded-full px-7 py-2.5">Log out</button>
             </>
           ) : (
-            <Link to="/login" className="btn-primary btn-glow rounded-full px-8 py-2.5 transition-all duration-300 hover:-translate-y-0.5 hover:scale-105 hover:shadow-lift">LOGIN</Link>
+            <Link to="/login" className="btn-primary btn-glow rounded-xl px-8 py-2.5 transition-all duration-300 hover:-translate-y-0.5 hover:scale-105 hover:shadow-lift">LOGIN</Link>
           )}
         </div>
 
@@ -97,7 +97,7 @@ export default function Navbar() {
               </li>
             ))}
             <li className="mt-3">
-              <Link to="/login" className="btn-primary w-full rounded-full py-2.5" onClick={() => setOpen(false)}>LOGIN</Link>
+              <Link to="/login" className="btn-primary w-full rounded-xl py-2.5" onClick={() => setOpen(false)}>LOGIN</Link>
             </li>
           </ul>
         </div>

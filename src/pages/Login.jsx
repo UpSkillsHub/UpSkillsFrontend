@@ -36,7 +36,7 @@ export default function Login() {
       ctaTo="/register"
     >
       <div className="text-center">
-        <h1 className="text-3xl font-extrabold text-brand-dark">Welcome</h1>
+        <h1 className="animate-gradient bg-gradient-to-r from-brand-800 via-blue-500 to-brand-800 bg-[length:200%_auto] bg-clip-text text-3xl font-extrabold text-transparent">Welcome</h1>
         <p className="mt-1 text-sm text-slate-500">Log in to your account to continue.</p>
       </div>
       {error && <p className="mt-4 rounded-xl bg-red-50 px-4 py-2.5 text-center text-sm text-red-600">{error}</p>}

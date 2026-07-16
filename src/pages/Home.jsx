@@ -52,7 +52,7 @@ const whatCards = [
   },
   {
     t: "Real-World Projects",
-    d: "One of the strongest aspects of Up Skills Hub is its emphasis on real-world projects. Participants work on actual problems—sometimes for real clients or realistic case studies.",
+    d: "One of the strongest aspects of Up Skills Hub is its emphasis on real-world projects. Participants work on actual problems, sometimes for real clients or realistic case studies.",
   },
   {
     t: "Talent Marketplace",
@@ -118,7 +118,7 @@ export default function Home() {
 
             <div className="mt-12">
               <p className="text-xs font-semibold tracking-widest text-slate-400">TRUSTED BY BIG INSTITUTIONS</p>
-              <div className="mt-4 flex flex-nowrap items-center gap-4">
+              <div className="mt-4 flex flex-wrap items-center gap-4">
                 {[1, 2, 3, 4].map((n) => (
                   <Institution key={n} n={n} />
                 ))}
@@ -176,7 +176,7 @@ export default function Home() {
       </section>
 
       {/* ABOUT US — What is Up Skills Hub? */}
-      <section id="about" className="bg-slate-50/70 py-24">
+      <section id="about" className="bg-slate-50/70 py-16 sm:py-24">
         <div className="container-page">
           <Reveal className="mx-auto max-w-3xl text-center">
             <h2 className="inline-block text-3xl font-extrabold text-brand-dark sm:text-4xl">
@@ -203,7 +203,7 @@ export default function Home() {
       </section>
 
       {/* COURSES — Our Courses */}
-      <section id="courses" className="py-24">
+      <section id="courses" className="py-16 sm:py-24">
         <div className="container-page">
           <Reveal className="text-center">
             <h2 className="inline-block text-3xl font-extrabold text-brand-dark sm:text-4xl">
@@ -229,7 +229,7 @@ export default function Home() {
       </section>
 
       {/* PROGRAM — Our Internship Programs */}
-      <section id="program" className="relative overflow-hidden bg-brand-dark py-24 text-white">
+      <section id="program" className="relative overflow-hidden bg-brand-dark py-16 sm:py-24 text-white">
         <img
           src="/images/internship2.jpg"
           alt=""
@@ -278,7 +278,7 @@ export default function Home() {
       </section>
 
       {/* CONTACT */}
-      <section id="contact" className="bg-slate-50/70 py-24">
+      <section id="contact" className="bg-slate-50/70 py-16 sm:py-24">
         <div className="container-page">
           <Reveal className="mx-auto max-w-2xl text-center">
             <h2 className="inline-block text-3xl font-extrabold text-brand-dark sm:text-4xl">
