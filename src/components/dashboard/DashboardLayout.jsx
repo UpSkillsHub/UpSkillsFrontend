@@ -5,13 +5,13 @@ import { usersApi } from "../../api/resources.js";
 import Icon from "./icons.jsx";
 
 const navItems = [
-  { to: "/dashboard", label: "Dashboard", icon: "dashboard", end: true },
-  { to: "/dashboard/programs", label: "Programs", icon: "programs" },
-  { to: "/dashboard/tasks", label: "Tasks", icon: "tasks" },
+  { to: "/dashboard", label: "Overview", icon: "dashboard", end: true },
+  { to: "/dashboard/users", label: "Users", icon: "programs" },
+  { to: "/dashboard/courses", label: "Courses", icon: "code" },
 ];
 
 const bottomItems = [
-  { to: "/dashboard/reports", label: "Weekly report", icon: "report" },
+  { to: "/dashboard/reports", label: "Reports", icon: "report" },
   { to: "/dashboard/settings", label: "Settings", icon: "settings" },
 ];
 
@@ -49,7 +49,7 @@ export default function DashboardLayout() {
       <aside className="hidden w-64 shrink-0 flex-col border-r border-slate-100 bg-white px-4 py-6 md:flex">
         <div className="flex items-center gap-2 px-2 text-lg font-extrabold text-brand-dark">
           <span className="grid h-9 w-9 place-items-center rounded-full bg-brand text-white">U</span>
-          Dashboard
+          Admin Portal
         </div>
 
         <nav className="mt-8 space-y-1">

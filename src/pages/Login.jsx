@@ -17,8 +17,9 @@ export default function Login() {
     setError("");
     setLoading(true);
     try {
-      await login(form);
-      navigate("/coming-soon");
+      const me = await login(form);
+      if (me?.role === "admin" || me?.role === "super_admin") navigate("/dashboard");
+      else navigate("/coming-soon");
     } catch (err) {
       setError(err?.response?.data?.message || "Login failed. Check your credentials.");
     } finally {

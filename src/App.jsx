@@ -1,7 +1,9 @@
 import { Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout.jsx";
-import ProtectedRoute from "./components/ProtectedRoute.jsx";
+import AdminRoute from "./components/AdminRoute.jsx";
 import DashboardLayout from "./components/dashboard/DashboardLayout.jsx";
+import AdminUsers from "./pages/admin/AdminUsers.jsx";
+import AdminCourses from "./pages/admin/AdminCourses.jsx";
 import Home from "./pages/Home.jsx";
 import Programs from "./pages/Programs.jsx";
 import Courses from "./pages/Courses.jsx";
@@ -46,15 +48,15 @@ export default function App() {
       <Route
         path="/dashboard"
         element={
-          <ProtectedRoute>
+          <AdminRoute>
             <DashboardLayout />
-          </ProtectedRoute>
+          </AdminRoute>
         }
       >
         <Route index element={<Dashboard />} />
-        <Route path="programs" element={<DashboardPlaceholder title="Programs" />} />
-        <Route path="tasks" element={<DashboardPlaceholder title="Tasks" />} />
-        <Route path="reports" element={<DashboardPlaceholder title="Weekly report" />} />
+        <Route path="users" element={<AdminUsers />} />
+        <Route path="courses" element={<AdminCourses />} />
+        <Route path="reports" element={<DashboardPlaceholder title="Reports" />} />
         <Route path="settings" element={<DashboardPlaceholder title="Settings" />} />
       </Route>
     </Routes>
