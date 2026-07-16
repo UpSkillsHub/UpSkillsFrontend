@@ -24,7 +24,7 @@ export default function ComingSoon() {
         </span>
         <h1 className="mt-4 text-4xl font-extrabold text-white sm:text-5xl">We're still working on it</h1>
         <p className="mt-4 leading-relaxed text-brand-100">
-          Thank you for signing up! The student area is under active development — please bear with us,
+          Thank you for signing up! The student area is under active development, please bear with us,
           it will be ready very soon.
         </p>
         <div className="mt-8 flex justify-center">

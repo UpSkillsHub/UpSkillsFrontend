@@ -99,7 +99,9 @@ export default function Navbar() {
           <ThemeToggle />
           {user ? (
             <>
-              <Link to="/dashboard" className="text-sm font-semibold text-brand-dark hover:text-brand-600 dark:text-slate-200">Dashboard</Link>
+              {(user.role === "admin" || user.role === "super_admin") && (
+                <Link to="/dashboard" className="text-sm font-semibold text-brand-dark hover:text-brand-600 dark:text-slate-200">Dashboard</Link>
+              )}
               <button onClick={logout} className="btn-primary rounded-full px-7 py-2.5">Log out</button>
             </>
           ) : (
