@@ -136,21 +136,25 @@ export default function Home() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-brand-900/45 via-brand-900/5 to-transparent" />
             </div>
-            <div className="absolute -left-6 top-10 w-44 animate-float rounded-2xl bg-white/95 p-4 shadow-lift backdrop-blur">
+            <div className="absolute -left-6 top-10 w-44 animate-float rounded-2xl bg-white/95 p-4 shadow-lift ring-2 ring-blue-400/70 backdrop-blur">
               <p className="text-2xl font-extrabold text-brand-dark">500k+</p>
               <p className="text-xs text-slate-500">Active learners</p>
             </div>
-            <div className="absolute -right-5 bottom-20 w-48 animate-float rounded-2xl bg-white/95 p-4 shadow-lift backdrop-blur" style={{ animationDelay: "1.5s" }}>
+            <div className="absolute -right-5 bottom-20 w-48 animate-float rounded-2xl bg-white/95 p-4 shadow-lift ring-2 ring-blue-400/70 backdrop-blur" style={{ animationDelay: "1.5s" }}>
               <div className="flex -space-x-2">
                 {[1, 2, 3, 4].map((n) => (
-                  <img
+                  <span
                     key={n}
-                    src={`/images/cohort${n}.jpg`}
-                    alt={`Cohort member ${n}`}
-                    className="h-9 w-9 rounded-full border-2 border-white object-cover shadow-sm transition-all duration-300 ease-apple hover:z-10 hover:-translate-y-1 hover:scale-125 hover:border-brand-400"
-                    style={{ animationDelay: `${n * 0.2}s` }}
-                    onError={(e) => (e.currentTarget.style.display = "none")}
-                  />
+                    className="animate-gradient inline-block rounded-full bg-gradient-to-br from-blue-400 via-brand-500 to-blue-600 bg-[length:200%_200%] p-[2px] shadow-sm transition-all duration-300 ease-apple hover:z-10 hover:-translate-y-1 hover:scale-125"
+                    style={{ animationDelay: `${n * 0.3}s` }}
+                  >
+                    <img
+                      src={`/images/cohort${n}.jpg`}
+                      alt={`Cohort member ${n}`}
+                      className="h-9 w-9 rounded-full border-2 border-white object-cover"
+                      onError={(e) => (e.currentTarget.style.display = "none")}
+                    />
+                  </span>
                 ))}
               </div>
               <p className="mt-2 text-xs font-medium text-slate-600">Join our next cohort</p>
