@@ -5,7 +5,7 @@ import { AuthShell, Field, PasswordField } from "../components/authUI.jsx";
 import { IconMail, IconLock, IconArrow } from "../components/icons.jsx";
 
 export default function Login() {
-  const { login } = useAuth();
+  const { login, logout } = useAuth();
   const navigate = useNavigate();
   const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
@@ -18,8 +18,13 @@ export default function Login() {
     setLoading(true);
     try {
       const me = await login(form);
-      if (me?.role === "admin" || me?.role === "super_admin") navigate("/dashboard");
-      else navigate("/coming-soon");
+      if (me?.role === "admin" || me?.role === "super_admin") {
+        navigate("/dashboard");
+      } else {
+        // Student portal isn't live yet — don't keep them signed in.
+        await logout();
+        navigate("/coming-soon");
+      }
     } catch (err) {
       setError(err?.response?.data?.message || "Login failed. Check your credentials.");
     } finally {

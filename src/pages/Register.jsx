@@ -5,7 +5,7 @@ import { AuthShell, Field, PasswordField } from "../components/authUI.jsx";
 import { IconMail, IconLock, IconUser, IconArrow, IconCheck } from "../components/icons.jsx";
 
 export default function Register() {
-  const { register } = useAuth();
+  const { register, logout } = useAuth();
   const navigate = useNavigate();
   const [form, setForm] = useState({ firstName: "", lastName: "", email: "", password: "", confirm: "" });
   const [error, setError] = useState("");
@@ -43,6 +43,8 @@ export default function Register() {
     try {
       const name = `${form.firstName} ${form.lastName}`.trim();
       await register({ name, email: form.email, password: form.password, role: "student" });
+      // Account is saved, but the student portal isn't live — don't keep them signed in.
+      await logout();
       navigate("/login");
     } catch (err) {
       setError(err?.response?.data?.message || "Registration failed.");
