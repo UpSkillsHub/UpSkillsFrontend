@@ -101,7 +101,7 @@ export default function Home() {
       <section id="home" className="relative overflow-hidden bg-white">
         <div className="pointer-events-none absolute -right-24 -top-24 h-96 w-96 animate-float rounded-full bg-brand-100/60 blur-3xl" />
         <div className="pointer-events-none absolute -left-20 top-40 h-72 w-72 animate-float rounded-full bg-brand-200/40 blur-3xl" style={{ animationDelay: "2s" }} />
-        <div className="container-page relative grid items-start gap-12 pb-16 pt-4 lg:grid-cols-2 lg:pb-20 lg:pt-6">
+        <div className="container-page relative grid items-start gap-12 pb-8 pt-4 lg:grid-cols-2 lg:pb-10 lg:pt-6">
           <div className="animate-fadeUp">
             <span className="badge mb-5">IT Training &amp; Internship Hub</span>
             <h1 className="animate-gradient bg-gradient-to-r from-brand-800 via-blue-500 to-brand-800 bg-[length:200%_auto] bg-clip-text text-4xl font-extrabold leading-[1.08] text-transparent sm:text-5xl lg:text-[3.4rem]">
@@ -154,18 +154,18 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Applications ticker — single-sentence TV-style banner */}
-        <div className="ticker-wrap overflow-hidden bg-gradient-to-r from-brand-800 via-blue-600 to-brand-800 py-2.5">
+        {/* Applications ticker — white TV-style banner with blue contour */}
+        <div className="ticker-wrap animate-gradient overflow-hidden border-y-2 border-blue-500 bg-gradient-to-r from-white via-blue-50 to-white bg-[length:200%_auto] py-2.5">
           <div className="ticker-track ticker-fast">
             {[0, 1].map((k) => (
-              <span key={k} className="flex items-center whitespace-nowrap pr-20 text-sm font-semibold tracking-wide text-white">
-                <span className="mr-3 inline-block h-2.5 w-2.5 animate-pulse rounded-full bg-emerald-300 shadow-[0_0_10px_2px_rgba(110,231,183,0.7)]" />
-                Continuous applications are open — start learning anytime with our flexible programs, no intake dates required.
+              <span key={k} className="flex items-center whitespace-nowrap pr-20 text-sm font-bold tracking-wide text-blue-700">
+                <span className="mr-3 inline-block h-2.5 w-2.5 animate-pulse rounded-full bg-blue-500 shadow-[0_0_10px_2px_rgba(59,130,246,0.7)]" />
+                Continuous applications are open; start learning anytime with our flexible programs, no intake dates required.
                 <a
                   href="https://docs.google.com/forms/d/e/1FAIpQLScMG7St3ye7JU7viFJFU1mZdXQcbZDuZ9F9wBiByiVek5SCdQ/viewform"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="ml-5 inline-flex items-center gap-1 rounded-full bg-white px-4 py-1 text-xs font-extrabold text-brand-700 shadow-sm transition hover:scale-105 hover:bg-brand-50"
+                  className="ml-5 inline-flex items-center gap-1 rounded-full bg-blue-600 px-4 py-1 text-xs font-extrabold text-white shadow-sm transition hover:scale-105 hover:bg-blue-700"
                 >
                   Apply Now →
                 </a>
@@ -176,7 +176,7 @@ export default function Home() {
       </section>
 
       {/* ABOUT US — What is Up Skills Hub? */}
-      <section id="about" className="bg-slate-50/70 py-16 sm:py-24">
+      <section id="about" className="bg-slate-50/70 pb-16 pt-8 sm:pb-24 sm:pt-10">
         <div className="container-page">
           <Reveal className="mx-auto max-w-3xl text-center">
             <h2 className="inline-block text-3xl font-extrabold text-brand-dark sm:text-4xl">
@@ -203,7 +203,7 @@ export default function Home() {
       </section>
 
       {/* COURSES — Our Courses */}
-      <section id="courses" className="py-16 sm:py-24">
+      <section id="courses" className="pb-16 pt-8 sm:pb-24 sm:pt-10">
         <div className="container-page">
           <Reveal className="text-center">
             <h2 className="inline-block text-3xl font-extrabold text-brand-dark sm:text-4xl">
@@ -278,7 +278,7 @@ export default function Home() {
       </section>
 
       {/* CONTACT */}
-      <section id="contact" className="bg-slate-50/70 py-16 sm:py-24">
+      <section id="contact" className="bg-slate-50/70 pb-16 pt-8 sm:pb-24 sm:pt-10">
         <div className="container-page">
           <Reveal className="mx-auto max-w-2xl text-center">
             <h2 className="inline-block text-3xl font-extrabold text-brand-dark sm:text-4xl">

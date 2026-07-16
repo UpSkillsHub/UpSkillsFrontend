@@ -3,6 +3,8 @@ import { IconFacebook, IconInstagram, IconLinkedin, IconWhatsapp, IconTwitter } 
 
 const quickLinks = [
   { label: "Home", id: "home" },
+  { label: "Courses", id: "courses" },
+  { label: "Program", id: "program" },
   { label: "About Us", id: "about" },
   { label: "Contact", id: "contact" },
 ];
@@ -56,13 +58,13 @@ export default function Footer() {
           <div className="mt-6">
             <h4 className="text-sm font-semibold text-white">Follow Us</h4>
             <div className="mt-3 flex gap-3">
-              {socials.map(({ Icon, label, color }) => (
+              {socials.map(({ Icon, label, color }, i) => (
                 <a
                   key={label}
                   href="#"
                   aria-label={label}
-                  style={{ color }}
-                  className="grid h-10 w-10 place-items-center rounded-full bg-white shadow-sm transition hover:-translate-y-0.5 hover:scale-110"
+                  style={{ color, "--sc": color, animationDelay: `${i * 0.25}s` }}
+                  className="social-icon animate-float grid h-10 w-10 place-items-center rounded-full bg-white shadow-sm"
                 >
                   <Icon className="h-5 w-5" />
                 </a>
