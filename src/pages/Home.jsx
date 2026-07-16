@@ -142,8 +142,15 @@ export default function Home() {
             </div>
             <div className="absolute -right-5 bottom-20 w-48 animate-float rounded-2xl bg-white/95 p-4 shadow-lift backdrop-blur" style={{ animationDelay: "1.5s" }}>
               <div className="flex -space-x-2">
-                {[0, 1, 2, 3].map((i) => (
-                  <span key={i} className="h-7 w-7 rounded-full border-2 border-white bg-gradient-to-br from-brand-400 to-brand-700" />
+                {[1, 2, 3, 4].map((n) => (
+                  <img
+                    key={n}
+                    src={`/images/cohort${n}.jpg`}
+                    alt={`Cohort member ${n}`}
+                    className="h-9 w-9 rounded-full border-2 border-white object-cover shadow-sm transition-all duration-300 ease-apple hover:z-10 hover:-translate-y-1 hover:scale-125 hover:border-brand-400"
+                    style={{ animationDelay: `${n * 0.2}s` }}
+                    onError={(e) => (e.currentTarget.style.display = "none")}
+                  />
                 ))}
               </div>
               <p className="mt-2 text-xs font-medium text-slate-600">Join our next cohort</p>
@@ -154,18 +161,18 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Applications ticker — white TV-style banner with blue contour */}
-        <div className="ticker-wrap animate-gradient overflow-hidden border-y-2 border-blue-500 bg-gradient-to-r from-white via-blue-50 to-white bg-[length:200%_auto] py-2.5">
+        {/* Applications ticker — single-sentence TV-style banner */}
+        <div className="ticker-wrap overflow-hidden bg-gradient-to-r from-brand-800 via-blue-600 to-brand-800 py-2.5">
           <div className="ticker-track ticker-fast">
             {[0, 1].map((k) => (
-              <span key={k} className="flex items-center whitespace-nowrap pr-20 text-sm font-bold tracking-wide text-blue-700">
-                <span className="mr-3 inline-block h-2.5 w-2.5 animate-pulse rounded-full bg-blue-500 shadow-[0_0_10px_2px_rgba(59,130,246,0.7)]" />
-                Continuous applications are open; start learning anytime with our flexible programs, no intake dates required.
+              <span key={k} className="flex items-center whitespace-nowrap pr-20 text-sm font-semibold tracking-wide text-white">
+                <span className="mr-3 inline-block h-2.5 w-2.5 animate-pulse rounded-full bg-emerald-300 shadow-[0_0_10px_2px_rgba(110,231,183,0.7)]" />
+                Continuous applications are open: start learning anytime with our flexible programs, no intake dates required.
                 <a
                   href="https://docs.google.com/forms/d/e/1FAIpQLScMG7St3ye7JU7viFJFU1mZdXQcbZDuZ9F9wBiByiVek5SCdQ/viewform"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="ml-5 inline-flex items-center gap-1 rounded-full bg-blue-600 px-4 py-1 text-xs font-extrabold text-white shadow-sm transition hover:scale-105 hover:bg-blue-700"
+                  className="ml-5 inline-flex items-center gap-1 rounded-full bg-white px-4 py-1 text-xs font-extrabold text-brand-700 shadow-sm transition hover:scale-105 hover:bg-brand-50"
                 >
                   Apply Now →
                 </a>
