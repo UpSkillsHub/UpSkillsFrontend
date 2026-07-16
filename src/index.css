@@ -133,7 +133,8 @@ section[id] {
 
 /* ---------- Dark mode (class strategy, default is light) ---------- */
 .dark body { background-color: #0b1020; color: #cbd5e1; }
-.dark h1, .dark h2, .dark h3 { color: #f1f5f9; }
+/* Flip only explicit dark-navy text; gradient (transparent) headings keep their gradient. */
+.dark .text-brand-dark { color: #f1f5f9; }
 .dark .text-slate-500 { color: #94a3b8; }
 .dark .text-slate-600 { color: #a7b4c8; }
 .dark .text-slate-400 { color: #7c8aa3; }

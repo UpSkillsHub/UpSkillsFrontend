@@ -5,10 +5,10 @@ import { IconEye, IconEyeOff, IconCheck, IconHome } from "./icons.jsx";
 // Curved split-screen shell used by Login, Register and Forgot-password.
 export function AuthShell({ brandTitle, brandText, features = [], ctaText, ctaLabel, ctaTo, children }) {
   return (
-    <div className="relative min-h-screen bg-slate-100">
+    <div className="relative min-h-screen bg-slate-100 dark:bg-brand-dark">
       {/* Animated background */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute inset-0 animate-gradient bg-[length:300%_300%] bg-gradient-to-br from-slate-100 via-brand-50 to-slate-200" />
+        <div className="absolute inset-0 animate-gradient bg-[length:300%_300%] bg-gradient-to-br from-slate-100 via-brand-50 to-slate-200 dark:from-brand-dark dark:via-brand-900 dark:to-brand-dark" />
         <div className="anim-drift absolute -left-24 top-10 h-80 w-80 rounded-full bg-brand-300/30 blur-3xl" />
         <div className="anim-drift-b absolute right-0 top-1/3 h-96 w-96 rounded-full bg-brand-400/20 blur-3xl" />
         <div className="anim-drift absolute bottom-0 left-1/3 h-72 w-72 rounded-full bg-brand-200/40 blur-3xl" style={{ animationDelay: "3s" }} />
@@ -22,14 +22,14 @@ export function AuthShell({ brandTitle, brandText, features = [], ctaText, ctaLa
       {/* Back to home */}
       <Link
         to="/"
-        className="absolute left-5 top-5 z-30 inline-flex items-center gap-2 rounded-full bg-white/85 px-4 py-2 text-sm font-semibold text-brand-dark shadow-soft backdrop-blur transition hover:-translate-y-0.5 hover:bg-white"
+        className="absolute left-5 top-5 z-30 inline-flex items-center gap-2 rounded-full bg-white/85 px-4 py-2 text-sm font-semibold text-brand-dark shadow-soft backdrop-blur transition hover:-translate-y-0.5 hover:bg-white dark:bg-white/10 dark:text-white dark:hover:bg-white/20"
       >
         <IconHome className="h-4 w-4" /> Back to home
       </Link>
 
       {/* Card */}
       <div className="relative flex min-h-screen items-center justify-center p-4 py-16">
-        <div className="anim-pop flex w-full max-w-5xl overflow-hidden rounded-[2.5rem] bg-white shadow-lift">
+        <div className="anim-pop flex w-full max-w-5xl overflow-hidden rounded-[2.5rem] bg-white shadow-lift dark:bg-brand-900">
           {/* Brand panel with curved edge */}
           <div className="anim-slide-left relative hidden w-[46%] flex-col justify-between overflow-hidden bg-gradient-to-br from-brand-600 to-brand-900 p-10 text-white lg:flex lg:rounded-r-[6rem]">
             <div className="pointer-events-none absolute -right-8 top-6 h-56 w-56 animate-float rounded-full bg-white/10 blur-2xl" />
@@ -87,7 +87,7 @@ export function Field({ icon: IconC, className = "", style, ...props }) {
       )}
       <input
         {...props}
-        className={`w-full rounded-full border border-transparent bg-slate-100 py-3.5 pl-12 pr-4 text-sm text-slate-800 outline-none transition-all duration-200 ease-apple placeholder:text-slate-400 focus:border-brand-400 focus:bg-white focus:ring-4 focus:ring-brand-100 ${className}`}
+        className={`w-full rounded-full border border-transparent bg-slate-100 py-3.5 pl-12 pr-4 text-sm text-slate-800 outline-none transition-all duration-200 ease-apple placeholder:text-slate-400 focus:border-brand-400 focus:bg-white focus:ring-4 focus:ring-brand-100 dark:bg-white/10 dark:text-white dark:placeholder:text-slate-400 dark:focus:bg-white/15 dark:focus:ring-white/10 ${className}`}
       />
     </div>
   );
@@ -106,7 +106,7 @@ export function PasswordField({ icon: IconC, style, ...props }) {
       <input
         {...props}
         type={show ? "text" : "password"}
-        className="w-full rounded-full border border-transparent bg-slate-100 py-3.5 pl-12 pr-12 text-sm text-slate-800 outline-none transition-all duration-200 ease-apple placeholder:text-slate-400 focus:border-brand-400 focus:bg-white focus:ring-4 focus:ring-brand-100"
+        className="w-full rounded-full border border-transparent bg-slate-100 py-3.5 pl-12 pr-12 text-sm text-slate-800 outline-none transition-all duration-200 ease-apple placeholder:text-slate-400 focus:border-brand-400 focus:bg-white focus:ring-4 focus:ring-brand-100 dark:bg-white/10 dark:text-white dark:placeholder:text-slate-400 dark:focus:bg-white/15 dark:focus:ring-white/10"
       />
       <button
         type="button"

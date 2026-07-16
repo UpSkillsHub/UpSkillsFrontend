@@ -104,7 +104,7 @@ export default function Home() {
         <div className="container-page relative grid items-start gap-12 pb-8 pt-4 lg:grid-cols-2 lg:pb-10 lg:pt-6">
           <div className="animate-fadeUp">
             <span className="badge mb-5">IT Training &amp; Internship Hub</span>
-            <h1 className="animate-gradient bg-gradient-to-r from-brand-800 via-blue-500 to-brand-800 bg-[length:200%_auto] bg-clip-text text-4xl font-extrabold leading-[1.08] text-transparent sm:text-5xl lg:text-[3.4rem]">
+            <h1 className="animate-gradient bg-gradient-to-r from-brand-800 via-blue-500 to-brand-800 bg-[length:200%_auto] bg-clip-text text-4xl font-extrabold leading-[1.08] text-transparent dark:from-blue-300 dark:via-white dark:to-blue-300 sm:text-5xl lg:text-[3.4rem]">
               Empowering Youth with Digital Skills &amp; Real Job Opportunities
             </h1>
             <p className="mt-5 max-w-xl text-lg leading-relaxed text-slate-500">
@@ -141,11 +141,11 @@ export default function Home() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-brand-900/45 via-brand-900/5 to-transparent" />
             </div>
-            <div className="float-glow absolute -left-6 top-10 w-44 rounded-2xl border-2 border-blue-500 bg-white/95 p-4 shadow-lift backdrop-blur">
+            <div className="float-glow absolute -left-6 top-10 w-44 rounded-2xl border-2 border-blue-500 bg-white/95 p-4 shadow-lift backdrop-blur dark:bg-brand-900/95">
               <p className="text-2xl font-extrabold text-brand-dark">500k+</p>
               <p className="text-xs text-slate-500">Active learners</p>
             </div>
-            <div className="float-glow absolute -right-5 bottom-20 w-48 rounded-2xl border-2 border-blue-500 bg-white/95 p-4 shadow-lift backdrop-blur" style={{ animationDelay: "1.5s" }}>
+            <div className="float-glow absolute -right-5 bottom-20 w-48 rounded-2xl border-2 border-blue-500 bg-white/95 p-4 shadow-lift backdrop-blur dark:bg-brand-900/95" style={{ animationDelay: "1.5s" }}>
               <div className="flex -space-x-2">
                 {[1, 2, 3, 4].map((n) => (
                   <img

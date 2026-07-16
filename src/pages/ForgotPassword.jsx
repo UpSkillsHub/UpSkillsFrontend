@@ -31,7 +31,7 @@ export default function ForgotPassword() {
         <span className="mx-auto mb-3 grid h-14 w-14 place-items-center rounded-2xl bg-brand-50 text-brand-600">
           <IconKey className="h-7 w-7" />
         </span>
-        <h1 className="animate-gradient bg-gradient-to-r from-brand-800 via-blue-500 to-brand-800 bg-[length:200%_auto] bg-clip-text text-3xl font-extrabold text-transparent">Reset password</h1>
+        <h1 className="animate-gradient bg-gradient-to-r from-brand-800 via-blue-500 to-brand-800 bg-[length:200%_auto] bg-clip-text text-3xl font-extrabold text-transparent dark:from-white dark:via-blue-300 dark:to-white">Reset password</h1>
         <p className="mt-1 text-sm text-slate-500">Enter your email and we'll send you a reset link.</p>
       </div>
 
