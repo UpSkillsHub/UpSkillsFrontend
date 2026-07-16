@@ -130,31 +130,31 @@ export default function Home() {
           <div className="relative hidden h-[460px] animate-scaleIn lg:block">
             <div className="absolute inset-0 overflow-hidden rounded-[2rem] shadow-lift ring-1 ring-brand-100">
               <img
+                src="/images/internshipTrue.jpg"
+                alt=""
+                className="absolute inset-0 h-full w-full object-cover"
+              />
+              <img
                 src="/images/internship.jpg"
                 alt="Up Skills Hub internship"
-                className="h-full w-full object-cover"
+                className="hero-swap-top absolute inset-0 h-full w-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-brand-900/45 via-brand-900/5 to-transparent" />
             </div>
-            <div className="absolute -left-6 top-10 w-44 animate-float rounded-2xl bg-white/95 p-4 shadow-lift ring-2 ring-blue-400/70 backdrop-blur">
+            <div className="float-glow absolute -left-6 top-10 w-44 rounded-2xl border-2 border-blue-500 bg-white/95 p-4 shadow-lift backdrop-blur">
               <p className="text-2xl font-extrabold text-brand-dark">500k+</p>
               <p className="text-xs text-slate-500">Active learners</p>
             </div>
-            <div className="absolute -right-5 bottom-20 w-48 animate-float rounded-2xl bg-white/95 p-4 shadow-lift ring-2 ring-blue-400/70 backdrop-blur" style={{ animationDelay: "1.5s" }}>
+            <div className="float-glow absolute -right-5 bottom-20 w-48 rounded-2xl border-2 border-blue-500 bg-white/95 p-4 shadow-lift backdrop-blur" style={{ animationDelay: "1.5s" }}>
               <div className="flex -space-x-2">
                 {[1, 2, 3, 4].map((n) => (
-                  <span
+                  <img
                     key={n}
-                    className="animate-gradient inline-block rounded-full bg-gradient-to-br from-blue-400 via-brand-500 to-blue-600 bg-[length:200%_200%] p-[2px] shadow-sm transition-all duration-300 ease-apple hover:z-10 hover:-translate-y-1 hover:scale-125"
-                    style={{ animationDelay: `${n * 0.3}s` }}
-                  >
-                    <img
-                      src={`/images/cohort${n}.jpg`}
-                      alt={`Cohort member ${n}`}
-                      className="h-9 w-9 rounded-full border-2 border-white object-cover"
-                      onError={(e) => (e.currentTarget.style.display = "none")}
-                    />
-                  </span>
+                    src={`/images/cohort${n}.jpg`}
+                    alt={`Cohort member ${n}`}
+                    className="btn-glow-strong h-9 w-9 rounded-full border-2 border-blue-500 object-cover transition-transform duration-300 ease-apple hover:z-10 hover:-translate-y-1 hover:scale-125"
+                    onError={(e) => (e.currentTarget.style.display = "none")}
+                  />
                 ))}
               </div>
               <p className="mt-2 text-xs font-medium text-slate-600">Join our next cohort</p>
