@@ -344,7 +344,6 @@ export default function Home() {
       <section id="success" className="relative overflow-hidden bg-white pb-16 pt-2 sm:pb-24 sm:pt-4 dark:bg-brand-dark">
         <div className="container-page">
           <Reveal className="mx-auto max-w-2xl text-center">
-            <span className="badge mb-4">Success Stories</span>
             <h2 className="inline-block text-3xl font-extrabold text-brand-dark sm:text-4xl">
               Success Stories
               <span className="mt-3 block h-1 w-24 rounded-full bg-brand-600 mx-auto" />

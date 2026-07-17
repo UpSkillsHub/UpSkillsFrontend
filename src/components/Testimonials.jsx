@@ -67,14 +67,14 @@ const testimonials = [
 ];
 
 function Avatar({ person, active, big }) {
-  const size = big ? "h-14 w-14" : "h-11 w-11";
+  const size = big ? "h-16 w-16" : "h-11 w-11";
   const ring = active ? "ring-2 ring-brand-400" : "ring-1 ring-slate-200 dark:ring-white/10";
   if (person.img) {
-    return <img src={person.img} alt={person.name} className={`${size} shrink-0 rounded-full object-cover ${ring}`} />;
+    return <img src={person.img} alt={person.name} className={`${size} shrink-0 rounded-full object-cover shadow-sm ${ring}`} />;
   }
   return (
-    <span className={`grid ${size} shrink-0 place-items-center rounded-full bg-slate-200 text-slate-500 dark:bg-white/10 dark:text-slate-300 ${ring}`}>
-      <IconUser className={big ? "h-7 w-7" : "h-6 w-6"} />
+    <span className={`grid ${size} shrink-0 place-items-center rounded-full bg-slate-200 text-slate-500 shadow-sm dark:bg-white/10 dark:text-slate-300 ${ring}`}>
+      <IconUser className={big ? "h-8 w-8" : "h-6 w-6"} />
     </span>
   );
 }
@@ -107,16 +107,22 @@ export default function Testimonials() {
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      <div className="grid md:grid-cols-[300px_1fr]">
-        {/* Circular people wheel — only a few show, the active one centred */}
-        <div className="relative h-[360px] overflow-hidden border-b border-slate-100 md:border-b-0 md:border-r dark:border-white/10">
+      <div className="grid md:grid-cols-[330px_1fr]">
+        {/* Circular people wheel — items sit on a curved arc, active centred */}
+        <div className="relative h-[400px] overflow-hidden border-b border-slate-100 md:border-b-0 md:border-r dark:border-white/10">
+          {/* faint guide arc */}
+          <svg className="pointer-events-none absolute inset-0 h-full w-full text-slate-200 dark:text-white/10" viewBox="0 0 330 400" preserveAspectRatio="none" fill="none">
+            <path d="M46 44 Q150 200 46 356" stroke="currentColor" strokeWidth="1.5" />
+          </svg>
+
           {testimonials.map((t, i) => {
             const off = offsetOf(i, active, n);
             const abs = Math.abs(off);
             const visible = abs <= 2;
+            const bulge = 52 * (1 - (off * off) / 4); // rightward bulge, max at centre
             const style = {
-              transform: `translateY(calc(-50% + ${off * 72}px)) translateX(${-abs * 16}px) scale(${(1 - abs * 0.14).toFixed(3)})`,
-              opacity: visible ? (1 - abs * 0.34).toFixed(2) : 0,
+              transform: `translateY(calc(-50% + ${off * 78}px)) translateX(${bulge.toFixed(1)}px) scale(${(1 - abs * 0.14).toFixed(3)})`,
+              opacity: visible ? (1 - abs * 0.33).toFixed(2) : 0,
               zIndex: 30 - abs,
               pointerEvents: visible ? "auto" : "none",
             };
@@ -125,7 +131,7 @@ export default function Testimonials() {
                 key={t.name}
                 onClick={() => setActive(i)}
                 style={style}
-                className={`absolute left-4 right-4 top-1/2 flex items-center gap-3 rounded-2xl px-3 py-2 text-left transition-all duration-500 ease-apple ${
+                className={`absolute left-3 top-1/2 flex w-[280px] items-center gap-3 rounded-2xl px-3 py-2 text-left transition-all duration-500 ease-apple ${
                   off === 0 ? "bg-brand-50 ring-1 ring-brand-200 dark:bg-white/10 dark:ring-white/15" : ""
                 }`}
               >
@@ -139,33 +145,12 @@ export default function Testimonials() {
           })}
         </div>
 
-        {/* Active testimonial */}
-        <div className="relative flex flex-col justify-center p-8 sm:p-10">
-          <span className="font-serif text-6xl leading-none text-brand-200 dark:text-blue-400/40">&ldquo;</span>
-          <div key={active} className="anim-rise">
-            <p className="mt-1 text-lg italic leading-relaxed text-slate-600 dark:text-slate-300">{current.text}</p>
-            <div className="mt-6 flex items-center gap-3">
-              <Avatar person={current} active />
-              <div>
-                <p className="font-bold text-brand-dark dark:text-white">{current.name}</p>
-                <p className="text-sm font-medium text-brand-600 dark:text-blue-300">{current.role}</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Progress dots */}
-          <div className="mt-8 flex flex-wrap gap-1.5">
-            {testimonials.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setActive(i)}
-                aria-label={`Show story ${i + 1}`}
-                className={`h-2 rounded-full transition-all duration-300 ${
-                  i === active ? "w-6 bg-brand-600" : "w-2 bg-slate-300 hover:bg-slate-400 dark:bg-white/20"
-                }`}
-              />
-            ))}
-          </div>
+        {/* Active testimonial — text only */}
+        <div className="relative flex flex-col justify-center p-8 sm:p-12">
+          <span className="font-serif text-7xl leading-none text-brand-200 dark:text-blue-400/40">&ldquo;</span>
+          <p key={active} className="anim-rise -mt-2 text-lg italic leading-relaxed text-slate-600 dark:text-slate-300">
+            {current.text}
+          </p>
         </div>
       </div>
     </div>
