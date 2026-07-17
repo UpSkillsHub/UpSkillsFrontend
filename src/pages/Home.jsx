@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Reveal from "../components/Reveal.jsx";
 import Testimonials from "../components/Testimonials.jsx";
-import { IconMail, IconPhone, IconMapPin, IconUser, IconUsers, IconClipboard, IconCard, IconCheck } from "../components/icons.jsx";
+import { IconMail, IconPhone, IconMapPin, IconUser, IconUsers, IconClipboard, IconCard, IconCheck, IconGrad, IconBriefcase, IconCode, IconHeadset, IconPalette, IconMegaphone } from "../components/icons.jsx";
 
 // Rotating hero background images. Drop hero-1.jpg … hero-5.jpg into
 // public/images/hero/ and they fade in automatically; until then a gradient shows.
@@ -75,6 +75,16 @@ const courses = [
 
 const benefits = ["Work on Real Projects", "Personalized Mentorship", "Earn Certification"];
 const whyChoose = ["Get Featured on Our Website", "Take on Real Tasks", "Job Preparation Support"];
+
+// Services offered by Up Skills Hub.
+const services = [
+  { icon: IconGrad, title: "Training", desc: "Structured, hands-on IT courses that take you from beginner to job-ready.", grad: "from-blue-500 to-blue-700" },
+  { icon: IconBriefcase, title: "Academic Internship", desc: "Real workplace internships with roles, tasks and deadlines for students.", grad: "from-emerald-500 to-emerald-700" },
+  { icon: IconCode, title: "Website & App Creation", desc: "We design and build fast, modern websites and mobile apps for you.", grad: "from-brand-500 to-brand-700" },
+  { icon: IconHeadset, title: "IT Support", desc: "Reliable technical support to keep your systems and teams running.", grad: "from-cyan-500 to-cyan-700" },
+  { icon: IconPalette, title: "Branding & Design", desc: "Logos, visual identity and graphics that make your brand stand out.", grad: "from-fuchsia-500 to-fuchsia-700" },
+  { icon: IconMegaphone, title: "Digital Marketing", desc: "SEO, content and campaigns that grow your business online.", grad: "from-amber-500 to-orange-600" },
+];
 
 // Talent Marketplace — how employers hire our trainees (4-step flow).
 const talentSteps = [
@@ -337,6 +347,40 @@ export default function Home() {
           <Reveal className="mt-14 text-center">
             <a href="#contact" onClick={scrollTo("contact")} className="btn-primary rounded-full px-8">Browse Talent</a>
           </Reveal>
+        </div>
+      </section>
+
+      {/* SERVICES — What Up Skills Hub offers */}
+      <section id="services" className="relative overflow-hidden bg-slate-50/70 pb-16 pt-10 sm:pb-24 sm:pt-12 dark:bg-transparent">
+        <div className="container-page">
+          <Reveal className="mx-auto max-w-2xl text-center">
+            <h2 className="inline-block text-3xl font-extrabold text-brand-dark sm:text-4xl">
+              Our Services
+              <span className="mt-3 block h-1 w-24 rounded-full bg-brand-600 mx-auto" />
+            </h2>
+            <p className="mt-6 text-slate-500">
+              Beyond training, Up Skills Hub delivers real digital services for individuals and
+              businesses, from building your website to growing your brand.
+            </p>
+          </Reveal>
+
+          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {services.map((s, i) => (
+              <Reveal key={s.title} delay={(i % 3) * 100}>
+                <div className="service-card group relative h-full overflow-hidden rounded-2xl border border-slate-100 bg-white p-7 transition-all duration-500 ease-apple hover:-translate-y-2 hover:shadow-lift dark:border-white/10 dark:bg-brand-900">
+                  <span className="service-sheen pointer-events-none absolute inset-0" />
+                  <span className={`relative grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br ${s.grad} animate-gradient bg-[length:200%_200%] text-white shadow-glow transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-6`}>
+                    <s.icon className="h-7 w-7" />
+                  </span>
+                  <h3 className="relative mt-5 text-lg font-bold text-brand-dark dark:text-white">{s.title}</h3>
+                  <p className="relative mt-2 text-sm leading-relaxed text-slate-500">{s.desc}</p>
+                  <span className="relative mt-4 inline-flex items-center gap-1 text-sm font-semibold text-brand-600 opacity-0 transition-all duration-300 group-hover:opacity-100 dark:text-blue-300">
+                    Learn more &rarr;
+                  </span>
+                </div>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </section>
 

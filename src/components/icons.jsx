@@ -39,6 +39,24 @@ export const IconClipboard = (p) => (
 export const IconCard = (p) => (
   <S {...p}><rect x="3" y="6" width="18" height="12" rx="2" /><path d="M3 10h18" /><path d="M7 15h3" /></S>
 );
+export const IconGrad = (p) => (
+  <S {...p}><path d="M12 3 2 8l10 5 10-5-10-5Z" /><path d="M6 10.5V15c0 1.4 2.7 2.6 6 2.6s6-1.2 6-2.6v-4.5" /><path d="M22 8v5" /></S>
+);
+export const IconBriefcase = (p) => (
+  <S {...p}><rect x="3" y="7" width="18" height="13" rx="2" /><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /><path d="M3 12h18" /></S>
+);
+export const IconCode = (p) => (
+  <S {...p}><path d="m8 8-4 4 4 4" /><path d="m16 8 4 4-4 4" /><path d="m13.5 6-3 12" /></S>
+);
+export const IconHeadset = (p) => (
+  <S {...p}><path d="M4 13v-2a8 8 0 0 1 16 0v2" /><rect x="2.5" y="13" width="4" height="6" rx="1.6" /><rect x="17.5" y="13" width="4" height="6" rx="1.6" /><path d="M20 19v.4a3 3 0 0 1-3 3h-2" /></S>
+);
+export const IconPalette = (p) => (
+  <S {...p}><path d="M12 3a9 9 0 1 0 0 18c1.1 0 1.6-.9 1-1.8-.6-1 0-2.2 1.2-2.2H16a5 5 0 0 0 5-5c0-4.5-4-9-9-9Z" /><circle cx="7.5" cy="11" r="1" /><circle cx="12" cy="8" r="1" /><circle cx="16" cy="11" r="1" /></S>
+);
+export const IconMegaphone = (p) => (
+  <S {...p}><path d="M4 10v4h3l10 5V5L7 10H4Z" /><path d="M18 10a3 3 0 0 1 0 4" /></S>
+);
 export const IconEye = (p) => (
   <S {...p}><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" /><circle cx="12" cy="12" r="3" /></S>
 );

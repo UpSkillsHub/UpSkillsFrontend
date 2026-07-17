@@ -135,6 +135,15 @@ section[id] {
 }
 .step-pulse { animation: stepPulse 2.6s ease-in-out infinite; }
 
+/* Services cards: a light sheen sweeps across on hover */
+.service-sheen {
+  background: linear-gradient(120deg, transparent 35%, rgba(59,130,246,0.14) 50%, transparent 65%);
+  background-size: 250% 100%;
+  background-position: 200% 0;
+}
+.service-card:hover .service-sheen { animation: sheenSweep 0.9s ease; }
+@keyframes sheenSweep { from { background-position: 200% 0; } to { background-position: -120% 0; } }
+
 /* Refined scrollbar */
 ::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-thumb { background: #cbd2f0; border-radius: 999px; border: 2px solid #fff; }
