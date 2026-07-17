@@ -407,60 +407,37 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CONTACT */}
-      <section id="contact" className="relative overflow-hidden bg-slate-50/70 pb-16 pt-8 sm:pb-24 sm:pt-10 dark:bg-transparent">
-        {/* Live animated background — soft, professional, light */}
-        <div className="pointer-events-none absolute inset-0 overflow-hidden">
-          <div className="absolute inset-0 animate-gradient bg-[length:200%_200%] bg-gradient-to-br from-blue-50 via-white to-brand-50 opacity-90 dark:from-brand-900 dark:via-brand-dark dark:to-brand-900 dark:opacity-60" />
-          <div className="anim-drift absolute -left-20 top-6 h-72 w-72 rounded-full bg-blue-300/30 blur-3xl" />
-          <div className="anim-drift-b absolute right-0 top-1/3 h-80 w-80 rounded-full bg-brand-300/25 blur-3xl" />
-          <div className="anim-drift absolute -bottom-10 left-1/3 h-64 w-64 rounded-full bg-blue-200/40 blur-3xl" style={{ animationDelay: "3s" }} />
-          <div className="anim-drift-b absolute bottom-10 right-1/4 h-56 w-56 rounded-full bg-brand-200/30 blur-3xl" style={{ animationDelay: "5s" }} />
-          <div className="animate-float absolute left-[12%] top-[24%] h-3 w-3 rounded-full bg-blue-400/50" />
-          <div className="animate-float absolute right-[16%] top-[30%] h-2 w-2 rounded-full bg-brand-400/50" style={{ animationDelay: "1.2s" }} />
-          <div className="animate-float absolute bottom-[22%] left-[26%] h-2.5 w-2.5 rounded-full bg-blue-300/60" style={{ animationDelay: "2.4s" }} />
-          <div className="animate-float absolute bottom-[28%] right-[30%] h-2 w-2 rounded-full bg-brand-300/50" style={{ animationDelay: "0.6s" }} />
-        </div>
-        <div className="container-page relative z-10">
-          <Reveal className="mx-auto max-w-2xl text-center">
-            <h2 className="inline-block text-3xl font-extrabold text-brand-dark sm:text-4xl">
-              Get in Touch
-              <span className="mt-3 block h-1 w-24 rounded-full bg-brand-600 mx-auto" />
-            </h2>
-            <p className="mt-6 text-slate-500">
-              Have a question or want to hire our talent? Send us a message and we'll get back to you.
-            </p>
-          </Reveal>
-
-          <Reveal delay={120} className="mx-auto mt-14 max-w-2xl">
-              <form onSubmit={(e) => e.preventDefault()} className="card space-y-5 p-8">
-                <div>
-                  <h3 className="text-2xl font-extrabold text-brand-dark">Contact Form</h3>
-                  <p className="mt-1 text-sm text-slate-500">Fill in the form and our team will get back to you shortly.</p>
-                </div>
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <div className="relative">
-                    <input className="input pr-11" placeholder="Matabaro Ardent" required />
-                    <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-slate-400"><IconUser className="h-5 w-5" /></span>
-                  </div>
-                  <div className="relative">
-                    <input type="email" className="input pr-11" placeholder="Email Address" required />
-                    <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-slate-400"><IconMail className="h-5 w-5" /></span>
-                  </div>
-                </div>
-                <select className="input" defaultValue="">
-                  <option value="" disabled>Choose Subject</option>
-                  <option>General enquiry</option>
-                  <option>Course information</option>
-                  <option>Hire our talent</option>
-                  <option>Partnership</option>
-                </select>
-                <textarea rows={5} className="input" placeholder="Your Message" required />
-                <div className="flex flex-col gap-3 sm:flex-row">
-                  <Link to="/" className="btn-secondary flex-1 rounded-full">Back to Home</Link>
-                  <button className="btn-primary flex-1 rounded-full">Submit Now</button>
-                </div>
-              </form>
+      {/* CALL TO ACTION */}
+      <section id="contact" className="relative overflow-hidden bg-white pb-16 pt-8 sm:pb-24 sm:pt-10 dark:bg-brand-dark">
+        <div className="container-page">
+          <Reveal className="mx-auto max-w-3xl">
+            <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-brand-600 to-brand-900 p-10 text-center text-white shadow-lift ring-1 ring-white/10 sm:p-14">
+              {/* animated decorative glow */}
+              <div className="pointer-events-none absolute -right-10 -top-10 h-52 w-52 animate-float rounded-full bg-white/10 blur-2xl" />
+              <div className="pointer-events-none absolute -bottom-12 -left-8 h-56 w-56 animate-float rounded-full bg-brand-300/20 blur-2xl" style={{ animationDelay: "1.5s" }} />
+              <h2 className="relative text-3xl font-extrabold sm:text-4xl">Ready to take the next step?</h2>
+              <p className="relative mx-auto mt-4 max-w-xl text-brand-100">
+                Whether you want to build in-demand skills or hire job-ready talent, Up Skills Hub is
+                your starting point.
+              </p>
+              <div className="relative mt-9 flex flex-col justify-center gap-4 sm:flex-row">
+                <a
+                  href="https://docs.google.com/forms/d/e/1FAIpQLScMG7St3ye7JU7viFJFU1mZdXQcbZDuZ9F9wBiByiVek5SCdQ/viewform"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center rounded-full bg-white px-10 py-4 text-base font-bold text-brand-700 shadow-glow transition-all duration-300 hover:-translate-y-0.5 hover:scale-105 hover:bg-brand-50"
+                >
+                  Join Training
+                </a>
+                <a
+                  href="#talent"
+                  onClick={scrollTo("talent")}
+                  className="inline-flex items-center justify-center rounded-full border-2 border-white/70 px-10 py-4 text-base font-bold text-white transition-all duration-300 hover:-translate-y-0.5 hover:scale-105 hover:bg-white hover:text-brand-700"
+                >
+                  Hire Our Talent
+                </a>
+              </div>
+            </div>
           </Reveal>
         </div>
       </section>
