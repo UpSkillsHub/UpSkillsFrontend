@@ -23,7 +23,16 @@ export function AuthProvider({ children }) {
     if (getAccessToken()) {
       authApi
         .me()
-        .then((res) => setUser(extractUser(res)))
+        .then((res) => {
+          const u = extractUser(res);
+          // Only admins keep a persistent session — the student portal isn't live yet.
+          if (u && (u.role === "admin" || u.role === "super_admin")) {
+            setUser(u);
+          } else {
+            clearTokens();
+            setUser(null);
+          }
+        })
         .catch(() => clearTokens())
         .finally(() => setLoading(false));
     } else {

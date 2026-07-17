@@ -8,7 +8,10 @@ import { IconSun, IconMoon } from "./icons.jsx";
 const sections = [
   { id: "home", label: "Home" },
   { id: "courses", label: "Courses" },
-  { id: "program", label: "Program" },
+  { id: "program", label: "Internship Program" },
+  { id: "talent", label: "Talent Marketplace" },
+  { id: "services", label: "Services" },
+  { id: "success", label: "Success Stories" },
   { id: "about", label: "About Us" },
   { id: "contact", label: "Contact" },
 ];
@@ -81,7 +84,7 @@ export default function Navbar() {
       <nav className="container-page flex h-[72px] items-center justify-between">
         <Logo />
 
-        <ul className="hidden items-center gap-9 md:flex">
+        <ul className="hidden items-center gap-5 lg:flex xl:gap-7">
           {sections.map((s) => (
             <li key={s.id}>
               <a
@@ -95,7 +98,7 @@ export default function Navbar() {
           ))}
         </ul>
 
-        <div className="hidden items-center gap-3 md:flex">
+        <div className="hidden items-center gap-3 lg:flex">
           <ThemeToggle />
           {user ? (
             <>
@@ -109,7 +112,7 @@ export default function Navbar() {
           )}
         </div>
 
-        <div className="flex items-center gap-2 md:hidden">
+        <div className="flex items-center gap-2 lg:hidden">
           <ThemeToggle />
           <button onClick={() => setOpen((o) => !o)} aria-label="Toggle menu">
             <div className="space-y-1.5">
@@ -122,7 +125,7 @@ export default function Navbar() {
       </nav>
 
       {open && (
-        <div className="animate-fadeIn border-t border-slate-100 bg-white md:hidden dark:border-white/10 dark:bg-brand-dark">
+        <div className="animate-fadeIn border-t border-slate-100 bg-white lg:hidden dark:border-white/10 dark:bg-brand-dark">
           <ul className="container-page flex flex-col py-3">
             {sections.map((s) => (
               <li key={s.id}>
