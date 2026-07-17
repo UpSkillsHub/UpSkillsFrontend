@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Reveal from "../components/Reveal.jsx";
+import Testimonials from "../components/Testimonials.jsx";
 import { IconMail, IconPhone, IconMapPin, IconUser, IconUsers, IconClipboard, IconCard, IconCheck } from "../components/icons.jsx";
 
 // Rotating hero background images. Drop hero-1.jpg … hero-5.jpg into
@@ -336,6 +337,24 @@ export default function Home() {
           <Reveal className="mt-14 text-center">
             <a href="#contact" onClick={scrollTo("contact")} className="btn-primary rounded-full px-8">Browse Talent</a>
           </Reveal>
+        </div>
+      </section>
+
+      {/* SUCCESS STORIES — Testimonials from trainees */}
+      <section id="success" className="relative overflow-hidden bg-white pb-16 pt-8 sm:pb-24 sm:pt-10 dark:bg-brand-dark">
+        <div className="container-page">
+          <Reveal className="mx-auto max-w-2xl text-center">
+            <span className="badge mb-4">Success Stories</span>
+            <h2 className="inline-block text-3xl font-extrabold text-brand-dark sm:text-4xl">
+              Success Stories
+              <span className="mt-3 block h-1 w-24 rounded-full bg-brand-600 mx-auto" />
+            </h2>
+            <p className="mt-6 text-slate-500">
+              Real trainees, real results. Hear how Up Skills Hub helped them gain skills, land jobs,
+              and launch their tech careers.
+            </p>
+          </Reveal>
+          <Testimonials />
         </div>
       </section>
 
