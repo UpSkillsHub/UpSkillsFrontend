@@ -80,7 +80,7 @@ const talentSteps = [
   { icon: IconClipboard, title: "Employer posts a task", desc: "A company or client posts a real task or project they need done." },
   { icon: IconUsers, title: "Trainees apply", desc: "Our skilled trainees browse the task and apply to take it on." },
   { icon: IconCheck, title: "Work completed", desc: "The chosen trainee delivers the finished, reviewed work on time." },
-  { icon: IconCard, title: "Employer pays", desc: "Once satisfied, the employer pays — trainees earn and build a track record." },
+  { icon: IconCard, title: "Employer pays", desc: "Once satisfied, the employer pays, trainees earn and build a track record." },
 ];
 
 // Institution logo slot — shows /images/institution-N.png, falls back to a box.
@@ -297,7 +297,7 @@ export default function Home() {
       </section>
 
       {/* TALENT MARKETPLACE — How employers hire our trainees */}
-      <section id="talent" className="relative overflow-hidden bg-white py-16 sm:py-24 dark:bg-brand-dark">
+      <section id="talent" className="relative overflow-hidden bg-white pb-16 pt-8 sm:pb-24 sm:pt-10 dark:bg-brand-dark">
         <div className="container-page">
           <Reveal className="mx-auto max-w-2xl text-center">
             <span className="badge mb-4">Talent Marketplace</span>
@@ -307,7 +307,7 @@ export default function Home() {
             </h2>
             <p className="mt-6 text-slate-500">
               Companies get real work done while our trainees gain paid, real-world experience.
-              Here's exactly how it works — from posting a task to getting paid.
+              Here's exactly how it works, from posting a task to getting paid.
             </p>
           </Reveal>
 
