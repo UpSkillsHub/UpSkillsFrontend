@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { IconFacebook, IconInstagram, IconLinkedin, IconWhatsapp, IconTwitter, IconChat, IconMapPin } from "./icons.jsx";
+import { IconFacebook, IconInstagram, IconLinkedin, IconWhatsapp, IconTwitter, IconChat, IconMapPin, IconMail, IconPhone } from "./icons.jsx";
 import ShareStoryModal from "./ShareStoryModal.jsx";
 
 // Matches the header navigation menu.
@@ -126,26 +126,44 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Find Us map */}
+      {/* Find Us — info + distinctively-shaped map */}
       <div className="container-page pb-16">
-        <h4 className="text-center text-lg font-bold text-white">Find Us</h4>
-        <div className="map-glow mx-auto mt-6 overflow-hidden rounded-2xl">
-          <iframe
-            title="Up Skills Hub location"
-            src={MAP_SRC}
-            className="h-72 w-full border-0"
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-          />
+        <div className="grid items-center gap-10 lg:grid-cols-5">
+          {/* Info */}
+          <div className="lg:col-span-2">
+            <span className="inline-block rounded-full bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-brand-100">Find Us</span>
+            <h3 className="mt-3 text-2xl font-extrabold text-white">Visit Up Skills Hub</h3>
+            <p className="mt-3 text-sm leading-relaxed text-slate-400">
+              We're in the heart of Remera, Kigali. Come say hello, or reach out to us anytime.
+            </p>
+            <ul className="mt-5 space-y-3 text-sm text-slate-300">
+              <li className="flex items-start gap-2"><IconMapPin className="mt-0.5 h-4 w-4 shrink-0 text-blue-400" /> KG 173 Street, Remera, Kigali, Rwanda</li>
+              <li className="flex items-start gap-2"><IconMail className="mt-0.5 h-4 w-4 shrink-0 text-blue-400" /> upskillshub.info@gmail.com</li>
+              <li className="flex items-start gap-2"><IconPhone className="mt-0.5 h-4 w-4 shrink-0 text-blue-400" /> +250 781 796 283</li>
+            </ul>
+            <a
+              href="https://maps.google.com/?q=Up+Skills+Hub,+KG+173+St,+Remera,+Kigali,+Rwanda"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-6 inline-flex items-center gap-2 rounded-full bg-blue-600 px-6 py-3 text-sm font-bold text-white shadow-glow transition hover:-translate-y-0.5 hover:scale-105 hover:bg-blue-700"
+            >
+              <IconMapPin className="h-4 w-4" /> Open in Google Maps
+            </a>
+          </div>
+
+          {/* Map — organic asymmetric shape + glowing border */}
+          <div className="lg:col-span-3">
+            <div className="map-glow overflow-hidden rounded-[2rem] rounded-bl-[5rem] rounded-tr-[5rem]">
+              <iframe
+                title="Up Skills Hub location"
+                src={MAP_SRC}
+                className="h-80 w-full border-0"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            </div>
+          </div>
         </div>
-        <a
-          href="https://maps.google.com/?q=KG+173+St,+Remera,+Kigali,+Rwanda"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-slate-400 transition hover:text-white"
-        >
-          <IconMapPin className="h-4 w-4" /> Open in Google Maps
-        </a>
       </div>
 
       <div className="border-t border-white/10 py-5 text-center text-xs text-slate-400">
