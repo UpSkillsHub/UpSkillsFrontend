@@ -298,7 +298,7 @@ export default function Home() {
       </section>
 
       {/* TALENT MARKETPLACE — How employers hire our trainees */}
-      <section id="talent" className="relative overflow-hidden bg-white pb-16 pt-8 sm:pb-24 sm:pt-10 dark:bg-brand-dark">
+      <section id="talent" className="relative overflow-hidden bg-white pb-10 pt-8 sm:pb-14 sm:pt-10 dark:bg-brand-dark">
         <div className="container-page">
           <Reveal className="mx-auto max-w-2xl text-center">
             <span className="badge mb-4">Talent Marketplace</span>
@@ -341,7 +341,7 @@ export default function Home() {
       </section>
 
       {/* SUCCESS STORIES — Testimonials from trainees */}
-      <section id="success" className="relative overflow-hidden bg-white pb-16 pt-8 sm:pb-24 sm:pt-10 dark:bg-brand-dark">
+      <section id="success" className="relative overflow-hidden bg-white pb-16 pt-2 sm:pb-24 sm:pt-4 dark:bg-brand-dark">
         <div className="container-page">
           <Reveal className="mx-auto max-w-2xl text-center">
             <span className="badge mb-4">Success Stories</span>

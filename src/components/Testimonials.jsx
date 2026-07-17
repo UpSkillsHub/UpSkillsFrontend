@@ -1,31 +1,31 @@
 import { useEffect, useState } from "react";
 import { IconUser } from "./icons.jsx";
 
-// Trainee success stories. Add an `img` path (e.g. "/images/testimonials/ardent.jpg")
-// later and it replaces the placeholder icon automatically.
+// Trainee success stories. Drop a photo in /public/images/testimonials/ and set
+// `img` to show it; leave null to fall back to the placeholder icon.
 const testimonials = [
   {
     name: "Ardent Matabaro",
     role: "Frontend Developer",
-    img: null,
-    text: "I joined Up Skills Hub with only basic HTML knowledge and left building full, responsive web apps in React. The real projects and my mentor's feedback made everything click — within weeks of finishing I was hired as a junior frontend developer.",
+    img: "/images/testimonials/ardent.jpg",
+    text: "I joined Up Skills Hub with only basic HTML knowledge and left building full, responsive web apps in React. The real projects and my mentor's feedback made everything click, and within weeks of finishing I was hired as a junior frontend developer.",
   },
   {
     name: "DonBéni Effata",
     role: "Backend Developer",
-    img: null,
+    img: "/images/testimonials/donbeni.jpg",
     text: "The backend track was hands-on from day one. I built real APIs, worked with databases, and learned how production systems actually fit together. The Talent Marketplace even connected me to my first paid client task.",
   },
   {
     name: "Jean-Luc Matabaro",
     role: "Cybersecurity Analyst",
-    img: null,
+    img: "/images/testimonials/jeanluc.jpg",
     text: "The Cybersecurity & Ethical Hacking program was intense and practical. I learned to find vulnerabilities and defend real systems, not just theory. Today I work as a security analyst, and it all started right here.",
   },
   {
     name: "Joseph Courbon",
     role: "Data Analyst",
-    img: null,
+    img: "/images/testimonials/joseph.jpg",
     text: "Power BI and data analysis felt intimidating until Up Skills Hub broke it down into real dashboards and real decisions. I now turn messy data into insights every day at work, and I owe that confidence to my trainers.",
   },
   {
@@ -38,25 +38,25 @@ const testimonials = [
     name: "Guillain Bengehya",
     role: "Full-Stack Developer",
     img: null,
-    text: "What sets Up Skills Hub apart is that you actually build things people use. The mentorship, the real tasks, the exposure on their website — it all made me job-ready. I went from student to full-stack developer faster than I imagined.",
+    text: "What sets Up Skills Hub apart is that you actually build things people use. The mentorship, the real tasks, the exposure on their website, it all made me job-ready. I went from student to full-stack developer faster than I imagined.",
   },
   {
     name: "Ntare Bright",
     role: "Digital Marketing Specialist",
-    img: null,
+    img: "/images/testimonials/ntare.jpg",
     text: "The Digital Marketing & SEO track was practical from the first lesson. I built real WordPress sites, ran real campaigns, and learned to read analytics properly. I now lead marketing for a growing local business.",
   },
   {
     name: "Aurora Dragnir",
     role: "UI/UX & Graphic Designer",
-    img: null,
+    img: "/images/testimonials/aurora.jpg",
     text: "I came in loving design but lacking direction. The graphic design program and real client briefs sharpened both my skills and my portfolio. The Talent Marketplace helped me land freelance work while I was still learning.",
   },
   {
     name: "Uwase Leiss",
     role: "Project Coordinator",
     img: null,
-    text: "The Business and Project Management course taught me how real teams plan and deliver. The internship put me in charge of actual tasks and deadlines — exactly the experience that got me my current project coordinator role.",
+    text: "The Business and Project Management course taught me how real teams plan and deliver. The internship put me in charge of actual tasks and deadlines, exactly the experience that got me my current project coordinator role.",
   },
   {
     name: "Victor Jacker",
@@ -66,28 +66,38 @@ const testimonials = [
   },
 ];
 
-function Avatar({ person, active }) {
-  const ring = active ? "ring-2 ring-brand-400" : "";
+function Avatar({ person, active, big }) {
+  const size = big ? "h-14 w-14" : "h-11 w-11";
+  const ring = active ? "ring-2 ring-brand-400" : "ring-1 ring-slate-200 dark:ring-white/10";
   if (person.img) {
-    return <img src={person.img} alt={person.name} className={`h-11 w-11 shrink-0 rounded-full object-cover ${ring}`} />;
+    return <img src={person.img} alt={person.name} className={`${size} shrink-0 rounded-full object-cover ${ring}`} />;
   }
   return (
-    <span className={`grid h-11 w-11 shrink-0 place-items-center rounded-full bg-slate-200 text-slate-500 dark:bg-white/10 dark:text-slate-300 ${ring}`}>
-      <IconUser className="h-6 w-6" />
+    <span className={`grid ${size} shrink-0 place-items-center rounded-full bg-slate-200 text-slate-500 dark:bg-white/10 dark:text-slate-300 ${ring}`}>
+      <IconUser className={big ? "h-7 w-7" : "h-6 w-6"} />
     </span>
   );
+}
+
+// Shortest circular distance between item i and the active index.
+function offsetOf(i, active, n) {
+  let off = i - active;
+  if (off > n / 2) off -= n;
+  if (off < -n / 2) off += n;
+  return off;
 }
 
 export default function Testimonials() {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
+  const n = testimonials.length;
 
-  // Auto-advance through everyone, then loop. Restarts 6s after any change.
+  // Auto-rotate through everyone, then loop. Restarts 6s after any change.
   useEffect(() => {
     if (paused) return;
-    const t = setTimeout(() => setActive((a) => (a + 1) % testimonials.length), 6000);
+    const t = setTimeout(() => setActive((a) => (a + 1) % n), 6000);
     return () => clearTimeout(t);
-  }, [active, paused]);
+  }, [active, paused, n]);
 
   const current = testimonials[active];
 
@@ -97,26 +107,36 @@ export default function Testimonials() {
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      <div className="grid md:grid-cols-[290px_1fr]">
-        {/* People list */}
-        <div className="border-b border-slate-100 p-4 md:border-b-0 md:border-r dark:border-white/10">
-          {testimonials.map((t, i) => (
-            <button
-              key={t.name}
-              onClick={() => setActive(i)}
-              className={`flex w-full items-center gap-3 rounded-2xl px-3 py-2 text-left transition ${
-                i === active
-                  ? "bg-brand-50 ring-1 ring-brand-200 dark:bg-white/10 dark:ring-white/15"
-                  : "hover:bg-slate-50 dark:hover:bg-white/5"
-              }`}
-            >
-              <Avatar person={t} active={i === active} />
-              <span className="min-w-0">
-                <span className={`block truncate text-sm font-bold ${i === active ? "text-brand-dark dark:text-white" : "text-slate-700 dark:text-slate-300"}`}>{t.name}</span>
-                <span className="block truncate text-xs text-slate-400">{t.role}</span>
-              </span>
-            </button>
-          ))}
+      <div className="grid md:grid-cols-[300px_1fr]">
+        {/* Circular people wheel — only a few show, the active one centred */}
+        <div className="relative h-[360px] overflow-hidden border-b border-slate-100 md:border-b-0 md:border-r dark:border-white/10">
+          {testimonials.map((t, i) => {
+            const off = offsetOf(i, active, n);
+            const abs = Math.abs(off);
+            const visible = abs <= 2;
+            const style = {
+              transform: `translateY(calc(-50% + ${off * 72}px)) translateX(${-abs * 16}px) scale(${(1 - abs * 0.14).toFixed(3)})`,
+              opacity: visible ? (1 - abs * 0.34).toFixed(2) : 0,
+              zIndex: 30 - abs,
+              pointerEvents: visible ? "auto" : "none",
+            };
+            return (
+              <button
+                key={t.name}
+                onClick={() => setActive(i)}
+                style={style}
+                className={`absolute left-4 right-4 top-1/2 flex items-center gap-3 rounded-2xl px-3 py-2 text-left transition-all duration-500 ease-apple ${
+                  off === 0 ? "bg-brand-50 ring-1 ring-brand-200 dark:bg-white/10 dark:ring-white/15" : ""
+                }`}
+              >
+                <Avatar person={t} active={off === 0} big={off === 0} />
+                <span className="min-w-0">
+                  <span className={`block truncate font-bold ${off === 0 ? "text-base text-brand-dark dark:text-white" : "text-sm text-slate-600 dark:text-slate-300"}`}>{t.name}</span>
+                  <span className="block truncate text-xs text-slate-400">{t.role}</span>
+                </span>
+              </button>
+            );
+          })}
         </div>
 
         {/* Active testimonial */}
