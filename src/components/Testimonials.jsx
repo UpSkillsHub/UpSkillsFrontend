@@ -89,10 +89,10 @@ export default function Testimonials() {
           })}
         </div>
 
-        {/* Active testimonial — text only */}
-        <div className="relative flex flex-col justify-center p-8 sm:p-12">
-          <span className="font-serif text-7xl leading-none text-brand-200 dark:text-blue-400/40">&ldquo;</span>
-          <p key={active} className="anim-rise -mt-2 text-lg italic leading-relaxed text-slate-600 dark:text-slate-300">
+        {/* Active testimonial — text vertically centred */}
+        <div className="relative flex min-h-[400px] flex-col justify-center p-8 sm:p-12">
+          <span className="pointer-events-none absolute left-8 top-8 font-serif text-7xl leading-none text-brand-200 dark:text-blue-400/40 sm:left-12">&ldquo;</span>
+          <p key={active} className="anim-rise text-lg italic leading-relaxed text-slate-600 dark:text-slate-300">
             {current.text}
           </p>
         </div>

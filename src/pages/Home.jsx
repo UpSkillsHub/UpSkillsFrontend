@@ -96,16 +96,25 @@ const talentSteps = [
   { icon: IconCard, title: "Employer pays", desc: "Once satisfied, the employer pays, trainees earn and build a track record." },
 ];
 
-// Institution logo slot — shows /images/institution-N.png, falls back to a box.
-function Institution({ n }) {
+// Trusted-company logos shown under the hero.
+const trustedLogos = [
+  "/images/trusted/auca.jpg",
+  "/images/trusted/tsinda.jpg",
+  "/images/trusted/golden.jpg",
+  "/images/trusted/apaer.jpg",
+  "/images/trusted/alicecop.jpg",
+  "/images/trusted/chris.png",
+];
+
+function Institution({ src }) {
   const [ok, setOk] = useState(true);
-  if (!ok) return <div className="h-14 w-32 rounded-lg bg-slate-100" />;
+  if (!ok) return null;
   return (
     <img
-      src={`/images/institution-${n}.png`}
-      alt="Partner institution"
+      src={src}
+      alt="Trusted company"
       onError={() => setOk(false)}
-      className="h-9 w-auto max-w-[100px] shrink-0 object-contain opacity-80 transition duration-300 hover:scale-105 hover:opacity-100"
+      className="h-10 w-auto max-w-[110px] shrink-0 object-contain opacity-80 transition duration-300 hover:scale-105 hover:opacity-100"
     />
   );
 }
@@ -136,9 +145,9 @@ export default function Home() {
 
             <div className="mt-12">
               <p className="text-xs font-semibold tracking-widest text-slate-400">TRUSTED BY BIG INSTITUTIONS</p>
-              <div className="mt-4 flex flex-wrap items-center gap-4">
-                {[1, 2, 3, 4].map((n) => (
-                  <Institution key={n} n={n} />
+              <div className="mt-4 flex flex-wrap items-center gap-5">
+                {trustedLogos.map((src) => (
+                  <Institution key={src} src={src} />
                 ))}
               </div>
             </div>
