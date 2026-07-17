@@ -16,6 +16,9 @@ const sections = [
   { id: "contact", label: "Contact" },
 ];
 
+// Application / training-join form (also used by the home ticker's "Apply Now").
+const APPLY_URL = "https://docs.google.com/forms/d/e/1FAIpQLScMG7St3ye7JU7viFJFU1mZdXQcbZDuZ9F9wBiByiVek5SCdQ/viewform";
+
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -96,6 +99,13 @@ export default function Navbar() {
               </a>
             </li>
           ))}
+          {!user && (
+            <li>
+              <Link to="/login" className="link-underline text-sm font-semibold text-brand-dark transition-colors duration-200 hover:text-brand-600 dark:text-slate-200 dark:hover:text-blue-400">
+                Login
+              </Link>
+            </li>
+          )}
         </ul>
 
         <div className="hidden items-center gap-3 lg:flex">
@@ -108,7 +118,23 @@ export default function Navbar() {
               <button onClick={logout} className="btn-primary rounded-full px-7 py-2.5">Log out</button>
             </>
           ) : (
-            <Link to="/login" className="btn-glow-strong inline-flex items-center rounded-xl border-2 border-blue-500 bg-white px-8 py-2.5 text-sm font-bold tracking-wide text-brand-600 transition-all duration-300 hover:-translate-y-0.5 hover:scale-105 hover:bg-brand-50 hover:text-brand-700">LOGIN</Link>
+            <>
+              <a
+                href="#talent"
+                onClick={go("talent")}
+                className="inline-flex items-center rounded-xl border-2 border-brand-600 px-4 py-2 text-xs font-bold tracking-wide text-brand-600 transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-50 dark:border-blue-400 dark:text-blue-300 dark:hover:bg-white/10"
+              >
+                Hire Talent
+              </a>
+              <a
+                href={APPLY_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center rounded-xl bg-brand-600 px-4 py-2 text-xs font-bold tracking-wide text-white shadow-glow transition-all duration-300 hover:-translate-y-0.5 hover:scale-105 hover:bg-brand-700"
+              >
+                Apply / Join Training
+              </a>
+            </>
           )}
         </div>
 
@@ -134,8 +160,20 @@ export default function Navbar() {
                 </a>
               </li>
             ))}
-            <li className="mt-3">
-              <Link to="/login" className="btn-glow-strong block w-full rounded-xl border-2 border-blue-500 bg-white py-2.5 text-center text-sm font-bold tracking-wide text-brand-600" onClick={() => setOpen(false)}>LOGIN</Link>
+            {!user && (
+              <li>
+                <Link to="/login" onClick={() => setOpen(false)} className="block py-2.5 text-sm font-semibold text-brand-dark dark:text-slate-200">
+                  Login
+                </Link>
+              </li>
+            )}
+            <li className="mt-3 flex flex-col gap-2">
+              <a href="#talent" onClick={go("talent")} className="rounded-xl border-2 border-brand-600 py-2.5 text-center text-sm font-bold text-brand-600 dark:border-blue-400 dark:text-blue-300">
+                Hire Talent
+              </a>
+              <a href={APPLY_URL} target="_blank" rel="noopener noreferrer" className="rounded-xl bg-brand-600 py-2.5 text-center text-sm font-bold text-white shadow-glow" onClick={() => setOpen(false)}>
+                Apply / Join Training
+              </a>
             </li>
           </ul>
         </div>
