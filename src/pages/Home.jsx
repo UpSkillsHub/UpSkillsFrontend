@@ -351,10 +351,10 @@ export default function Home() {
       </section>
 
       {/* SERVICES — What Up Skills Hub offers (dark, animated) */}
-      <section id="services" className="relative overflow-hidden bg-brand-dark pb-16 pt-10 text-white sm:pb-24 sm:pt-12">
+      <section id="services" className="relative overflow-hidden bg-brand-700 pb-16 pt-10 text-white sm:pb-24 sm:pt-12">
         {/* Live animated background */}
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
-          <div className="absolute inset-0 animate-gradient bg-[length:220%_220%] bg-gradient-to-br from-brand-900 via-brand-dark to-brand-900" />
+          <div className="absolute inset-0 animate-gradient bg-[length:220%_220%] bg-gradient-to-br from-brand-600 via-brand-700 to-brand-800" />
           <div className="anim-drift absolute -left-24 top-8 h-80 w-80 rounded-full bg-blue-600/20 blur-3xl" />
           <div className="anim-drift-b absolute -right-10 top-1/3 h-96 w-96 rounded-full bg-brand-500/25 blur-3xl" />
           <div className="anim-drift absolute -bottom-20 left-1/3 h-72 w-72 rounded-full bg-blue-500/15 blur-3xl" style={{ animationDelay: "3s" }} />
