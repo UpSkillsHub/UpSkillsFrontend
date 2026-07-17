@@ -55,7 +55,15 @@ export default function Testimonials() {
     >
       <div className="grid md:grid-cols-[360px_1fr]">
         {/* People orbit */}
-        <div className="relative mx-auto h-[380px] w-full max-w-[360px] border-b border-slate-100 md:border-b-0 md:border-r dark:border-white/10">
+        <div className="relative mx-auto h-[380px] w-full max-w-[360px] overflow-hidden border-b border-slate-100 md:border-b-0 md:border-r dark:border-white/10">
+          {/* Animated gradient background + drifting particles */}
+          <div className="pointer-events-none absolute inset-0 animate-gradient bg-[length:200%_200%] bg-gradient-to-br from-brand-50 via-white to-blue-50 dark:from-brand-900 dark:via-brand-900 dark:to-brand-800" />
+          <div className="pointer-events-none absolute inset-0">
+            <div className="animate-float absolute left-[20%] top-[30%] h-1.5 w-1.5 rounded-full bg-brand-300/60" />
+            <div className="animate-float absolute right-[24%] top-[42%] h-1 w-1 rounded-full bg-blue-400/60" style={{ animationDelay: "1.2s" }} />
+            <div className="animate-float absolute bottom-[26%] left-[38%] h-1.5 w-1.5 rounded-full bg-brand-400/50" style={{ animationDelay: "2.4s" }} />
+            <div className="animate-float absolute bottom-[34%] right-[30%] h-1 w-1 rounded-full bg-blue-300/60" style={{ animationDelay: "0.6s" }} />
+          </div>
           {/* Slow glowing dot orbiting the group (no lines) */}
           <svg viewBox="0 0 360 380" preserveAspectRatio="none" className="pointer-events-none absolute inset-0 h-full w-full" fill="none">
             <path id="orbit" d="M180 44 A140 150 0 1 0 180 344 A140 150 0 1 0 180 44" fill="none" />
@@ -95,8 +103,8 @@ export default function Testimonials() {
             );
           })}
 
-          {/* Active person — profile + name in the centre */}
-          <div key={active} className="anim-pop pointer-events-none absolute inset-x-0 top-1/2 flex -translate-y-1/2 flex-col items-center">
+          {/* Active person — profile + name in the exact centre */}
+          <div key={active} className="anim-pop pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
             <span className="star-pulse inline-block rounded-full">
               <Avatar person={current} big />
             </span>
