@@ -409,15 +409,15 @@ export default function Home() {
       </section>
 
       {/* CALL TO ACTION */}
-      <section id="contact" className="relative overflow-hidden bg-white pb-16 pt-8 sm:pb-24 sm:pt-10 dark:bg-brand-dark">
+      <section id="contact" className="relative overflow-hidden bg-white py-24 sm:py-32 dark:bg-brand-dark">
         <div className="container-page">
-          <ScrollScale className="mx-auto max-w-3xl">
-            <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-brand-600 to-brand-900 p-10 text-center text-white shadow-lift ring-1 ring-white/10 sm:p-14">
+          <ScrollScale className="mx-auto max-w-5xl" min={0.6}>
+            <div className="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-brand-600 to-brand-900 p-12 text-center text-white shadow-lift ring-1 ring-white/10 sm:p-24">
               {/* animated decorative glow */}
-              <div className="pointer-events-none absolute -right-10 -top-10 h-52 w-52 animate-float rounded-full bg-white/10 blur-2xl" />
-              <div className="pointer-events-none absolute -bottom-12 -left-8 h-56 w-56 animate-float rounded-full bg-brand-300/20 blur-2xl" style={{ animationDelay: "1.5s" }} />
-              <h2 className="relative text-3xl font-extrabold sm:text-4xl">Ready to take the next step?</h2>
-              <p className="relative mx-auto mt-4 max-w-xl text-brand-100">
+              <div className="pointer-events-none absolute -right-10 -top-10 h-56 w-56 animate-float rounded-full bg-white/10 blur-2xl" />
+              <div className="pointer-events-none absolute -bottom-14 -left-10 h-64 w-64 animate-float rounded-full bg-brand-300/20 blur-2xl" style={{ animationDelay: "1.5s" }} />
+              <h2 className="relative text-4xl font-extrabold sm:text-5xl lg:text-6xl">Ready to take the next step?</h2>
+              <p className="relative mx-auto mt-5 max-w-xl text-lg text-brand-100">
                 Whether you want to build in-demand skills or hire job-ready talent, Up Skills Hub is
                 your starting point.
               </p>
