@@ -37,7 +37,7 @@ export default function ShareStoryModal({ open, onClose }) {
   return (
     <div className="fixed inset-0 z-[70] flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-brand-900/70 backdrop-blur-sm" onClick={close} />
-      <div className="anim-pop relative w-full max-w-lg overflow-hidden rounded-3xl bg-white shadow-lift">
+      <div className="anim-pop relative w-full max-w-lg overflow-hidden rounded-3xl bg-white shadow-lift dark:bg-brand-900">
         {/* Header */}
         <div className="flex items-start justify-between bg-gradient-to-br from-brand-600 to-brand-800 p-6 text-white">
           <div className="flex items-center gap-3">
@@ -49,7 +49,7 @@ export default function ShareStoryModal({ open, onClose }) {
               <p className="text-sm text-brand-100">Inspire future Up Skills Hub trainees</p>
             </div>
           </div>
-          <button onClick={close} aria-label="Close" className="text-white/80 transition hover:text-white">
+          <button onClick={close} aria-label="Close" className="x-live grid h-9 w-9 shrink-0 place-items-center rounded-full text-white/85 transition-all duration-300 hover:rotate-90 hover:scale-110 hover:bg-white/15 hover:text-white">
             <IconClose className="h-5 w-5" />
           </button>
         </div>

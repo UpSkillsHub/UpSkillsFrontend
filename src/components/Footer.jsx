@@ -27,7 +27,7 @@ const socials = [
 
 // Google Maps embed for the Up Skills Hub address (no API key needed).
 const MAP_SRC =
-  "https://maps.google.com/maps?q=KG%20173%20St%2C%20Remera%2C%20Kigali%2C%20Rwanda&t=&z=15&ie=UTF8&iwloc=&output=embed";
+  "https://maps.google.com/maps?q=Up%20Skills%20Hub%2C%20KG%20173%20St%2C%20Remera%2C%20Kigali%2C%20Rwanda&t=&z=16&ie=UTF8&iwloc=&output=embed";
 
 export default function Footer() {
   const navigate = useNavigate();
@@ -119,9 +119,9 @@ export default function Footer() {
           </p>
           <button
             onClick={() => setModalOpen(true)}
-            className="mt-4 inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/5 px-4 py-2.5 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:border-white/40 hover:bg-white/10"
+            className="mt-4 inline-flex w-full items-center justify-center gap-2 whitespace-nowrap rounded-xl border border-white/20 bg-white/5 px-4 py-2.5 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:border-white/40 hover:bg-white/10"
           >
-            <IconChat className="h-4 w-4" /> Share Your Story
+            <IconChat className="h-4 w-4 shrink-0" /> Share Your Story
           </button>
         </div>
       </div>
@@ -129,7 +129,7 @@ export default function Footer() {
       {/* Find Us map */}
       <div className="container-page pb-16">
         <h4 className="text-center text-lg font-bold text-white">Find Us</h4>
-        <div className="mx-auto mt-6 overflow-hidden rounded-2xl ring-1 ring-white/10">
+        <div className="map-glow mx-auto mt-6 overflow-hidden rounded-2xl">
           <iframe
             title="Up Skills Hub location"
             src={MAP_SRC}

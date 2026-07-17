@@ -142,6 +142,17 @@ section[id] {
 }
 .btn-live { animation: livePulse 2.2s ease-in-out infinite; }
 
+/* Live glowing contour around the Find Us map */
+@keyframes mapGlow {
+  0%, 100% { box-shadow: 0 0 0 1px rgba(59,130,246,0.25), 0 0 16px 0 rgba(59,130,246,0.20); }
+  50% { box-shadow: 0 0 0 2px rgba(59,130,246,0.6), 0 0 28px 4px rgba(59,130,246,0.45); }
+}
+.map-glow { animation: mapGlow 3s ease-in-out infinite; }
+
+/* Live soft pulse for the modal close (X) button */
+@keyframes xGlow { 0%, 100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); } 50% { box-shadow: 0 0 0 4px rgba(255,255,255,0.18); } }
+.x-live { animation: xGlow 2s ease-in-out infinite; }
+
 /* Services cards: a light sheen sweeps across on hover */
 .service-sheen {
   background: linear-gradient(120deg, transparent 35%, rgba(59,130,246,0.14) 50%, transparent 65%);
