@@ -30,6 +30,15 @@ export const IconLock = (p) => (
 export const IconUser = (p) => (
   <S {...p}><circle cx="12" cy="8" r="4" /><path d="M4 21c0-4 4-6 8-6s8 2 8 6" /></S>
 );
+export const IconUsers = (p) => (
+  <S {...p}><circle cx="9" cy="8" r="3.2" /><path d="M3 20c0-3.2 2.7-5 6-5s6 1.8 6 5" /><path d="M16 5.5a3.2 3.2 0 0 1 0 6.4" /><path d="M18.5 20c0-2.4-1-4-2.5-5" /></S>
+);
+export const IconClipboard = (p) => (
+  <S {...p}><rect x="6" y="4" width="12" height="16" rx="2" /><path d="M9 4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1z" /><path d="M9 12h6M9 16h4" /></S>
+);
+export const IconCard = (p) => (
+  <S {...p}><rect x="3" y="6" width="18" height="12" rx="2" /><path d="M3 10h18" /><path d="M7 15h3" /></S>
+);
 export const IconEye = (p) => (
   <S {...p}><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" /><circle cx="12" cy="12" r="3" /></S>
 );

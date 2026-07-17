@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Reveal from "../components/Reveal.jsx";
-import { IconMail, IconPhone, IconMapPin, IconUser } from "../components/icons.jsx";
+import { IconMail, IconPhone, IconMapPin, IconUser, IconUsers, IconClipboard, IconCard, IconCheck } from "../components/icons.jsx";
 
 // Rotating hero background images. Drop hero-1.jpg … hero-5.jpg into
 // public/images/hero/ and they fade in automatically; until then a gradient shows.
@@ -74,6 +74,14 @@ const courses = [
 
 const benefits = ["Work on Real Projects", "Personalized Mentorship", "Earn Certification"];
 const whyChoose = ["Get Featured on Our Website", "Take on Real Tasks", "Job Preparation Support"];
+
+// Talent Marketplace — how employers hire our trainees (4-step flow).
+const talentSteps = [
+  { icon: IconClipboard, title: "Employer posts a task", desc: "A company or client posts a real task or project they need done." },
+  { icon: IconUsers, title: "Trainees apply", desc: "Our skilled trainees browse the task and apply to take it on." },
+  { icon: IconCheck, title: "Work completed", desc: "The chosen trainee delivers the finished, reviewed work on time." },
+  { icon: IconCard, title: "Employer pays", desc: "Once satisfied, the employer pays — trainees earn and build a track record." },
+];
 
 // Institution logo slot — shows /images/institution-N.png, falls back to a box.
 function Institution({ n }) {
@@ -284,6 +292,49 @@ export default function Home() {
             <Link to="/register" className="btn rounded-full bg-white px-8 text-brand-dark hover:-translate-y-0.5 hover:bg-brand-50">
               Apply for Internship
             </Link>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* TALENT MARKETPLACE — How employers hire our trainees */}
+      <section id="talent" className="relative overflow-hidden bg-white py-16 sm:py-24 dark:bg-brand-dark">
+        <div className="container-page">
+          <Reveal className="mx-auto max-w-2xl text-center">
+            <span className="badge mb-4">Talent Marketplace</span>
+            <h2 className="inline-block text-3xl font-extrabold text-brand-dark sm:text-4xl">
+              How Employers Hire Our Talent
+              <span className="mt-3 block h-1 w-24 rounded-full bg-brand-600 mx-auto" />
+            </h2>
+            <p className="mt-6 text-slate-500">
+              Companies get real work done while our trainees gain paid, real-world experience.
+              Here's exactly how it works — from posting a task to getting paid.
+            </p>
+          </Reveal>
+
+          {/* Animated 4-step flow */}
+          <div className="relative mt-16">
+            {/* connector line + traveling dot (desktop) */}
+            <div className="absolute left-[12%] right-[12%] top-8 hidden lg:block">
+              <div className="h-0.5 w-full rounded-full bg-gradient-to-r from-brand-100 via-brand-400 to-brand-100 dark:from-white/10 dark:via-blue-400/60 dark:to-white/10" />
+              <span className="flow-dot absolute top-1/2 h-3 w-3 -translate-y-1/2 rounded-full bg-brand-600 shadow-glow" />
+            </div>
+
+            <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+              {talentSteps.map((s, i) => (
+                <Reveal key={s.title} delay={i * 140} className="relative text-center">
+                  <div className="step-pulse relative mx-auto grid h-16 w-16 place-items-center rounded-2xl border border-brand-100 bg-white text-brand-600 dark:border-white/10 dark:bg-brand-900 dark:text-blue-300">
+                    <s.icon className="h-7 w-7" />
+                    <span className="absolute -right-2 -top-2 grid h-6 w-6 place-items-center rounded-full bg-brand-600 text-xs font-bold text-white">{i + 1}</span>
+                  </div>
+                  <h3 className="mt-5 text-lg font-bold text-brand-dark dark:text-white">{s.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-slate-500">{s.desc}</p>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+
+          <Reveal className="mt-14 text-center">
+            <a href="#contact" onClick={scrollTo("contact")} className="btn-primary rounded-full px-8">Browse Talent</a>
           </Reveal>
         </div>
       </section>
