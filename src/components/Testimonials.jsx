@@ -96,7 +96,7 @@ export default function Testimonials() {
           })}
 
           {/* Active person — profile + name in the centre */}
-          <div key={active} className="anim-pop absolute left-1/2 top-[44%] flex -translate-x-1/2 -translate-y-1/2 flex-col items-center">
+          <div key={active} className="anim-pop pointer-events-none absolute inset-x-0 top-1/2 flex -translate-y-1/2 flex-col items-center">
             <span className="star-pulse inline-block rounded-full">
               <Avatar person={current} big />
             </span>
