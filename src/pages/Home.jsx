@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Reveal from "../components/Reveal.jsx";
 import Testimonials from "../components/Testimonials.jsx";
+import ScrollScale from "../components/ScrollScale.jsx";
 import { IconMail, IconPhone, IconMapPin, IconUser, IconUsers, IconClipboard, IconCard, IconCheck, IconGrad, IconBriefcase, IconCode, IconHeadset, IconPalette, IconMegaphone } from "../components/icons.jsx";
 
 // Rotating hero background images. Drop hero-1.jpg … hero-5.jpg into
@@ -410,7 +411,7 @@ export default function Home() {
       {/* CALL TO ACTION */}
       <section id="contact" className="relative overflow-hidden bg-white pb-16 pt-8 sm:pb-24 sm:pt-10 dark:bg-brand-dark">
         <div className="container-page">
-          <Reveal className="mx-auto max-w-3xl">
+          <ScrollScale className="mx-auto max-w-3xl">
             <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-brand-600 to-brand-900 p-10 text-center text-white shadow-lift ring-1 ring-white/10 sm:p-14">
               {/* animated decorative glow */}
               <div className="pointer-events-none absolute -right-10 -top-10 h-52 w-52 animate-float rounded-full bg-white/10 blur-2xl" />
@@ -425,20 +426,20 @@ export default function Home() {
                   href="https://docs.google.com/forms/d/e/1FAIpQLScMG7St3ye7JU7viFJFU1mZdXQcbZDuZ9F9wBiByiVek5SCdQ/viewform"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center rounded-full bg-white px-10 py-4 text-base font-bold text-brand-700 shadow-glow transition-all duration-300 hover:-translate-y-0.5 hover:scale-105 hover:bg-brand-50"
+                  className="btn-live inline-flex items-center justify-center rounded-full border-2 border-white/70 bg-white/10 px-10 py-4 text-base font-bold text-white backdrop-blur transition-all duration-300 hover:-translate-y-0.5 hover:scale-105 hover:bg-white/20"
                 >
                   Join Training
                 </a>
                 <a
                   href="#talent"
                   onClick={scrollTo("talent")}
-                  className="inline-flex items-center justify-center rounded-full border-2 border-white/70 px-10 py-4 text-base font-bold text-white transition-all duration-300 hover:-translate-y-0.5 hover:scale-105 hover:bg-white hover:text-brand-700"
+                  className="btn-live inline-flex items-center justify-center rounded-full border-2 border-white/70 px-10 py-4 text-base font-bold text-white transition-all duration-300 hover:-translate-y-0.5 hover:scale-105 hover:bg-white hover:text-brand-700"
                 >
                   Hire Our Talent
                 </a>
               </div>
             </div>
-          </Reveal>
+          </ScrollScale>
         </div>
       </section>
     </>
