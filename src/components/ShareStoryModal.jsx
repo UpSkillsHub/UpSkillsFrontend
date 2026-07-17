@@ -45,7 +45,7 @@ export default function ShareStoryModal({ open, onClose }) {
               <IconChat className="h-6 w-6" />
             </span>
             <div>
-              <h3 className="text-lg font-extrabold">Share Your Story</h3>
+              <h3 className="text-lg font-extrabold text-white">Share Your Story</h3>
               <p className="text-sm text-brand-100">Inspire future Up Skills Hub trainees</p>
             </div>
           </div>
@@ -80,7 +80,7 @@ export default function ShareStoryModal({ open, onClose }) {
               <div className="flex flex-1 flex-col gap-3">
                 <div>
                   <label className="mb-1 block text-sm font-medium text-slate-600">Full Name *</label>
-                  <input name="name" value={form.name} onChange={handle} required placeholder="e.g. Jean-Luc Matabaro" className="input" />
+                  <input name="name" value={form.name} onChange={handle} required placeholder="e.g. Ardent Matabaro" className="input" />
                 </div>
                 <div>
                   <label className="mb-1 block text-sm font-medium text-slate-600">Role / Track *</label>

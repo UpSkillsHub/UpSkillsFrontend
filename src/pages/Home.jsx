@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Reveal from "../components/Reveal.jsx";
 import Testimonials from "../components/Testimonials.jsx";
 import ScrollScale from "../components/ScrollScale.jsx";
+import HeroActions from "../components/HeroActions.jsx";
 import { IconMail, IconPhone, IconMapPin, IconUser, IconUsers, IconClipboard, IconCard, IconCheck, IconGrad, IconBriefcase, IconCode, IconHeadset, IconPalette, IconMegaphone } from "../components/icons.jsx";
 
 // Rotating hero background images. Drop hero-1.jpg … hero-5.jpg into
@@ -131,10 +132,7 @@ export default function Home() {
               Welcome to Up Skills Hub Training Program we keep you motivated, and help you achieve
               your goal.
             </p>
-            <div className="mt-8 flex flex-wrap gap-4">
-              <a href="#courses" onClick={scrollTo("courses")} className="btn-primary rounded-full px-8">Explore Courses</a>
-              <a href="#contact" onClick={scrollTo("contact")} className="btn-secondary rounded-full px-8">Hire Our Talent</a>
-            </div>
+            <HeroActions />
 
             <div className="mt-12">
               <p className="text-xs font-semibold tracking-widest text-slate-400">TRUSTED BY BIG INSTITUTIONS</p>
