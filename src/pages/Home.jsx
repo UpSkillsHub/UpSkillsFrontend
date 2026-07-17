@@ -367,16 +367,16 @@ export default function Home() {
           <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {services.map((s, i) => (
               <Reveal key={s.title} delay={(i % 3) * 100}>
-                <div className="service-card group relative h-full overflow-hidden rounded-2xl border border-slate-100 bg-white p-7 transition-all duration-500 ease-apple hover:-translate-y-2 hover:shadow-lift dark:border-white/10 dark:bg-brand-900">
-                  <span className="service-sheen pointer-events-none absolute inset-0" />
-                  <span className={`relative grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br ${s.grad} animate-gradient bg-[length:200%_200%] text-white shadow-glow transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-6`}>
+                <div className="group relative h-full overflow-hidden rounded-2xl border border-slate-200/80 bg-white p-8 transition-all duration-500 ease-apple hover:-translate-y-1.5 hover:border-brand-200 hover:shadow-lift dark:border-white/10 dark:bg-brand-900 dark:hover:border-white/20">
+                  {/* top accent line grows on hover */}
+                  <span className="absolute inset-x-0 top-0 h-1 origin-left scale-x-0 bg-gradient-to-r from-brand-600 to-blue-500 transition-transform duration-500 ease-apple group-hover:scale-x-100" />
+                  {/* editorial index */}
+                  <span className="pointer-events-none absolute right-6 top-5 text-4xl font-extrabold text-slate-100 dark:text-white/5">0{i + 1}</span>
+                  <span className="relative grid h-14 w-14 place-items-center rounded-2xl bg-brand-50 text-brand-600 ring-1 ring-brand-100 transition-all duration-500 ease-apple group-hover:-translate-y-1 group-hover:bg-brand-600 group-hover:text-white group-hover:shadow-glow dark:bg-white/10 dark:text-blue-300 dark:ring-white/10">
                     <s.icon className="h-7 w-7" />
                   </span>
-                  <h3 className="relative mt-5 text-lg font-bold text-brand-dark dark:text-white">{s.title}</h3>
+                  <h3 className="relative mt-6 text-lg font-bold text-brand-dark dark:text-white">{s.title}</h3>
                   <p className="relative mt-2 text-sm leading-relaxed text-slate-500">{s.desc}</p>
-                  <span className="relative mt-4 inline-flex items-center gap-1 text-sm font-semibold text-brand-600 opacity-0 transition-all duration-300 group-hover:opacity-100 dark:text-blue-300">
-                    Learn more &rarr;
-                  </span>
                 </div>
               </Reveal>
             ))}
