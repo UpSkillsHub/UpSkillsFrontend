@@ -350,28 +350,23 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SERVICES — What Up Skills Hub offers (photo background + light cards) */}
-      <section id="services" className="relative overflow-hidden bg-gradient-to-br from-brand-700 to-brand-900 py-16 sm:py-24">
-        {/* Background photo (drop /images/services-bg.jpg) + darkening overlay */}
-        <img
-          src="/images/services-bg.jpg"
-          alt=""
-          className="absolute inset-0 h-full w-full object-cover"
-          onError={(e) => (e.currentTarget.style.display = "none")}
-        />
-        <div className="absolute inset-0 bg-brand-900/70" />
-        {/* subtle floating particles for life */}
+      {/* SERVICES — What Up Skills Hub offers (fixed parallax background) */}
+      <section id="services" className="relative overflow-hidden bg-brand-800 py-16 sm:py-24">
+        {/* Fixed parallax background — stays put while the content scrolls over it */}
+        <div className="absolute inset-0 bg-cover bg-center bg-fixed" style={{ backgroundImage: "url('/images/background.jpg')" }} />
+        <div className="absolute inset-0 bg-brand-900/65" />
+        {/* subtle floating particles */}
         <div className="pointer-events-none absolute inset-0">
-          <div className="animate-float absolute left-[12%] top-[18%] h-2 w-2 rounded-full bg-blue-300/50" />
+          <div className="animate-float absolute left-[12%] top-[18%] h-2 w-2 rounded-full bg-brand-300/50" />
           <div className="animate-float absolute right-[16%] top-[26%] h-1.5 w-1.5 rounded-full bg-white/40" style={{ animationDelay: "1.4s" }} />
-          <div className="animate-float absolute bottom-[18%] left-[26%] h-2 w-2 rounded-full bg-blue-200/50" style={{ animationDelay: "2.6s" }} />
+          <div className="animate-float absolute bottom-[18%] left-[26%] h-2 w-2 rounded-full bg-brand-200/50" style={{ animationDelay: "2.6s" }} />
         </div>
 
         <div className="container-page relative z-10">
           <Reveal className="mx-auto max-w-2xl text-center">
             <h2 className="inline-block text-3xl font-extrabold text-white sm:text-4xl">
               Our Services
-              <span className="mt-3 block h-1 w-24 rounded-full bg-blue-400 mx-auto" />
+              <span className="mt-3 block h-1 w-24 rounded-full bg-brand-300 mx-auto" />
             </h2>
             <p className="mt-6 text-slate-200">
               Beyond training, Up Skills Hub delivers real digital services for individuals and
@@ -382,15 +377,12 @@ export default function Home() {
           <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {services.map((s, i) => (
               <Reveal key={s.title} delay={(i % 3) * 100}>
-                <div className="group flex h-full flex-col rounded-2xl bg-white p-8 shadow-lift ring-1 ring-black/5 transition-all duration-500 ease-apple hover:-translate-y-2 hover:shadow-glow">
-                  <span className="grid h-14 w-14 place-items-center rounded-2xl bg-blue-50 text-blue-600 transition-all duration-500 ease-apple group-hover:bg-blue-600 group-hover:text-white">
+                <div className="card-hover group flex h-full flex-col rounded-2xl bg-brand-50 p-8 ring-1 ring-brand-100">
+                  <span className="grid h-14 w-14 place-items-center rounded-2xl bg-white text-brand-600 shadow-sm ring-1 ring-brand-100 transition-all duration-500 ease-apple group-hover:bg-brand-600 group-hover:text-white">
                     <s.icon className="h-7 w-7" />
                   </span>
                   <h3 className="mt-5 text-xl font-bold text-brand-dark">{s.title}</h3>
-                  <p className="mt-3 flex-1 text-sm leading-relaxed text-slate-500">{s.desc}</p>
-                  <a href="#contact" onClick={scrollTo("contact")} className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-blue-600 transition-all group-hover:gap-2">
-                    Learn More &rarr;
-                  </a>
+                  <p className="mt-3 text-sm leading-relaxed text-slate-500">{s.desc}</p>
                 </div>
               </Reveal>
             ))}
