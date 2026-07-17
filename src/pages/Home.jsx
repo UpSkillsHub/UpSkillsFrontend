@@ -412,7 +412,7 @@ export default function Home() {
       <section id="contact" className="relative overflow-hidden bg-white py-24 sm:py-32 dark:bg-brand-dark">
         <div className="container-page">
           <ScrollScale className="mx-auto max-w-6xl" min={0.58}>
-            <div className="relative overflow-hidden rounded-[2.5rem] bg-brand-800 bg-cover bg-center p-14 text-center text-white shadow-lift ring-1 ring-white/10 sm:p-28" style={{ backgroundImage: "url('/images/call-to-action.jpg')" }}>
+            <div className="relative overflow-hidden rounded-[2.5rem] bg-brand-800 bg-cover bg-center p-14 text-center text-white shadow-lift ring-1 ring-white/10 sm:p-28" style={{ backgroundImage: "url('/images/call-to-action2.jpg')" }}>
               {/* dark overlay so the text stays readable */}
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-brand-900/85 to-brand-800/80" />
               {/* animated decorative glow */}
