@@ -1,70 +1,6 @@
 import { useEffect, useState } from "react";
 import { IconUser } from "./icons.jsx";
-
-// Trainee success stories. Drop a photo in /public/images/testimonials/ and set
-// `img` to show it; leave null to fall back to the placeholder icon.
-const testimonials = [
-  {
-    name: "Ardent Matabaro",
-    role: "Frontend Developer",
-    img: "/images/testimonials/ardent.jpg",
-    text: "I joined Up Skills Hub with only basic HTML knowledge and left building full, responsive web apps in React. The real projects and my mentor's feedback made everything click, and within weeks of finishing I was hired as a junior frontend developer.",
-  },
-  {
-    name: "DonBéni Effata",
-    role: "Backend Developer",
-    img: "/images/testimonials/donbeni.jpg",
-    text: "The backend track was hands-on from day one. I built real APIs, worked with databases, and learned how production systems actually fit together. The Talent Marketplace even connected me to my first paid client task.",
-  },
-  {
-    name: "Jean-Luc Matabaro",
-    role: "Cybersecurity Analyst",
-    img: "/images/testimonials/jeanluc.jpg",
-    text: "The Cybersecurity & Ethical Hacking program was intense and practical. I learned to find vulnerabilities and defend real systems, not just theory. Today I work as a security analyst, and it all started right here.",
-  },
-  {
-    name: "Joseph Courbon",
-    role: "Data Analyst",
-    img: "/images/testimonials/joseph.jpg",
-    text: "Power BI and data analysis felt intimidating until Up Skills Hub broke it down into real dashboards and real decisions. I now turn messy data into insights every day at work, and I owe that confidence to my trainers.",
-  },
-  {
-    name: "Rodruigue Shabani",
-    role: "Mobile Developer",
-    img: null,
-    text: "I always wanted to build apps but never knew where to start. The mobile development track gave me real projects to ship, and the internship taught me to work to deadlines. I published my first app before I even graduated.",
-  },
-  {
-    name: "Guillain Bengehya",
-    role: "Full-Stack Developer",
-    img: null,
-    text: "What sets Up Skills Hub apart is that you actually build things people use. The mentorship, the real tasks, the exposure on their website, it all made me job-ready. I went from student to full-stack developer faster than I imagined.",
-  },
-  {
-    name: "Ntare Bright",
-    role: "Digital Marketing Specialist",
-    img: "/images/testimonials/ntare.jpg",
-    text: "The Digital Marketing & SEO track was practical from the first lesson. I built real WordPress sites, ran real campaigns, and learned to read analytics properly. I now lead marketing for a growing local business.",
-  },
-  {
-    name: "Aurora Dragnir",
-    role: "UI/UX & Graphic Designer",
-    img: "/images/testimonials/aurora.jpg",
-    text: "I came in loving design but lacking direction. The graphic design program and real client briefs sharpened both my skills and my portfolio. The Talent Marketplace helped me land freelance work while I was still learning.",
-  },
-  {
-    name: "Uwase Leiss",
-    role: "Project Coordinator",
-    img: null,
-    text: "The Business and Project Management course taught me how real teams plan and deliver. The internship put me in charge of actual tasks and deadlines, exactly the experience that got me my current project coordinator role.",
-  },
-  {
-    name: "Victor Jacker",
-    role: "IT Support Specialist",
-    img: null,
-    text: "Up Skills Hub gave me both the technical skills and the professional habits employers look for. From Microsoft Office mastery to real IT support tasks, I walked into my first interview genuinely prepared and confident.",
-  },
-];
+import { getTestimonials, subscribe } from "../data/testimonials.js";
 
 function Avatar({ person, active, big }) {
   const size = big ? "h-16 w-16" : "h-12 w-12";
@@ -88,18 +24,23 @@ function offsetOf(i, active, n) {
 }
 
 export default function Testimonials() {
+  const [list, setList] = useState(getTestimonials);
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
-  const n = testimonials.length;
+  const n = list.length;
+
+  // Re-read the store when a new story is submitted.
+  useEffect(() => subscribe(() => setList(getTestimonials())), []);
 
   // Auto-rotate through everyone, then loop. Restarts 6s after any change.
   useEffect(() => {
-    if (paused) return;
+    if (paused || n === 0) return;
     const t = setTimeout(() => setActive((a) => (a + 1) % n), 6000);
     return () => clearTimeout(t);
   }, [active, paused, n]);
 
-  const current = testimonials[active];
+  const current = list[Math.min(active, n - 1)] || list[0];
+  if (!current) return null;
 
   return (
     <div
@@ -115,7 +56,7 @@ export default function Testimonials() {
             <path d="M40 56 Q132 200 40 344" stroke="currentColor" strokeWidth="1.5" />
           </svg>
 
-          {testimonials.map((t, i) => {
+          {list.map((t, i) => {
             const off = offsetOf(i, active, n);
             const abs = Math.abs(off);
             const visible = abs <= 2;
@@ -131,7 +72,7 @@ export default function Testimonials() {
             };
             return (
               <button
-                key={t.name}
+                key={t.id ?? t.name}
                 onClick={() => setActive(i)}
                 style={style}
                 className={`absolute left-0 top-1/2 flex w-[250px] items-center gap-3 rounded-2xl px-2 py-2 text-left transition-all duration-500 ease-apple ${

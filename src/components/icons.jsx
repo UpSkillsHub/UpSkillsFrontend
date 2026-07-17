@@ -57,6 +57,12 @@ export const IconPalette = (p) => (
 export const IconMegaphone = (p) => (
   <S {...p}><path d="M4 10v4h3l10 5V5L7 10H4Z" /><path d="M18 10a3 3 0 0 1 0 4" /></S>
 );
+export const IconChat = (p) => (
+  <S {...p}><path d="M21 12a8 8 0 0 1-11.4 7.2L3 21l1.8-6.6A8 8 0 1 1 21 12Z" /><path d="M8.5 12h.01M12 12h.01M15.5 12h.01" /></S>
+);
+export const IconClose = (p) => (
+  <S {...p}><path d="m6 6 12 12M18 6 6 18" /></S>
+);
 export const IconEye = (p) => (
   <S {...p}><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" /><circle cx="12" cy="12" r="3" /></S>
 );
