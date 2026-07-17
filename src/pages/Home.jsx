@@ -96,26 +96,33 @@ const talentSteps = [
   { icon: IconCard, title: "Employer pays", desc: "Once satisfied, the employer pays, trainees earn and build a track record." },
 ];
 
-// Trusted-company logos shown under the hero.
+// Trusted-company logos shown under the hero (click through to their sites).
 const trustedLogos = [
-  "/images/trusted/auca.jpg",
-  "/images/trusted/tsinda.jpg",
-  "/images/trusted/golden.jpg",
-  "/images/trusted/apaer.jpg",
-  "/images/trusted/alicecop.jpg",
-  "/images/trusted/chris.png",
+  { src: "/images/trusted/auca.jpg", url: "https://web.auca.ac.rw/" },
+  { src: "/images/trusted/tsinda.jpg", url: "https://tsindamedia.com/" },
+  { src: "/images/trusted/golden.jpg", url: null },
+  { src: "/images/trusted/apaer.jpg", url: "https://www.apaerschool.rw/" },
+  { src: "/images/trusted/alicecop.jpg", url: "https://www.alicecop.com/" },
+  { src: "/images/trusted/chris.png", url: "https://www.chrisofficial.com/" },
 ];
 
-function Institution({ src }) {
+function Institution({ src, url }) {
   const [ok, setOk] = useState(true);
   if (!ok) return null;
-  return (
+  const img = (
     <img
       src={src}
       alt="Trusted company"
       onError={() => setOk(false)}
-      className="h-10 w-auto max-w-[110px] shrink-0 object-contain opacity-80 transition duration-300 hover:scale-105 hover:opacity-100"
+      className="h-10 w-auto max-w-[110px] shrink-0 object-contain opacity-80 transition duration-300 hover:scale-110 hover:opacity-100"
     />
+  );
+  return url ? (
+    <a href={url} target="_blank" rel="noopener noreferrer" title="Visit website" className="shrink-0">
+      {img}
+    </a>
+  ) : (
+    img
   );
 }
 
@@ -146,8 +153,8 @@ export default function Home() {
             <div className="mt-12">
               <p className="text-xs font-semibold tracking-widest text-slate-400">TRUSTED BY BIG INSTITUTIONS</p>
               <div className="mt-4 flex flex-wrap items-center gap-5">
-                {trustedLogos.map((src) => (
-                  <Institution key={src} src={src} />
+                {trustedLogos.map((logo) => (
+                  <Institution key={logo.src} src={logo.src} url={logo.url} />
                 ))}
               </div>
             </div>
