@@ -409,7 +409,7 @@ export default function Home() {
       </section>
 
       {/* CALL TO ACTION */}
-      <section id="contact" className="relative overflow-hidden bg-white py-24 sm:py-32 dark:bg-brand-dark">
+      <section id="contact" className="relative overflow-hidden bg-white py-12 sm:py-16 dark:bg-brand-dark">
         <div className="container-page">
           <ScrollScale className="mx-auto max-w-6xl" min={0.58}>
             <div className="relative overflow-hidden rounded-[2.5rem] bg-brand-800 bg-cover bg-center p-14 text-center text-white shadow-lift ring-1 ring-white/10 sm:p-28" style={{ backgroundImage: "url('/images/call-to-action2.jpg')" }}>
