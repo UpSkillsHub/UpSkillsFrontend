@@ -350,20 +350,21 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SERVICES — What Up Skills Hub offers (dark, animated) */}
-      <section id="services" className="relative overflow-hidden bg-brand-600 pb-16 pt-10 text-white sm:pb-24 sm:pt-12">
-        {/* Live animated background */}
-        <div className="pointer-events-none absolute inset-0 overflow-hidden">
-          <div className="absolute inset-0 animate-gradient bg-[length:220%_220%] bg-gradient-to-br from-brand-500 via-brand-600 to-brand-700" />
-          <div className="anim-drift absolute -left-24 top-8 h-80 w-80 rounded-full bg-blue-600/20 blur-3xl" />
-          <div className="anim-drift-b absolute -right-10 top-1/3 h-96 w-96 rounded-full bg-brand-500/25 blur-3xl" />
-          <div className="anim-drift absolute -bottom-20 left-1/3 h-72 w-72 rounded-full bg-blue-500/15 blur-3xl" style={{ animationDelay: "3s" }} />
-          <div className="anim-drift-b absolute bottom-10 right-1/4 h-64 w-64 rounded-full bg-blue-400/10 blur-3xl" style={{ animationDelay: "5s" }} />
-          <div className="animate-float absolute left-[10%] top-[18%] h-2 w-2 rounded-full bg-blue-400/60" />
-          <div className="animate-float absolute right-[14%] top-[24%] h-1.5 w-1.5 rounded-full bg-blue-300/60" style={{ animationDelay: "1.2s" }} />
-          <div className="animate-float absolute bottom-[20%] left-[22%] h-2.5 w-2.5 rounded-full bg-brand-300/50" style={{ animationDelay: "2.4s" }} />
-          <div className="animate-float absolute bottom-[26%] right-[28%] h-1.5 w-1.5 rounded-full bg-blue-400/60" style={{ animationDelay: "0.6s" }} />
-          <div className="animate-float absolute left-[46%] top-[12%] h-1.5 w-1.5 rounded-full bg-white/40" style={{ animationDelay: "1.8s" }} />
+      {/* SERVICES — What Up Skills Hub offers (photo background + light cards) */}
+      <section id="services" className="relative overflow-hidden bg-gradient-to-br from-brand-700 to-brand-900 py-16 sm:py-24">
+        {/* Background photo (drop /images/services-bg.jpg) + darkening overlay */}
+        <img
+          src="/images/services-bg.jpg"
+          alt=""
+          className="absolute inset-0 h-full w-full object-cover"
+          onError={(e) => (e.currentTarget.style.display = "none")}
+        />
+        <div className="absolute inset-0 bg-brand-900/70" />
+        {/* subtle floating particles for life */}
+        <div className="pointer-events-none absolute inset-0">
+          <div className="animate-float absolute left-[12%] top-[18%] h-2 w-2 rounded-full bg-blue-300/50" />
+          <div className="animate-float absolute right-[16%] top-[26%] h-1.5 w-1.5 rounded-full bg-white/40" style={{ animationDelay: "1.4s" }} />
+          <div className="animate-float absolute bottom-[18%] left-[26%] h-2 w-2 rounded-full bg-blue-200/50" style={{ animationDelay: "2.6s" }} />
         </div>
 
         <div className="container-page relative z-10">
@@ -372,7 +373,7 @@ export default function Home() {
               Our Services
               <span className="mt-3 block h-1 w-24 rounded-full bg-blue-400 mx-auto" />
             </h2>
-            <p className="mt-6 text-slate-300">
+            <p className="mt-6 text-slate-200">
               Beyond training, Up Skills Hub delivers real digital services for individuals and
               businesses, from building your website to growing your brand.
             </p>
@@ -381,18 +382,15 @@ export default function Home() {
           <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {services.map((s, i) => (
               <Reveal key={s.title} delay={(i % 3) * 100}>
-                <div className="group relative h-full overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-8 backdrop-blur transition-all duration-500 ease-apple hover:-translate-y-1.5 hover:border-blue-400/40 hover:bg-white/[0.08] hover:shadow-lift">
-                  {/* top accent line grows on hover */}
-                  <span className="absolute inset-x-0 top-0 h-1 origin-left scale-x-0 bg-gradient-to-r from-blue-400 to-brand-400 transition-transform duration-500 ease-apple group-hover:scale-x-100" />
-                  {/* visible shimmering index */}
-                  <span className="pointer-events-none absolute right-5 top-3 animate-gradient bg-gradient-to-br from-blue-300 via-white to-brand-300 bg-[length:200%_200%] bg-clip-text text-5xl font-extrabold text-transparent opacity-60 transition-opacity duration-500 group-hover:opacity-100">
-                    0{i + 1}
-                  </span>
-                  <span className="relative grid h-14 w-14 place-items-center rounded-2xl bg-white/10 text-blue-300 ring-1 ring-white/10 transition-all duration-500 ease-apple group-hover:-translate-y-1 group-hover:bg-blue-500 group-hover:text-white group-hover:shadow-glow">
+                <div className="group flex h-full flex-col rounded-2xl bg-white p-8 shadow-lift ring-1 ring-black/5 transition-all duration-500 ease-apple hover:-translate-y-2 hover:shadow-glow">
+                  <span className="grid h-14 w-14 place-items-center rounded-2xl bg-blue-50 text-blue-600 transition-all duration-500 ease-apple group-hover:bg-blue-600 group-hover:text-white">
                     <s.icon className="h-7 w-7" />
                   </span>
-                  <h3 className="relative mt-6 text-lg font-bold text-white">{s.title}</h3>
-                  <p className="relative mt-2 text-sm leading-relaxed text-slate-300">{s.desc}</p>
+                  <h3 className="mt-5 text-xl font-bold text-brand-dark">{s.title}</h3>
+                  <p className="mt-3 flex-1 text-sm leading-relaxed text-slate-500">{s.desc}</p>
+                  <a href="#contact" onClick={scrollTo("contact")} className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-blue-600 transition-all group-hover:gap-2">
+                    Learn More &rarr;
+                  </a>
                 </div>
               </Reveal>
             ))}
