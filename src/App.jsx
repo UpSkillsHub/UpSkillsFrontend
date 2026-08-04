@@ -17,6 +17,7 @@ import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 import ForgotPassword from "./pages/ForgotPassword.jsx";
 import ComingSoon from "./pages/ComingSoon.jsx";
+import UnderConstruction from "./pages/UnderConstruction.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import DashboardPlaceholder from "./pages/DashboardPlaceholder.jsx";
 import NotFound from "./pages/NotFound.jsx";
@@ -31,6 +32,11 @@ export default function App() {
         <Route path="/courses" element={<Courses />} />
         <Route path="/courses/:id" element={<CourseDetail />} />
         <Route path="/category/:category" element={<CategoryCourses />} />
+        <Route path="/internship" element={<UnderConstruction title="Internship Program" />} />
+        <Route path="/talent" element={<UnderConstruction title="Talent Marketplace" />} />
+        <Route path="/services" element={<UnderConstruction title="Services" />} />
+        <Route path="/success-stories" element={<UnderConstruction title="Success Stories" />} />
+        <Route path="/about" element={<UnderConstruction title="About Us" />} />
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/trainers" element={<Trainers />} />
         <Route path="/contact" element={<Contact />} />

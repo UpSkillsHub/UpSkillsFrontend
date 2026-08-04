@@ -1,19 +1,19 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
 import Logo from "./Logo.jsx";
 import { IconSun, IconMoon } from "./icons.jsx";
 
-// The header menu items are sections of the single-page home.
-const sections = [
-  { id: "home", label: "Home" },
-  { id: "courses", label: "Courses" },
-  { id: "program", label: "Internship Program" },
-  { id: "talent", label: "Talent Marketplace" },
-  { id: "services", label: "Services" },
-  { id: "success", label: "Success Stories" },
-  { id: "about", label: "About Us" },
-  { id: "contact", label: "Contact" },
+// Each menu item is its own page — no scrolling to home sections.
+const menu = [
+  { to: "/", label: "Home" },
+  { to: "/courses", label: "Courses" },
+  { to: "/internship", label: "Internship Program" },
+  { to: "/talent", label: "Talent Marketplace" },
+  { to: "/services", label: "Services" },
+  { to: "/success-stories", label: "Success Stories" },
+  { to: "/about", label: "About Us" },
+  { to: "/contact", label: "Contact" },
 ];
 
 export default function Navbar() {
@@ -23,8 +23,6 @@ export default function Navbar() {
     () => typeof document !== "undefined" && document.documentElement.classList.contains("dark")
   );
   const { user, logout } = useAuth();
-  const navigate = useNavigate();
-  const location = useLocation();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -40,23 +38,6 @@ export default function Navbar() {
     root.classList.toggle("dark", next);
     try { localStorage.setItem("theme", next ? "dark" : "light"); } catch (e) {}
     setDark(next);
-  };
-
-  // Smooth-scroll to a section; if we're on another route, go home first.
-  const go = (id) => (e) => {
-    e.preventDefault();
-    setOpen(false);
-    const scroll = () => {
-      const el = document.getElementById(id);
-      if (el) el.scrollIntoView({ behavior: "smooth" });
-      else window.scrollTo({ top: 0, behavior: "smooth" });
-    };
-    if (location.pathname !== "/") {
-      navigate("/");
-      setTimeout(scroll, 140);
-    } else {
-      scroll();
-    }
   };
 
   const ThemeToggle = ({ className = "" }) => (
@@ -85,15 +66,21 @@ export default function Navbar() {
         <Logo />
 
         <ul className="hidden items-center gap-5 lg:flex xl:gap-7">
-          {sections.map((s) => (
-            <li key={s.id}>
-              <a
-                href={`#${s.id}`}
-                onClick={go(s.id)}
-                className="link-underline text-sm font-semibold text-brand-dark transition-colors duration-200 hover:text-brand-600 dark:text-slate-200 dark:hover:text-blue-400"
+          {menu.map((m) => (
+            <li key={m.to}>
+              <NavLink
+                to={m.to}
+                end={m.to === "/"}
+                className={({ isActive }) =>
+                  `link-underline text-sm font-semibold transition-colors duration-200 hover:text-brand-600 dark:hover:text-blue-400 ${
+                    isActive
+                      ? "text-brand-600 dark:text-blue-400"
+                      : "text-brand-dark dark:text-slate-200"
+                  }`
+                }
               >
-                {s.label}
-              </a>
+                {m.label}
+              </NavLink>
             </li>
           ))}
         </ul>
@@ -127,11 +114,22 @@ export default function Navbar() {
       {open && (
         <div className="animate-fadeIn border-t border-slate-100 bg-white lg:hidden dark:border-white/10 dark:bg-brand-dark">
           <ul className="container-page flex flex-col py-3">
-            {sections.map((s) => (
-              <li key={s.id}>
-                <a href={`#${s.id}`} onClick={go(s.id)} className="block py-2.5 text-sm font-semibold text-brand-dark dark:text-slate-200">
-                  {s.label}
-                </a>
+            {menu.map((m) => (
+              <li key={m.to}>
+                <NavLink
+                  to={m.to}
+                  end={m.to === "/"}
+                  onClick={() => setOpen(false)}
+                  className={({ isActive }) =>
+                    `block py-2.5 text-sm font-semibold ${
+                      isActive
+                        ? "text-brand-600 dark:text-blue-400"
+                        : "text-brand-dark dark:text-slate-200"
+                    }`
+                  }
+                >
+                  {m.label}
+                </NavLink>
               </li>
             ))}
             <li className="mt-3">
