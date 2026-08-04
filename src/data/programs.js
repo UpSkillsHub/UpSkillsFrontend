@@ -12,7 +12,7 @@ export const courses = [
     slug: "cybersecurity-ethical-hacking",
     name: "Cybersecurity & Ethical Hacking",
     description:
-      "Learn to protect systems and networks — penetration testing, threat analysis, and ethical hacking tools used by security professionals.",
+      "Learn to protect systems and networks through penetration testing, threat analysis, and the ethical hacking tools used by security professionals.",
     durationMonths: 3,
     monthlyFee: 100000,
     category: "IT & Security",
@@ -30,7 +30,7 @@ export const courses = [
     slug: "backend-development",
     name: "Backend Development",
     description:
-      "Create servers, APIs, and databases — the engine behind every application.",
+      "Create the servers, APIs, and databases that power every modern application.",
     durationMonths: 3,
     monthlyFee: 70000,
     category: "Software Development",
@@ -39,7 +39,7 @@ export const courses = [
     slug: "python-with-programming",
     name: "Python with Programming",
     description:
-      "Master programming fundamentals with Python — from basics to automation and real projects.",
+      "Master programming fundamentals with Python, from the basics all the way to automation and real projects.",
     durationMonths: 3,
     monthlyFee: 70000,
     category: "Software Development",
@@ -57,7 +57,7 @@ export const courses = [
     slug: "machine-learning",
     name: "Machine Learning",
     description:
-      "Train models that learn from data — prediction, classification, and practical ML workflows.",
+      "Train models that learn from data, covering prediction, classification, and practical machine learning workflows.",
     durationMonths: 3,
     monthlyFee: 80000,
     category: "AI & Data",
@@ -84,7 +84,7 @@ export const courses = [
     slug: "digital-marketing-seo-wordpress",
     name: "Digital Marketing & SEO with WordPress",
     description:
-      "Grow businesses online — SEO, social media, content marketing, and WordPress websites.",
+      "Grow businesses online with SEO, social media, content marketing, and WordPress websites.",
     durationMonths: 2,
     monthlyFee: 100000,
     category: "Marketing",
@@ -93,7 +93,7 @@ export const courses = [
     slug: "copy-writing",
     name: "Copy Writing",
     description:
-      "Write words that sell — ads, websites, emails, and content that converts readers into customers.",
+      "Learn to write words that sell: ads, websites, emails, and content that converts readers into customers.",
     durationMonths: 2,
     monthlyFee: 70000,
     category: "Marketing",
@@ -138,7 +138,7 @@ export const courses = [
     slug: "project-management",
     name: "Project Management",
     description:
-      "Plan, run, and deliver projects on time — methods, tools, and team leadership.",
+      "Plan, run, and deliver projects on time using proven methods, tools, and team leadership skills.",
     durationMonths: 2,
     monthlyFee: 70000,
     category: "Business",
