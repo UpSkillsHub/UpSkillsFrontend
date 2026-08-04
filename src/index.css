@@ -176,6 +176,48 @@ section[id] {
 .service-card:hover .service-sheen { animation: sheenSweep 0.9s ease; }
 @keyframes sheenSweep { from { background-position: 200% 0; } to { background-position: -120% 0; } }
 
+/* Courses hero: slow cinematic Ken Burns zoom on the background photo */
+@keyframes kenBurns {
+  from { transform: scale(1) translate(0, 0); }
+  to { transform: scale(1.14) translate(1.5%, -1.5%); }
+}
+.anim-kenburns { animation: kenBurns 22s ease-in-out infinite alternate; will-change: transform; }
+
+/* Courses hero: tiny glowing particles drifting upward */
+@keyframes particleRise {
+  0% { transform: translateY(0) scale(1); opacity: 0; }
+  12% { opacity: var(--po, 0.7); }
+  85% { opacity: var(--po, 0.7); }
+  100% { transform: translateY(-46vh) scale(0.5); opacity: 0; }
+}
+.hero-particle {
+  position: absolute;
+  bottom: -8px;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(147,197,253,0.95), rgba(59,130,246,0.35) 70%);
+  filter: blur(0.5px);
+  animation: particleRise linear infinite;
+  pointer-events: none;
+}
+
+/* Animated gradient headline (pairs with bg-clip-text) */
+.text-gradient-animated {
+  background-image: linear-gradient(90deg, #ffffff, #93c5fd, #ffffff, #8aa0c9, #ffffff);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradientShift 6s ease infinite;
+}
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Soft bouncing scroll hint at the bottom of the hero */
+@keyframes heroBounce { 0%, 100% { transform: translateY(0); opacity: .8; } 50% { transform: translateY(8px); opacity: .35; } }
+.anim-hero-bounce { animation: heroBounce 1.8s ease-in-out infinite; }
+
 /* Refined scrollbar */
 ::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-thumb { background: #cbd2f0; border-radius: 999px; border: 2px solid #fff; }
