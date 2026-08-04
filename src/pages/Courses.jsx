@@ -11,6 +11,7 @@ import {
   IconGrad,
   IconCheck,
   IconUsers,
+  IconCard,
 } from "../components/icons.jsx";
 import {
   courses,
@@ -46,6 +47,12 @@ const IconGlobe = (p) => (
 );
 const IconCertificate = (p) => (
   <Svg {...p}><circle cx="12" cy="9.5" r="4.5" /><path d="m9.5 13 -1.5 7 4-2.4 4 2.4-1.5-7" /></Svg>
+);
+const IconGift = (p) => (
+  <Svg {...p}><rect x="4" y="10" width="16" height="10" rx="1.5" /><path d="M4 10h16M12 10v10" /><path d="M12 10V7m0 0c-1.8 0-4-.8-4-2.5C8 3 9.2 2.5 10 2.5c1.6 0 2 2.2 2 4.5Zm0 0c1.8 0 4-.8 4-2.5 0-1.5-1.2-2-2-2-1.6 0-2 2.2-2 4.5Z" /></Svg>
+);
+const IconBook = (p) => (
+  <Svg {...p}><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15.5H6.5A2.5 2.5 0 0 0 4 21V5.5Z" /><path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20" /></Svg>
 );
 
 /* Counts from 0 up to `end` once the hero is on screen */
@@ -447,86 +454,174 @@ export default function Courses() {
             </p>
           </Reveal>
 
-          <div className="mx-auto mt-10 grid max-w-4xl gap-6 md:grid-cols-2">
+          <div className="mx-auto mt-12 grid max-w-4xl gap-7 md:grid-cols-2">
             {internshipPrograms.map((p, i) => (
-              <Reveal key={p.slug} effect="rich" delay={i * 130}>
-                <div className="card card-hover flex h-full flex-col overflow-hidden">
-                  <div className="flex items-center gap-3 border-b border-slate-100 bg-gradient-to-r from-brand-600 to-brand-500 px-6 py-4 dark:border-white/10">
-                    <div className="grid h-10 w-10 place-items-center rounded-xl bg-white/15 text-white ring-1 ring-white/25">
-                      <IconGrad className="h-5 w-5" />
+              <Reveal key={p.slug} effect="rich" delay={i * 140}>
+                <div className="group h-full rounded-3xl bg-gradient-to-br from-brand-300/60 via-slate-100 to-blue-200/70 p-px shadow-soft transition-all duration-500 ease-apple hover:-translate-y-2 hover:shadow-lift dark:from-white/15 dark:via-white/5 dark:to-blue-400/20">
+                  <div className="course-card relative flex h-full flex-col overflow-hidden rounded-[calc(1.5rem-1px)] bg-white dark:bg-[#111a2e]">
+                    <div className="service-sheen pointer-events-none absolute inset-0 z-10" />
+
+                    {/* Header */}
+                    <div className="relative overflow-hidden bg-gradient-to-br from-brand-800 via-brand-600 to-brand-500 px-6 py-6">
+                      <div className="anim-drift pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-blue-400/25 blur-2xl" />
+                      <div className="relative flex items-center gap-4">
+                        <div className="grid h-12 w-12 shrink-0 animate-float place-items-center rounded-2xl bg-white/15 text-white ring-1 ring-white/25 backdrop-blur">
+                          {i === 0 ? <IconBook className="h-6 w-6" /> : <IconGrad className="h-6 w-6" />}
+                        </div>
+                        <div>
+                          <p className="text-[10px] font-bold uppercase tracking-widest text-blue-200/90">
+                            {i === 0 ? "Secondary School Track" : "University Track"}
+                          </p>
+                          <h3 className="mt-0.5 text-base font-bold leading-snug !text-white">{p.name}</h3>
+                        </div>
+                      </div>
                     </div>
-                    <h3 className="text-sm font-bold leading-snug !text-white">{p.name}</h3>
+
+                    {/* Fee rows */}
+                    <dl className="flex-1 space-y-1 p-6 text-sm">
+                      {[
+                        { icon: IconClock, label: "Duration", node: <span className="text-right font-semibold text-slate-800 dark:text-white">{p.duration}</span> },
+                        { icon: IconCard, label: "Registration fee", node: <span className="font-semibold text-slate-800 dark:text-white">{rwf(p.registrationFee)}</span> },
+                        {
+                          icon: IconGift,
+                          label: "Program fee",
+                          node: (
+                            <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-700 ring-1 ring-emerald-100 dark:bg-emerald-500/10 dark:text-emerald-300 dark:ring-emerald-500/20">
+                              <span className="relative flex h-1.5 w-1.5">
+                                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                              </span>
+                              FREE
+                            </span>
+                          ),
+                        },
+                      ].map((row, j) => (
+                        <div
+                          key={row.label}
+                          className="stagger-item flex items-center justify-between gap-4 rounded-xl px-3 py-2.5 transition-colors duration-300 hover:bg-brand-50/60 dark:hover:bg-white/5"
+                          style={{ transitionDelay: `${200 + j * 120}ms` }}
+                        >
+                          <dt className="flex items-center gap-2.5 text-slate-500 dark:text-slate-400">
+                            <span className="grid h-8 w-8 place-items-center rounded-lg bg-brand-50 text-brand-500 ring-1 ring-brand-100/70 dark:text-blue-300">
+                              <row.icon className="h-4 w-4" />
+                            </span>
+                            {row.label}
+                          </dt>
+                          <dd>{row.node}</dd>
+                        </div>
+                      ))}
+
+                      {/* Highlighted total */}
+                      <div className="stagger-item !mt-4 rounded-2xl bg-gradient-to-r from-brand-50 to-blue-50 p-4 ring-1 ring-brand-100/80 dark:from-white/5 dark:to-white/5 dark:ring-white/10" style={{ transitionDelay: "560ms" }}>
+                        <div className="flex items-center justify-between gap-3">
+                          <div className="flex items-center gap-2.5">
+                            <span className="seal-pulse grid h-9 w-9 place-items-center rounded-full bg-white text-brand-600 ring-1 ring-brand-100 dark:bg-white/10 dark:text-blue-300">
+                              <IconCertificate className="h-5 w-5" />
+                            </span>
+                            <span className="text-sm font-semibold text-slate-700 dark:text-slate-200">
+                              Mentorship and certificate
+                            </span>
+                          </div>
+                          <span className="text-xl font-extrabold text-brand-600 dark:text-blue-400">
+                            {rwf(p.mentorshipCertificateFee)}
+                          </span>
+                        </div>
+                      </div>
+                    </dl>
+
+                    {/* Apply */}
+                    <div className="px-6 pb-6">
+                      <Link
+                        to="/register"
+                        className="btn-cta group/btn relative flex w-full items-center justify-between rounded-full p-1.5 pl-6 text-sm font-bold text-white shadow-glow transition-all duration-300 ease-apple hover:-translate-y-0.5 hover:shadow-lift active:scale-[0.97]"
+                      >
+                        <span className="tracking-wide transition-transform duration-300 ease-apple group-hover/btn:translate-x-1.5">
+                          Apply for Internship
+                        </span>
+                        <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white text-brand-700 shadow-soft transition-all duration-500 ease-apple group-hover/btn:-rotate-45 group-hover/btn:bg-blue-100 group-hover/btn:shadow-glow">
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
+                            <path d="M5 12h14M13 6l6 6-6 6" />
+                          </svg>
+                        </span>
+                      </Link>
+                    </div>
                   </div>
-                  <dl className="flex-1 space-y-3 p-6 text-sm">
-                    <div className="flex items-center justify-between gap-4">
-                      <dt className="text-slate-500 dark:text-slate-400">Duration</dt>
-                      <dd className="text-right font-semibold text-slate-800 dark:text-white">{p.duration}</dd>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <dt className="text-slate-500 dark:text-slate-400">Registration fee</dt>
-                      <dd className="font-semibold text-slate-800 dark:text-white">{rwf(p.registrationFee)}</dd>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <dt className="text-slate-500 dark:text-slate-400">Program fee</dt>
-                      <dd className="rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-bold text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-300">
-                        FREE
-                      </dd>
-                    </div>
-                    <div className="flex items-center justify-between border-t border-slate-100 pt-3 dark:border-white/10">
-                      <dt className="font-medium text-slate-600 dark:text-slate-300">Mentorship and certificate</dt>
-                      <dd className="text-base font-extrabold text-brand-600 dark:text-blue-400">
-                        {rwf(p.mentorshipCertificateFee)}
-                      </dd>
-                    </div>
-                  </dl>
                 </div>
               </Reveal>
             ))}
           </div>
 
           {/* Who can apply + Eligibility */}
-          <div className="mx-auto mt-10 grid max-w-4xl gap-6 md:grid-cols-5">
+          <div className="mx-auto mt-12 grid max-w-4xl gap-7 md:grid-cols-5">
             <Reveal effect="rich" className="md:col-span-2">
-              <div className="card h-full p-6">
-                <h3 className="flex items-center gap-2.5 text-base font-bold text-slate-800 dark:text-white">
-                  <span className="grid h-9 w-9 place-items-center rounded-xl bg-brand-50 text-brand-600 ring-1 ring-brand-100 dark:text-blue-300">
-                    <IconUsers className="h-5 w-5" />
-                  </span>
-                  Who Can Apply?
-                </h3>
-                <ul className="mt-4 space-y-3 text-sm text-slate-600 dark:text-slate-300">
-                  {whoCanApply.map((w) => (
-                    <li key={w} className="flex items-center gap-2.5">
-                      <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-emerald-50 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-300">
-                        <IconCheck className="h-3 w-3" />
-                      </span>
-                      {w}
-                    </li>
-                  ))}
-                </ul>
+              <div className="group h-full rounded-3xl bg-gradient-to-br from-blue-200/70 via-slate-100 to-brand-200/70 p-px shadow-soft transition-all duration-500 ease-apple hover:-translate-y-2 hover:shadow-lift dark:from-blue-400/20 dark:via-white/5 dark:to-white/15">
+                <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(1.5rem-1px)] bg-white p-7 dark:bg-[#111a2e]">
+                  <div className="pointer-events-none absolute -right-12 -top-12 h-36 w-36 rounded-full bg-blue-100/70 blur-2xl transition-transform duration-700 group-hover:scale-150 dark:bg-blue-400/10" />
+                  <div className="relative flex items-center gap-3.5">
+                    <span className="grid h-12 w-12 animate-float place-items-center rounded-2xl bg-gradient-to-br from-brand-50 to-blue-100 text-brand-600 shadow-soft ring-1 ring-brand-100 dark:text-blue-300">
+                      <IconUsers className="h-6 w-6" />
+                    </span>
+                    <div>
+                      <h3 className="text-lg font-bold text-slate-800 dark:text-white">Who Can Apply?</h3>
+                      <p className="text-xs text-slate-400 dark:text-slate-500">Open to two groups of students</p>
+                    </div>
+                  </div>
+                  <ul className="relative mt-6 space-y-3.5">
+                    {whoCanApply.map((w, j) => (
+                      <li
+                        key={w}
+                        className="stagger-item flex items-center gap-3.5 rounded-2xl bg-brand-50/60 p-4 ring-1 ring-brand-100/60 transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-50 hover:shadow-soft dark:bg-white/5 dark:ring-white/10 dark:hover:bg-white/10"
+                        style={{ transitionDelay: `${250 + j * 150}ms` }}
+                      >
+                        <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-white text-brand-600 shadow-soft ring-1 ring-brand-100 dark:bg-white/10 dark:text-blue-300">
+                          {j === 0 ? <IconGrad className="h-5 w-5" /> : <IconBook className="h-5 w-5" />}
+                        </span>
+                        <div>
+                          <p className="text-sm font-bold text-slate-800 dark:text-white">{w}</p>
+                          <p className="text-xs text-slate-500 dark:text-slate-400">
+                            {j === 0 ? "In IT-related fields and faculties" : "In IT trades and related subjects"}
+                          </p>
+                        </div>
+                        <span className="ml-auto grid h-6 w-6 shrink-0 place-items-center rounded-full bg-emerald-50 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-300">
+                          <IconCheck className="h-3.5 w-3.5" />
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             </Reveal>
+
             <Reveal effect="rich" delay={130} className="md:col-span-3">
-              <div className="card h-full p-6">
-                <h3 className="flex items-center gap-2.5 text-base font-bold text-slate-800 dark:text-white">
-                  <span className="grid h-9 w-9 place-items-center rounded-xl bg-brand-50 text-brand-600 ring-1 ring-brand-100 dark:text-blue-300">
-                    <IconClipboard className="h-5 w-5" />
-                  </span>
-                  Eligibility
-                </h3>
-                <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
-                  This internship is designed for students studying:
-                </p>
-                <ul className="mt-3 grid gap-x-6 gap-y-2.5 text-sm text-slate-600 dark:text-slate-300 sm:grid-cols-2">
-                  {eligibility.map((e) => (
-                    <li key={e} className="flex items-start gap-2.5">
-                      <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-emerald-50 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-300">
-                        <IconCheck className="h-3 w-3" />
-                      </span>
-                      {e}
-                    </li>
-                  ))}
-                </ul>
+              <div className="group h-full rounded-3xl bg-gradient-to-br from-brand-200/70 via-slate-100 to-emerald-200/50 p-px shadow-soft transition-all duration-500 ease-apple hover:-translate-y-2 hover:shadow-lift dark:from-white/15 dark:via-white/5 dark:to-emerald-400/15">
+                <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(1.5rem-1px)] bg-white p-7 dark:bg-[#111a2e]">
+                  <div className="pointer-events-none absolute -bottom-12 -left-12 h-36 w-36 rounded-full bg-emerald-100/60 blur-2xl transition-transform duration-700 group-hover:scale-150 dark:bg-emerald-400/10" />
+                  <div className="relative flex items-center gap-3.5">
+                    <span className="grid h-12 w-12 animate-float place-items-center rounded-2xl bg-gradient-to-br from-brand-50 to-blue-100 text-brand-600 shadow-soft ring-1 ring-brand-100 dark:text-blue-300" style={{ animationDelay: "0.5s" }}>
+                      <IconClipboard className="h-6 w-6" />
+                    </span>
+                    <div>
+                      <h3 className="text-lg font-bold text-slate-800 dark:text-white">Eligibility</h3>
+                      <p className="text-xs text-slate-400 dark:text-slate-500">
+                        Designed for students studying any of the following
+                      </p>
+                    </div>
+                  </div>
+                  <ul className="relative mt-6 grid gap-3 sm:grid-cols-2">
+                    {eligibility.map((e, j) => (
+                      <li
+                        key={e}
+                        className="stagger-item flex items-center gap-2.5 rounded-xl bg-brand-50/60 px-3.5 py-2.5 text-sm font-medium text-slate-700 ring-1 ring-brand-100/60 transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-50 hover:shadow-soft dark:bg-white/5 dark:text-slate-200 dark:ring-white/10 dark:hover:bg-white/10"
+                        style={{ transitionDelay: `${250 + j * 90}ms` }}
+                      >
+                        <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-emerald-50 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-300">
+                          <IconCheck className="h-3.5 w-3.5" />
+                        </span>
+                        {e}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             </Reveal>
           </div>
