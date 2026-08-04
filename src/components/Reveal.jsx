@@ -10,13 +10,9 @@ export default function Reveal({ children, as: Tag = "div", delay = 0, className
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+    // Keep observing so the entrance replays when scrolling back up or down.
     const obs = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          obs.disconnect();
-        }
-      },
+      ([entry]) => setVisible(entry.isIntersecting),
       { threshold: 0.12, rootMargin: "0px 0px -40px 0px" },
     );
     obs.observe(el);
@@ -26,7 +22,7 @@ export default function Reveal({ children, as: Tag = "div", delay = 0, className
   return (
     <Tag
       ref={ref}
-      style={{ transitionDelay: `${delay}ms` }}
+      style={{ transitionDelay: visible ? `${delay}ms` : "0ms" }}
       className={`${effect === "rich" ? "reveal-rich" : "reveal"} ${visible ? "is-visible" : ""} ${className}`}
     >
       {children}

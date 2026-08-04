@@ -162,12 +162,16 @@ function CourseCard({ course }) {
 
         <Link
           to={`/courses/${course.slug}`}
-          className="btn-cta group/btn mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl py-3 text-sm font-bold text-white shadow-glow transition-all duration-300 ease-apple hover:-translate-y-0.5 hover:shadow-lift active:scale-[0.97]"
+          className="btn-cta group/btn relative mt-5 flex w-full items-center justify-between rounded-full p-1.5 pl-6 text-sm font-bold text-white shadow-glow transition-all duration-300 ease-apple hover:-translate-y-0.5 hover:shadow-lift active:scale-[0.97]"
         >
-          View Course Details
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 transition-transform duration-300 ease-apple group-hover/btn:translate-x-1.5">
-            <path d="M5 12h14M13 6l6 6-6 6" />
-          </svg>
+          <span className="tracking-wide transition-transform duration-300 ease-apple group-hover/btn:translate-x-1.5">
+            View Course Details
+          </span>
+          <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white text-brand-700 shadow-soft transition-all duration-500 ease-apple group-hover/btn:-rotate-45 group-hover/btn:bg-blue-100 group-hover/btn:shadow-glow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg>
+          </span>
         </Link>
       </div>
     </div>
@@ -350,62 +354,82 @@ export default function Courses() {
         <div className="mt-16 grid gap-6 md:grid-cols-3">
           {/* 1. Study your way: globe with an orbiting dot */}
           <Reveal effect="rich">
-            <div className="card card-hover course-card group relative h-full overflow-hidden p-8 text-center">
-              <div className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-brand-50 blur-2xl transition-transform duration-700 group-hover:scale-150 dark:bg-white/5" />
-              <div className="relative mx-auto h-20 w-20">
-                <div className="absolute inset-1.5 grid place-items-center rounded-full bg-brand-50 text-brand-600 ring-1 ring-brand-100 dark:text-blue-300">
-                  <IconGlobe className="h-8 w-8" />
+            <div className="group h-full rounded-3xl bg-gradient-to-br from-brand-200/80 via-slate-100 to-blue-200/70 p-px shadow-soft transition-all duration-500 ease-apple hover:-translate-y-2 hover:shadow-lift dark:from-white/15 dark:via-white/5 dark:to-blue-400/20">
+              <div className="relative flex h-full flex-col items-center overflow-hidden rounded-[calc(1.5rem-1px)] bg-white/95 p-8 pt-10 text-center backdrop-blur dark:bg-[#111a2e]">
+                <div className="pointer-events-none absolute -right-12 -top-12 h-36 w-36 rounded-full bg-blue-100/70 blur-2xl transition-transform duration-700 group-hover:scale-150 dark:bg-blue-400/10" />
+                {/* Icon stage: concentric rings + floating globe + orbiting dot */}
+                <div className="relative h-24 w-24 animate-float">
+                  <span className="absolute inset-0 rounded-full border border-brand-100 dark:border-white/10" />
+                  <span className="absolute inset-3 rounded-full border border-brand-100/70 dark:border-white/5" />
+                  <div className="absolute inset-5 grid place-items-center rounded-full bg-gradient-to-br from-brand-50 to-blue-100 text-brand-600 shadow-soft dark:text-blue-300">
+                    <IconGlobe className="h-8 w-8" />
+                  </div>
+                  <div className="orbit-ring absolute inset-0">
+                    <span className="absolute -top-1 left-1/2 h-3 w-3 -translate-x-1/2 rounded-full bg-blue-500 shadow-glow" />
+                  </div>
                 </div>
-                {/* Orbiting satellite dot */}
-                <div className="orbit-ring absolute inset-0">
-                  <span className="absolute -top-0.5 left-1/2 h-3 w-3 -translate-x-1/2 rounded-full bg-blue-500 shadow-glow" />
-                </div>
+                <span className="mt-5 rounded-full bg-brand-50 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-brand-600 dark:text-blue-300">
+                  Flexible
+                </span>
+                <h3 className="mt-3 text-lg font-bold text-slate-800 dark:text-white">Study Your Way</h3>
+                <p className="mt-2 text-sm leading-relaxed text-slate-500 dark:text-slate-400">
+                  On-site in Kigali or fully online. Same course, your choice.
+                </p>
               </div>
-              <h3 className="mt-5 text-base font-bold text-slate-800 dark:text-white">Study Your Way</h3>
-              <p className="mt-2 text-sm leading-relaxed text-slate-500 dark:text-slate-400">
-                On-site in Kigali or fully online. Same course, your choice.
-              </p>
             </div>
           </Reveal>
 
           {/* 2. Online and self-coaching: live typing dots + price focus */}
           <Reveal effect="rich" delay={110}>
-            <div className="card card-hover course-card group relative h-full overflow-hidden p-8 text-center">
-              <div className="pointer-events-none absolute -left-10 -top-10 h-32 w-32 rounded-full bg-blue-50 blur-2xl transition-transform duration-700 group-hover:scale-150 dark:bg-white/5" />
-              <div className="relative mx-auto grid h-20 w-20 place-items-center">
-                <div className="grid h-16 w-16 place-items-center rounded-2xl bg-brand-50 ring-1 ring-brand-100">
-                  <span className="flex items-end gap-1.5">
-                    <span className="typing-dot h-2.5 w-2.5 rounded-full bg-brand-500" style={{ animationDelay: "0s" }} />
-                    <span className="typing-dot h-2.5 w-2.5 rounded-full bg-brand-500" style={{ animationDelay: "0.18s" }} />
-                    <span className="typing-dot h-2.5 w-2.5 rounded-full bg-brand-500" style={{ animationDelay: "0.36s" }} />
-                  </span>
+            <div className="group h-full rounded-3xl bg-gradient-to-br from-blue-200/70 via-slate-100 to-brand-200/80 p-px shadow-soft transition-all duration-500 ease-apple hover:-translate-y-2 hover:shadow-lift dark:from-blue-400/20 dark:via-white/5 dark:to-white/15">
+              <div className="relative flex h-full flex-col items-center overflow-hidden rounded-[calc(1.5rem-1px)] bg-white/95 p-8 pt-10 text-center backdrop-blur dark:bg-[#111a2e]">
+                <div className="pointer-events-none absolute -left-12 -top-12 h-36 w-36 rounded-full bg-brand-100/70 blur-2xl transition-transform duration-700 group-hover:scale-150 dark:bg-blue-400/10" />
+                <div className="relative h-24 w-24 animate-float" style={{ animationDelay: "0.6s" }}>
+                  <span className="absolute inset-0 rounded-full border border-brand-100 dark:border-white/10" />
+                  <span className="absolute inset-3 rounded-full border border-brand-100/70 dark:border-white/5" />
+                  <div className="absolute inset-5 grid place-items-center rounded-full bg-gradient-to-br from-brand-50 to-blue-100 shadow-soft">
+                    <span className="flex items-end gap-1.5">
+                      <span className="typing-dot h-2.5 w-2.5 rounded-full bg-brand-500" style={{ animationDelay: "0s" }} />
+                      <span className="typing-dot h-2.5 w-2.5 rounded-full bg-brand-500" style={{ animationDelay: "0.18s" }} />
+                      <span className="typing-dot h-2.5 w-2.5 rounded-full bg-brand-500" style={{ animationDelay: "0.36s" }} />
+                    </span>
+                  </div>
                 </div>
+                <span className="mt-5 rounded-full bg-brand-50 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-brand-600 dark:text-blue-300">
+                  Flat Rate
+                </span>
+                <h3 className="mt-3 text-lg font-bold text-slate-800 dark:text-white">Online and Self-Coaching</h3>
+                <p className="mt-2 text-3xl font-extrabold text-brand-600 dark:text-blue-400">
+                  {rwf(ONLINE_MONTHLY_FEE)}
+                  <span className="text-sm font-semibold text-slate-400"> /month</span>
+                </p>
+                <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">Any course, from anywhere.</p>
               </div>
-              <h3 className="mt-5 text-base font-bold text-slate-800 dark:text-white">Online and Self-Coaching</h3>
-              <p className="mt-2 text-2xl font-extrabold text-brand-600 dark:text-blue-400">
-                {rwf(ONLINE_MONTHLY_FEE)}
-                <span className="text-sm font-semibold text-slate-400"> /month</span>
-              </p>
-              <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">Flat rate for any course.</p>
             </div>
           </Reveal>
 
           {/* 3. Certificate: pulsing seal with a marching dashed ring */}
           <Reveal effect="rich" delay={220}>
-            <div className="card card-hover course-card group relative h-full overflow-hidden p-8 text-center">
-              <div className="pointer-events-none absolute -bottom-10 -right-10 h-32 w-32 rounded-full bg-emerald-50 blur-2xl transition-transform duration-700 group-hover:scale-150 dark:bg-white/5" />
-              <div className="relative mx-auto h-20 w-20">
-                <div className="seal-pulse absolute inset-1.5 grid place-items-center rounded-full bg-brand-50 text-brand-600 ring-1 ring-brand-100 dark:text-blue-300">
-                  <IconCertificate className="h-8 w-8" />
+            <div className="group h-full rounded-3xl bg-gradient-to-br from-emerald-200/60 via-slate-100 to-brand-200/80 p-px shadow-soft transition-all duration-500 ease-apple hover:-translate-y-2 hover:shadow-lift dark:from-emerald-400/20 dark:via-white/5 dark:to-white/15">
+              <div className="relative flex h-full flex-col items-center overflow-hidden rounded-[calc(1.5rem-1px)] bg-white/95 p-8 pt-10 text-center backdrop-blur dark:bg-[#111a2e]">
+                <div className="pointer-events-none absolute -bottom-12 -right-12 h-36 w-36 rounded-full bg-emerald-100/70 blur-2xl transition-transform duration-700 group-hover:scale-150 dark:bg-emerald-400/10" />
+                <div className="relative h-24 w-24 animate-float" style={{ animationDelay: "1.2s" }}>
+                  <div className="seal-pulse absolute inset-5 grid place-items-center rounded-full bg-gradient-to-br from-brand-50 to-emerald-50 text-brand-600 shadow-soft dark:text-blue-300">
+                    <IconCertificate className="h-8 w-8" />
+                  </div>
+                  <svg viewBox="0 0 96 96" fill="none" className="absolute inset-0 h-full w-full text-blue-400/70">
+                    <circle cx="48" cy="48" r="45" stroke="currentColor" strokeWidth="1.6" className="ring-dash" />
+                  </svg>
+                  <span className="absolute inset-2.5 rounded-full border border-brand-100/70 dark:border-white/5" />
                 </div>
-                <svg viewBox="0 0 80 80" fill="none" className="absolute inset-0 h-full w-full text-blue-400/70">
-                  <circle cx="40" cy="40" r="38" stroke="currentColor" strokeWidth="1.6" className="ring-dash" />
-                </svg>
+                <span className="mt-5 rounded-full bg-emerald-50 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-300">
+                  Certified
+                </span>
+                <h3 className="mt-3 text-lg font-bold text-slate-800 dark:text-white">Recognized Certificate</h3>
+                <p className="mt-2 text-sm leading-relaxed text-slate-500 dark:text-slate-400">
+                  Awarded to every trainee upon successful completion.
+                </p>
               </div>
-              <h3 className="mt-5 text-base font-bold text-slate-800 dark:text-white">Recognized Certificate</h3>
-              <p className="mt-2 text-sm leading-relaxed text-slate-500 dark:text-slate-400">
-                Awarded to every trainee upon successful completion.
-              </p>
             </div>
           </Reveal>
         </div>
