@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import Reveal from "../components/Reveal.jsx";
+import ScrollScale from "../components/ScrollScale.jsx";
 import {
   IconCode,
   IconPalette,
@@ -109,13 +110,15 @@ const categoryIcons = {
 function CourseCard({ course }) {
   const Icon = categoryIcons[course.category] || IconCode;
   return (
-    <div className="card card-hover group relative flex h-full flex-col overflow-hidden">
+    <div className="card card-hover course-card group relative flex h-full flex-col overflow-hidden">
       {/* Accent line that lights up on hover */}
       <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-brand-500 via-brand-300 to-brand-500 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+      {/* Light sheen sweeps across the card on hover */}
+      <div className="service-sheen pointer-events-none absolute inset-0 z-10" />
 
       <div className="flex flex-1 flex-col p-6">
         <div className="flex items-start justify-between gap-3">
-          <div className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-brand-50 text-brand-600 ring-1 ring-brand-100 transition-transform duration-500 group-hover:scale-110 dark:text-blue-300">
+          <div className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-brand-50 text-brand-600 ring-1 ring-brand-100 transition-all duration-500 group-hover:-rotate-6 group-hover:scale-110 group-hover:shadow-glow dark:text-blue-300">
             <Icon className="h-6 w-6" />
           </div>
           <span className="rounded-full bg-emerald-50 px-3 py-1 text-[11px] font-semibold text-emerald-700 ring-1 ring-emerald-100 dark:bg-emerald-500/10 dark:text-emerald-300 dark:ring-emerald-500/20">
@@ -157,8 +160,14 @@ function CourseCard({ course }) {
           </div>
         </div>
 
-        <Link to={`/courses/${course.slug}`} className="btn-primary mt-5 w-full rounded-xl py-2.5 text-center">
+        <Link
+          to={`/courses/${course.slug}`}
+          className="btn-cta group/btn mt-5 inline-flex w-full items-center justify-center gap-2 rounded-xl py-3 text-sm font-bold text-white shadow-glow transition-all duration-300 ease-apple hover:-translate-y-0.5 hover:shadow-lift active:scale-[0.97]"
+        >
           View Course Details
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 transition-transform duration-300 ease-apple group-hover/btn:translate-x-1.5">
+            <path d="M5 12h14M13 6l6 6-6 6" />
+          </svg>
         </Link>
       </div>
     </div>
@@ -220,7 +229,7 @@ export default function Courses() {
           ))}
         </div>
 
-        <div className="container-page relative py-24 text-center sm:py-28">
+        <div className="container-page relative pb-20 pt-10 text-center sm:pb-24 sm:pt-12">
           <Reveal>
             <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-blue-100 ring-1 ring-white/20 backdrop-blur">
               <span className="relative flex h-2 w-2">
@@ -287,7 +296,7 @@ export default function Courses() {
 
       {/* ================= Catalog ================= */}
       <section id="catalog" className="container-page py-16 sm:py-20">
-        <Reveal>
+        <Reveal effect="rich">
           <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
             <div>
               <h2 className="text-3xl font-extrabold">Our Courses</h2>
@@ -328,7 +337,7 @@ export default function Courses() {
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.length > 0 ? (
             filtered.map((c, i) => (
-              <Reveal key={c.slug} delay={(i % 3) * 80}>
+              <Reveal key={c.slug} effect="rich" delay={(i % 3) * 110}>
                 <CourseCard course={c} />
               </Reveal>
             ))
@@ -337,44 +346,75 @@ export default function Courses() {
           )}
         </div>
 
-        {/* Study options */}
-        <Reveal className="mt-14">
-          <div className="grid gap-5 md:grid-cols-3">
-            {[
-              {
-                icon: IconGlobe,
-                title: "Study Your Way",
-                text: "Every course is available both on-site at our Kigali campus and fully online.",
-              },
-              {
-                icon: IconUsers,
-                title: "Online and Self-Coaching",
-                text: `Prefer to learn online or with a personal coach? The program fee is ${rwf(ONLINE_MONTHLY_FEE)} per month for any course.`,
-              },
-              {
-                icon: IconCertificate,
-                title: "Recognized Certificate",
-                text: "Upon successful completion, every trainee receives a recognized certificate.",
-              },
-            ].map((f) => (
-              <div key={f.title} className="card flex items-start gap-4 p-6">
-                <div className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-brand-50 text-brand-600 ring-1 ring-brand-100 dark:text-blue-300">
-                  <f.icon className="h-5 w-5" />
+        {/* Study options: three live, animated tiles */}
+        <div className="mt-16 grid gap-6 md:grid-cols-3">
+          {/* 1. Study your way: globe with an orbiting dot */}
+          <Reveal effect="rich">
+            <div className="card card-hover course-card group relative h-full overflow-hidden p-8 text-center">
+              <div className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-brand-50 blur-2xl transition-transform duration-700 group-hover:scale-150 dark:bg-white/5" />
+              <div className="relative mx-auto h-20 w-20">
+                <div className="absolute inset-1.5 grid place-items-center rounded-full bg-brand-50 text-brand-600 ring-1 ring-brand-100 dark:text-blue-300">
+                  <IconGlobe className="h-8 w-8" />
                 </div>
-                <div>
-                  <h3 className="text-sm font-bold text-slate-800 dark:text-white">{f.title}</h3>
-                  <p className="mt-1 text-sm leading-relaxed text-slate-500 dark:text-slate-400">{f.text}</p>
+                {/* Orbiting satellite dot */}
+                <div className="orbit-ring absolute inset-0">
+                  <span className="absolute -top-0.5 left-1/2 h-3 w-3 -translate-x-1/2 rounded-full bg-blue-500 shadow-glow" />
                 </div>
               </div>
-            ))}
-          </div>
-        </Reveal>
+              <h3 className="mt-5 text-base font-bold text-slate-800 dark:text-white">Study Your Way</h3>
+              <p className="mt-2 text-sm leading-relaxed text-slate-500 dark:text-slate-400">
+                On-site in Kigali or fully online. Same course, your choice.
+              </p>
+            </div>
+          </Reveal>
+
+          {/* 2. Online and self-coaching: live typing dots + price focus */}
+          <Reveal effect="rich" delay={110}>
+            <div className="card card-hover course-card group relative h-full overflow-hidden p-8 text-center">
+              <div className="pointer-events-none absolute -left-10 -top-10 h-32 w-32 rounded-full bg-blue-50 blur-2xl transition-transform duration-700 group-hover:scale-150 dark:bg-white/5" />
+              <div className="relative mx-auto grid h-20 w-20 place-items-center">
+                <div className="grid h-16 w-16 place-items-center rounded-2xl bg-brand-50 ring-1 ring-brand-100">
+                  <span className="flex items-end gap-1.5">
+                    <span className="typing-dot h-2.5 w-2.5 rounded-full bg-brand-500" style={{ animationDelay: "0s" }} />
+                    <span className="typing-dot h-2.5 w-2.5 rounded-full bg-brand-500" style={{ animationDelay: "0.18s" }} />
+                    <span className="typing-dot h-2.5 w-2.5 rounded-full bg-brand-500" style={{ animationDelay: "0.36s" }} />
+                  </span>
+                </div>
+              </div>
+              <h3 className="mt-5 text-base font-bold text-slate-800 dark:text-white">Online and Self-Coaching</h3>
+              <p className="mt-2 text-2xl font-extrabold text-brand-600 dark:text-blue-400">
+                {rwf(ONLINE_MONTHLY_FEE)}
+                <span className="text-sm font-semibold text-slate-400"> /month</span>
+              </p>
+              <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">Flat rate for any course.</p>
+            </div>
+          </Reveal>
+
+          {/* 3. Certificate: pulsing seal with a marching dashed ring */}
+          <Reveal effect="rich" delay={220}>
+            <div className="card card-hover course-card group relative h-full overflow-hidden p-8 text-center">
+              <div className="pointer-events-none absolute -bottom-10 -right-10 h-32 w-32 rounded-full bg-emerald-50 blur-2xl transition-transform duration-700 group-hover:scale-150 dark:bg-white/5" />
+              <div className="relative mx-auto h-20 w-20">
+                <div className="seal-pulse absolute inset-1.5 grid place-items-center rounded-full bg-brand-50 text-brand-600 ring-1 ring-brand-100 dark:text-blue-300">
+                  <IconCertificate className="h-8 w-8" />
+                </div>
+                <svg viewBox="0 0 80 80" fill="none" className="absolute inset-0 h-full w-full text-blue-400/70">
+                  <circle cx="40" cy="40" r="38" stroke="currentColor" strokeWidth="1.6" className="ring-dash" />
+                </svg>
+              </div>
+              <h3 className="mt-5 text-base font-bold text-slate-800 dark:text-white">Recognized Certificate</h3>
+              <p className="mt-2 text-sm leading-relaxed text-slate-500 dark:text-slate-400">
+                Awarded to every trainee upon successful completion.
+              </p>
+            </div>
+          </Reveal>
+        </div>
       </section>
 
       {/* ================= Internship ================= */}
       <section className="relative bg-brand-50/60 py-16 dark:bg-white/[0.03] sm:py-20">
         <div className="container-page">
-          <Reveal className="mx-auto max-w-2xl text-center">
+          <Reveal effect="rich" className="mx-auto max-w-2xl text-center">
             <span className="badge">Academic Internship Program</span>
             <h2 className="mt-4 text-3xl font-extrabold sm:text-4xl">Internship Program</h2>
             <p className="mt-3 leading-relaxed text-slate-600 dark:text-slate-300">
@@ -385,7 +425,7 @@ export default function Courses() {
 
           <div className="mx-auto mt-10 grid max-w-4xl gap-6 md:grid-cols-2">
             {internshipPrograms.map((p, i) => (
-              <Reveal key={p.slug} delay={i * 100}>
+              <Reveal key={p.slug} effect="rich" delay={i * 130}>
                 <div className="card card-hover flex h-full flex-col overflow-hidden">
                   <div className="flex items-center gap-3 border-b border-slate-100 bg-gradient-to-r from-brand-600 to-brand-500 px-6 py-4 dark:border-white/10">
                     <div className="grid h-10 w-10 place-items-center rounded-xl bg-white/15 text-white ring-1 ring-white/25">
@@ -422,7 +462,7 @@ export default function Courses() {
 
           {/* Who can apply + Eligibility */}
           <div className="mx-auto mt-10 grid max-w-4xl gap-6 md:grid-cols-5">
-            <Reveal className="md:col-span-2">
+            <Reveal effect="rich" className="md:col-span-2">
               <div className="card h-full p-6">
                 <h3 className="flex items-center gap-2.5 text-base font-bold text-slate-800 dark:text-white">
                   <span className="grid h-9 w-9 place-items-center rounded-xl bg-brand-50 text-brand-600 ring-1 ring-brand-100 dark:text-blue-300">
@@ -442,7 +482,7 @@ export default function Courses() {
                 </ul>
               </div>
             </Reveal>
-            <Reveal delay={100} className="md:col-span-3">
+            <Reveal effect="rich" delay={130} className="md:col-span-3">
               <div className="card h-full p-6">
                 <h3 className="flex items-center gap-2.5 text-base font-bold text-slate-800 dark:text-white">
                   <span className="grid h-9 w-9 place-items-center rounded-xl bg-brand-50 text-brand-600 ring-1 ring-brand-100 dark:text-blue-300">
@@ -471,7 +511,8 @@ export default function Courses() {
 
       {/* ================= CTA ================= */}
       <section className="container-page py-16 sm:py-20">
-        <Reveal>
+        <Reveal effect="rich">
+          <ScrollScale min={0.93}>
           <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-800 via-brand-600 to-brand-500 px-6 py-14 text-center shadow-lift sm:px-12">
             <div className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-blue-400/20 blur-3xl" />
             <div className="pointer-events-none absolute -bottom-20 -left-16 h-64 w-64 rounded-full bg-brand-400/25 blur-3xl" />
@@ -497,6 +538,7 @@ export default function Courses() {
               </Link>
             </div>
           </div>
+          </ScrollScale>
         </Reveal>
       </section>
     </div>

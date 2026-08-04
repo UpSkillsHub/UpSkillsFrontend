@@ -2,7 +2,8 @@ import { useEffect, useRef, useState } from "react";
 
 // Fades + slides its children into view on scroll (Apple-style easing lives in
 // index.css .reveal). Optional stagger via `delay` in ms.
-export default function Reveal({ children, as: Tag = "div", delay = 0, className = "" }) {
+// effect="rich" uses a deeper Apple-style entrance: rise + scale + blur-to-sharp.
+export default function Reveal({ children, as: Tag = "div", delay = 0, className = "", effect }) {
   const ref = useRef(null);
   const [visible, setVisible] = useState(false);
 
@@ -26,7 +27,7 @@ export default function Reveal({ children, as: Tag = "div", delay = 0, className
     <Tag
       ref={ref}
       style={{ transitionDelay: `${delay}ms` }}
-      className={`reveal ${visible ? "is-visible" : ""} ${className}`}
+      className={`${effect === "rich" ? "reveal-rich" : "reveal"} ${visible ? "is-visible" : ""} ${className}`}
     >
       {children}
     </Tag>
