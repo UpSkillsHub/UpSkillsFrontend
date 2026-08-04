@@ -10,8 +10,6 @@ import {
   IconClipboard,
   IconGrad,
   IconCheck,
-  IconUsers,
-  IconCard,
 } from "../components/icons.jsx";
 import {
   courses,
@@ -47,9 +45,6 @@ const IconGlobe = (p) => (
 );
 const IconCertificate = (p) => (
   <Svg {...p}><circle cx="12" cy="9.5" r="4.5" /><path d="m9.5 13 -1.5 7 4-2.4 4 2.4-1.5-7" /></Svg>
-);
-const IconGift = (p) => (
-  <Svg {...p}><rect x="4" y="10" width="16" height="10" rx="1.5" /><path d="M4 10h16M12 10v10" /><path d="M12 10V7m0 0c-1.8 0-4-.8-4-2.5C8 3 9.2 2.5 10 2.5c1.6 0 2 2.2 2 4.5Zm0 0c1.8 0 4-.8 4-2.5 0-1.5-1.2-2-2-2-1.6 0-2 2.2-2 4.5Z" /></Svg>
 );
 const IconBook = (p) => (
   <Svg {...p}><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15.5H6.5A2.5 2.5 0 0 0 4 21V5.5Z" /><path d="M4 18.5A2.5 2.5 0 0 1 6.5 16H20" /></Svg>
@@ -454,42 +449,46 @@ export default function Courses() {
             </p>
           </Reveal>
 
-          <div className="mx-auto mt-12 grid max-w-4xl gap-7 md:grid-cols-2">
+          <div className="mx-auto mt-12 grid max-w-4xl gap-8 md:grid-cols-2">
             {internshipPrograms.map((p, i) => (
               <Reveal key={p.slug} effect="rich" delay={i * 140}>
-                <div className="group h-full rounded-3xl bg-gradient-to-br from-brand-300/60 via-slate-100 to-blue-200/70 p-px shadow-soft transition-all duration-500 ease-apple hover:-translate-y-2 hover:shadow-lift dark:from-white/15 dark:via-white/5 dark:to-blue-400/20">
-                  <div className="course-card relative flex h-full flex-col overflow-hidden rounded-[calc(1.5rem-1px)] bg-white dark:bg-[#111a2e]">
-                    <div className="service-sheen pointer-events-none absolute inset-0 z-10" />
+                <div className="spin-border h-full shadow-lift transition-transform duration-500 ease-apple hover:-translate-y-2">
+                  <div className="relative flex h-full flex-col overflow-hidden bg-gradient-to-br from-brand-900 via-brand-800 to-brand-700 p-7">
+                    {/* Ambience */}
+                    <div className="anim-drift pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-blue-500/20 blur-3xl" />
+                    <div className="anim-drift-b pointer-events-none absolute -bottom-20 -left-16 h-48 w-48 rounded-full bg-brand-400/15 blur-3xl" />
+                    {/* Giant watermark icon */}
+                    <div className="pointer-events-none absolute -bottom-8 -right-6 text-white/[0.04]">
+                      {i === 0 ? <IconBook className="h-44 w-44" /> : <IconGrad className="h-44 w-44" />}
+                    </div>
 
                     {/* Header */}
-                    <div className="relative overflow-hidden bg-gradient-to-br from-brand-800 via-brand-600 to-brand-500 px-6 py-6">
-                      <div className="anim-drift pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-blue-400/25 blur-2xl" />
-                      <div className="relative flex items-center gap-4">
-                        <div className="grid h-12 w-12 shrink-0 animate-float place-items-center rounded-2xl bg-white/15 text-white ring-1 ring-white/25 backdrop-blur">
-                          {i === 0 ? <IconBook className="h-6 w-6" /> : <IconGrad className="h-6 w-6" />}
-                        </div>
-                        <div>
-                          <p className="text-[10px] font-bold uppercase tracking-widest text-blue-200/90">
-                            {i === 0 ? "Secondary School Track" : "University Track"}
-                          </p>
-                          <h3 className="mt-0.5 text-base font-bold leading-snug !text-white">{p.name}</h3>
-                        </div>
+                    <div className="relative flex items-start justify-between gap-4">
+                      <div>
+                        <span className="inline-flex items-center rounded-full bg-white/10 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-blue-200 ring-1 ring-white/15 backdrop-blur">
+                          {i === 0 ? "Secondary School Track" : "University Track"}
+                        </span>
+                        <h3 className="mt-3 max-w-[15rem] text-lg font-bold leading-snug !text-white">{p.name}</h3>
+                      </div>
+                      <div className="grid h-12 w-12 shrink-0 animate-float place-items-center rounded-2xl bg-white/10 text-blue-200 ring-1 ring-white/15 backdrop-blur">
+                        {i === 0 ? <IconBook className="h-6 w-6" /> : <IconGrad className="h-6 w-6" />}
                       </div>
                     </div>
 
-                    {/* Fee rows */}
-                    <dl className="flex-1 space-y-1 p-6 text-sm">
+                    {/* Fee timeline */}
+                    <div className="relative mt-8 flex-1 pl-7">
+                      <span className="draw-line absolute bottom-1 left-[7px] top-1 w-px bg-gradient-to-b from-blue-400/90 via-blue-300/40 to-transparent" />
                       {[
-                        { icon: IconClock, label: "Duration", node: <span className="text-right font-semibold text-slate-800 dark:text-white">{p.duration}</span> },
-                        { icon: IconCard, label: "Registration fee", node: <span className="font-semibold text-slate-800 dark:text-white">{rwf(p.registrationFee)}</span> },
+                        { label: "Duration", node: <span className="font-semibold text-white">{p.duration}</span> },
+                        { label: "Registration fee", node: <span className="font-semibold text-white">{rwf(p.registrationFee)}</span> },
                         {
-                          icon: IconGift,
                           label: "Program fee",
+                          free: true,
                           node: (
-                            <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-700 ring-1 ring-emerald-100 dark:bg-emerald-500/10 dark:text-emerald-300 dark:ring-emerald-500/20">
+                            <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-bold text-emerald-300 ring-1 ring-emerald-400/30">
                               <span className="relative flex h-1.5 w-1.5">
-                                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-300 opacity-75" />
+                                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
                               </span>
                               FREE
                             </span>
@@ -498,165 +497,180 @@ export default function Courses() {
                       ].map((row, j) => (
                         <div
                           key={row.label}
-                          className="stagger-item flex items-center justify-between gap-4 rounded-xl px-3 py-2.5 transition-colors duration-300 hover:bg-brand-50/60 dark:hover:bg-white/5"
-                          style={{ transitionDelay: `${200 + j * 120}ms` }}
+                          className="stagger-item relative flex items-center justify-between gap-4 py-3"
+                          style={{ transitionDelay: `${250 + j * 140}ms` }}
                         >
-                          <dt className="flex items-center gap-2.5 text-slate-500 dark:text-slate-400">
-                            <span className="grid h-8 w-8 place-items-center rounded-lg bg-brand-50 text-brand-500 ring-1 ring-brand-100/70 dark:text-blue-300">
-                              <row.icon className="h-4 w-4" />
-                            </span>
-                            {row.label}
-                          </dt>
-                          <dd>{row.node}</dd>
+                          <span className={`absolute -left-7 top-1/2 h-3.5 w-3.5 -translate-y-1/2 rounded-full border-2 ${row.free ? "border-emerald-400 bg-emerald-400/30" : "border-blue-300 bg-brand-800"}`}>
+                            {row.free && <span className="absolute inset-0 animate-ping rounded-full bg-emerald-400/60" />}
+                          </span>
+                          <p className="text-sm text-blue-200/80">{row.label}</p>
+                          {row.node}
                         </div>
                       ))}
-
-                      {/* Highlighted total */}
-                      <div className="stagger-item !mt-4 rounded-2xl bg-gradient-to-r from-brand-50 to-blue-50 p-4 ring-1 ring-brand-100/80 dark:from-white/5 dark:to-white/5 dark:ring-white/10" style={{ transitionDelay: "560ms" }}>
-                        <div className="flex items-center justify-between gap-3">
-                          <div className="flex items-center gap-2.5">
-                            <span className="seal-pulse grid h-9 w-9 place-items-center rounded-full bg-white text-brand-600 ring-1 ring-brand-100 dark:bg-white/10 dark:text-blue-300">
-                              <IconCertificate className="h-5 w-5" />
-                            </span>
-                            <span className="text-sm font-semibold text-slate-700 dark:text-slate-200">
-                              Mentorship and certificate
-                            </span>
-                          </div>
-                          <span className="text-xl font-extrabold text-brand-600 dark:text-blue-400">
-                            {rwf(p.mentorshipCertificateFee)}
-                          </span>
-                        </div>
-                      </div>
-                    </dl>
-
-                    {/* Apply */}
-                    <div className="px-6 pb-6">
-                      <Link
-                        to="/register"
-                        className="btn-cta group/btn relative flex w-full items-center justify-between rounded-full p-1.5 pl-6 text-sm font-bold text-white shadow-glow transition-all duration-300 ease-apple hover:-translate-y-0.5 hover:shadow-lift active:scale-[0.97]"
-                      >
-                        <span className="tracking-wide transition-transform duration-300 ease-apple group-hover/btn:translate-x-1.5">
-                          Apply for Internship
-                        </span>
-                        <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white text-brand-700 shadow-soft transition-all duration-500 ease-apple group-hover/btn:-rotate-45 group-hover/btn:bg-blue-100 group-hover/btn:shadow-glow">
-                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
-                            <path d="M5 12h14M13 6l6 6-6 6" />
-                          </svg>
-                        </span>
-                      </Link>
                     </div>
+
+                    {/* Price plate */}
+                    <div className="stagger-item relative mt-5 flex items-center justify-between gap-3 rounded-2xl bg-white/[0.07] p-4 ring-1 ring-white/10 backdrop-blur" style={{ transitionDelay: "680ms" }}>
+                      <div>
+                        <p className="text-[10px] font-bold uppercase tracking-widest text-blue-200/70">
+                          Mentorship and certificate
+                        </p>
+                        <p className="mt-1 bg-gradient-to-r from-white to-blue-300 bg-clip-text text-2xl font-extrabold text-transparent">
+                          {rwf(p.mentorshipCertificateFee)}
+                        </p>
+                      </div>
+                      <span className="seal-pulse grid h-11 w-11 place-items-center rounded-full bg-white/10 text-blue-200 ring-1 ring-white/15">
+                        <IconCertificate className="h-5 w-5" />
+                      </span>
+                    </div>
+
+                    {/* Apply: inverted white pill */}
+                    <Link
+                      to="/register"
+                      className="group/btn relative mt-6 flex w-full items-center justify-between rounded-full bg-white p-1.5 pl-6 text-sm font-bold text-brand-800 shadow-soft transition-all duration-300 ease-apple hover:-translate-y-0.5 hover:shadow-lift active:scale-[0.97]"
+                    >
+                      <span className="tracking-wide transition-transform duration-300 ease-apple group-hover/btn:translate-x-1.5">
+                        Apply for Internship
+                      </span>
+                      <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-brand-700 text-white transition-all duration-500 ease-apple group-hover/btn:-rotate-45 group-hover/btn:bg-brand-600 group-hover/btn:shadow-glow">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
+                          <path d="M5 12h14M13 6l6 6-6 6" />
+                        </svg>
+                      </span>
+                    </Link>
                   </div>
                 </div>
               </Reveal>
             ))}
           </div>
 
-          {/* Who can apply + Eligibility */}
-          <div className="mx-auto mt-12 grid max-w-4xl gap-7 md:grid-cols-5">
-            <Reveal effect="rich" className="md:col-span-2">
-              <div className="group h-full rounded-3xl bg-gradient-to-br from-blue-200/70 via-slate-100 to-brand-200/70 p-px shadow-soft transition-all duration-500 ease-apple hover:-translate-y-2 hover:shadow-lift dark:from-blue-400/20 dark:via-white/5 dark:to-white/15">
-                <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(1.5rem-1px)] bg-white p-7 dark:bg-[#111a2e]">
-                  <div className="pointer-events-none absolute -right-12 -top-12 h-36 w-36 rounded-full bg-blue-100/70 blur-2xl transition-transform duration-700 group-hover:scale-150 dark:bg-blue-400/10" />
-                  <div className="relative flex items-center gap-3.5">
-                    <span className="grid h-12 w-12 animate-float place-items-center rounded-2xl bg-gradient-to-br from-brand-50 to-blue-100 text-brand-600 shadow-soft ring-1 ring-brand-100 dark:text-blue-300">
-                      <IconUsers className="h-6 w-6" />
-                    </span>
-                    <div>
-                      <h3 className="text-lg font-bold text-slate-800 dark:text-white">Who Can Apply?</h3>
-                      <p className="text-xs text-slate-400 dark:text-slate-500">Open to two groups of students</p>
-                    </div>
-                  </div>
-                  <ul className="relative mt-6 space-y-3.5">
-                    {whoCanApply.map((w, j) => (
-                      <li
-                        key={w}
-                        className="stagger-item flex items-center gap-3.5 rounded-2xl bg-brand-50/60 p-4 ring-1 ring-brand-100/60 transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-50 hover:shadow-soft dark:bg-white/5 dark:ring-white/10 dark:hover:bg-white/10"
-                        style={{ transitionDelay: `${250 + j * 150}ms` }}
-                      >
-                        <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-white text-brand-600 shadow-soft ring-1 ring-brand-100 dark:bg-white/10 dark:text-blue-300">
-                          {j === 0 ? <IconGrad className="h-5 w-5" /> : <IconBook className="h-5 w-5" />}
-                        </span>
-                        <div>
-                          <p className="text-sm font-bold text-slate-800 dark:text-white">{w}</p>
-                          <p className="text-xs text-slate-500 dark:text-slate-400">
-                            {j === 0 ? "In IT-related fields and faculties" : "In IT trades and related subjects"}
-                          </p>
-                        </div>
-                        <span className="ml-auto grid h-6 w-6 shrink-0 place-items-center rounded-full bg-emerald-50 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-300">
-                          <IconCheck className="h-3.5 w-3.5" />
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </Reveal>
+          {/* Who can apply + Eligibility: one glass panel, stepper + pill wall */}
+          <Reveal effect="rich" className="mx-auto mt-14 max-w-5xl">
+            <div className="dots-panel relative overflow-hidden rounded-[2.5rem] border border-brand-100/80 bg-white/80 shadow-soft backdrop-blur-xl dark:border-white/10 dark:bg-white/[0.04]">
+              <div className="anim-drift pointer-events-none absolute -left-20 -top-20 h-56 w-56 rounded-full bg-blue-100/60 blur-3xl dark:bg-blue-400/10" />
+              <div className="anim-drift-b pointer-events-none absolute -bottom-24 -right-20 h-56 w-56 rounded-full bg-emerald-100/50 blur-3xl dark:bg-emerald-400/10" />
 
-            <Reveal effect="rich" delay={130} className="md:col-span-3">
-              <div className="group h-full rounded-3xl bg-gradient-to-br from-brand-200/70 via-slate-100 to-emerald-200/50 p-px shadow-soft transition-all duration-500 ease-apple hover:-translate-y-2 hover:shadow-lift dark:from-white/15 dark:via-white/5 dark:to-emerald-400/15">
-                <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(1.5rem-1px)] bg-white p-7 dark:bg-[#111a2e]">
-                  <div className="pointer-events-none absolute -bottom-12 -left-12 h-36 w-36 rounded-full bg-emerald-100/60 blur-2xl transition-transform duration-700 group-hover:scale-150 dark:bg-emerald-400/10" />
-                  <div className="relative flex items-center gap-3.5">
-                    <span className="grid h-12 w-12 animate-float place-items-center rounded-2xl bg-gradient-to-br from-brand-50 to-blue-100 text-brand-600 shadow-soft ring-1 ring-brand-100 dark:text-blue-300" style={{ animationDelay: "0.5s" }}>
-                      <IconClipboard className="h-6 w-6" />
-                    </span>
-                    <div>
-                      <h3 className="text-lg font-bold text-slate-800 dark:text-white">Eligibility</h3>
-                      <p className="text-xs text-slate-400 dark:text-slate-500">
-                        Designed for students studying any of the following
-                      </p>
-                    </div>
-                  </div>
-                  <ul className="relative mt-6 grid gap-3 sm:grid-cols-2">
-                    {eligibility.map((e, j) => (
-                      <li
-                        key={e}
-                        className="stagger-item flex items-center gap-2.5 rounded-xl bg-brand-50/60 px-3.5 py-2.5 text-sm font-medium text-slate-700 ring-1 ring-brand-100/60 transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-50 hover:shadow-soft dark:bg-white/5 dark:text-slate-200 dark:ring-white/10 dark:hover:bg-white/10"
-                        style={{ transitionDelay: `${250 + j * 90}ms` }}
-                      >
-                        <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-emerald-50 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-300">
-                          <IconCheck className="h-3.5 w-3.5" />
+              <div className="relative grid md:grid-cols-5">
+                {/* Left: who can apply, as a drawing stepper */}
+                <div className="p-8 sm:p-10 md:col-span-2">
+                  <span className="badge">Open Admission</span>
+                  <h3 className="mt-3 text-2xl font-extrabold">Who Can Apply?</h3>
+                  <div className="relative mt-8 pl-9">
+                    <span className="draw-line absolute bottom-4 left-[15px] top-2 w-px bg-gradient-to-b from-brand-400 via-brand-200 to-transparent dark:from-blue-400 dark:via-blue-400/30" />
+                    {whoCanApply.map((w, j) => (
+                      <div key={w} className="pop-item relative pb-8 last:pb-0" style={{ transitionDelay: `${350 + j * 200}ms` }}>
+                        <span className="absolute -left-9 top-0 grid h-8 w-8 place-items-center rounded-full bg-gradient-to-br from-brand-600 to-brand-500 text-white shadow-glow ring-4 ring-white dark:ring-brand-900">
+                          {j === 0 ? <IconGrad className="h-4 w-4" /> : <IconBook className="h-4 w-4" />}
                         </span>
-                        {e}
-                      </li>
+                        <p className="pt-1 text-base font-bold text-slate-800 dark:text-white">{w}</p>
+                        <p className="mt-1 text-sm leading-relaxed text-slate-500 dark:text-slate-400">
+                          {j === 0 ? "In IT-related fields and faculties" : "In IT trades and related subjects"}
+                        </p>
+                      </div>
                     ))}
-                  </ul>
+                  </div>
+                </div>
+
+                {/* Divider */}
+                <div className="pointer-events-none absolute inset-y-10 left-[40%] hidden w-px bg-gradient-to-b from-transparent via-brand-200 to-transparent md:block dark:via-white/15" />
+
+                {/* Right: eligibility as a springy pill wall */}
+                <div className="border-t border-brand-100/70 p-8 sm:p-10 md:col-span-3 md:border-t-0 dark:border-white/10">
+                  <span className="badge">Fields of Study</span>
+                  <h3 className="mt-3 text-2xl font-extrabold">Eligibility</h3>
+                  <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
+                    This internship is designed for students studying:
+                  </p>
+                  <div className="mt-6 flex flex-wrap gap-2.5">
+                    {eligibility.map((e, j) => {
+                      const tints = [
+                        "border-brand-200 bg-brand-50/80 text-brand-700 hover:bg-brand-100 dark:border-white/15 dark:bg-white/5 dark:text-blue-200",
+                        "border-blue-200 bg-blue-50/80 text-blue-700 hover:bg-blue-100 dark:border-blue-400/25 dark:bg-blue-400/10 dark:text-blue-200",
+                        "border-emerald-200 bg-emerald-50/80 text-emerald-700 hover:bg-emerald-100 dark:border-emerald-400/25 dark:bg-emerald-400/10 dark:text-emerald-200",
+                      ];
+                      return (
+                        <span
+                          key={e}
+                          className={`pop-item inline-flex cursor-default items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold shadow-sm transition-all duration-300 ease-apple hover:-translate-y-1 hover:shadow-soft ${tints[j % 3]}`}
+                          style={{ transitionDelay: `${300 + j * 90}ms` }}
+                        >
+                          <IconCheck className="h-3.5 w-3.5" />
+                          {e}
+                        </span>
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
-            </Reveal>
-          </div>
+            </div>
+          </Reveal>
         </div>
       </section>
 
       {/* ================= CTA ================= */}
-      <section className="container-page py-16 sm:py-20">
+      <section className="py-14 sm:py-16">
         <Reveal effect="rich">
-          <ScrollScale min={0.93}>
-          <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-800 via-brand-600 to-brand-500 px-6 py-14 text-center shadow-lift sm:px-12">
-            <div className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-blue-400/20 blur-3xl" />
-            <div className="pointer-events-none absolute -bottom-20 -left-16 h-64 w-64 rounded-full bg-brand-400/25 blur-3xl" />
-            <h2 className="relative text-3xl font-extrabold !text-white sm:text-4xl">
-              Don't Wait. Apply Today!
-            </h2>
-            <p className="relative mx-auto mt-4 max-w-xl leading-relaxed text-blue-100/90">
-              Kickstart your journey with expert mentorship, real project experience, and career
-              growth. Gain real skills and build a brighter future.
-            </p>
-            <div className="relative mt-8 flex flex-wrap items-center justify-center gap-4">
-              <Link
-                to="/register"
-                className="rounded-full bg-white px-10 py-3.5 text-sm font-bold text-brand-700 shadow-soft transition-all duration-300 hover:-translate-y-0.5 hover:scale-105"
-              >
-                Apply Now
-              </Link>
-              <Link
-                to="/contact"
-                className="rounded-full border-2 border-white/40 px-10 py-3 text-sm font-bold text-white backdrop-blur transition-all duration-300 hover:-translate-y-0.5 hover:border-white/80 hover:bg-white/10"
-              >
-                Talk to Us
-              </Link>
+          <ScrollScale min={0.96}>
+            <div className="cta-clip relative overflow-hidden bg-brand-900 py-24 text-center sm:py-32">
+              {/* Living aurora background */}
+              <div className="anim-aurora pointer-events-none absolute -left-24 top-0 h-[26rem] w-[26rem] rounded-full bg-blue-500/25 blur-3xl" />
+              <div className="anim-aurora-b pointer-events-none absolute -right-24 bottom-0 h-[26rem] w-[26rem] rounded-full bg-brand-400/25 blur-3xl" />
+              <div className="anim-aurora pointer-events-none absolute left-1/2 top-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-300/10 blur-3xl" style={{ animationDelay: "3s" }} />
+              {/* Rising particles */}
+              <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+                {PARTICLES.slice(0, 10).map((p, i) => (
+                  <span
+                    key={i}
+                    className="hero-particle"
+                    style={{
+                      left: p.left,
+                      width: `${p.size}px`,
+                      height: `${p.size}px`,
+                      animationDuration: `${p.duration}s`,
+                      animationDelay: `${p.delay}s`,
+                      "--po": p.opacity,
+                    }}
+                  />
+                ))}
+              </div>
+
+              <div className="container-page relative">
+                <span className="pop-item inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-blue-100 ring-1 ring-white/20 backdrop-blur" style={{ transitionDelay: "200ms" }}>
+                  <span className="relative flex h-2 w-2">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+                  </span>
+                  Start Anytime
+                </span>
+                <h2 className="mt-6 text-4xl font-extrabold !text-white sm:text-5xl">
+                  Don't Wait.
+                  <span className="text-gradient-animated"> Apply Today!</span>
+                </h2>
+                <p className="mx-auto mt-5 max-w-xl leading-relaxed text-blue-100/90">
+                  Kickstart your journey with expert mentorship, real project experience, and
+                  career growth. Gain real skills and build a brighter future.
+                </p>
+                <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+                  <Link
+                    to="/register"
+                    className="group/btn flex items-center gap-3 rounded-full bg-white p-1.5 pl-8 text-sm font-bold text-brand-800 shadow-lift transition-all duration-300 ease-apple hover:-translate-y-1 hover:scale-[1.03] active:scale-[0.97]"
+                  >
+                    Apply Now
+                    <span className="grid h-9 w-9 place-items-center rounded-full bg-brand-700 text-white transition-all duration-500 ease-apple group-hover/btn:-rotate-45 group-hover/btn:bg-brand-600">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
+                        <path d="M5 12h14M13 6l6 6-6 6" />
+                      </svg>
+                    </span>
+                  </Link>
+                  <Link
+                    to="/contact"
+                    className="btn-live rounded-full border-2 border-white/50 px-10 py-3 text-sm font-bold text-white backdrop-blur transition-all duration-300 ease-apple hover:-translate-y-1 hover:bg-white/10"
+                  >
+                    Talk to Us
+                  </Link>
+                </div>
+              </div>
             </div>
-          </div>
           </ScrollScale>
         </Reveal>
       </section>

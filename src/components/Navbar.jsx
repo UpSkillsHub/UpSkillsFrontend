@@ -65,21 +65,30 @@ export default function Navbar() {
       <nav className="container-page flex h-[72px] items-center justify-between">
         <Logo />
 
-        <ul className="hidden items-center gap-5 lg:flex xl:gap-7">
+        <ul className="hidden items-center gap-1 lg:flex xl:gap-1.5">
           {menu.map((m) => (
             <li key={m.to}>
               <NavLink
                 to={m.to}
                 end={m.to === "/"}
                 className={({ isActive }) =>
-                  `link-underline text-sm font-semibold transition-colors duration-200 hover:text-brand-600 dark:hover:text-blue-400 ${
+                  `relative block rounded-full px-3 py-2 text-[13px] font-semibold tracking-wide transition-all duration-300 ease-apple xl:px-3.5 ${
                     isActive
-                      ? "text-brand-600 dark:text-blue-400"
-                      : "text-brand-dark dark:text-slate-200"
+                      ? "bg-brand-50 text-brand-700 shadow-inner dark:bg-white/10 dark:text-blue-300"
+                      : "text-slate-600 hover:-translate-y-0.5 hover:bg-slate-50 hover:text-brand-700 dark:text-slate-300 dark:hover:bg-white/5 dark:hover:text-blue-300"
                   }`
                 }
               >
-                {m.label}
+                {({ isActive }) => (
+                  <>
+                    {m.label}
+                    <span
+                      className={`absolute -bottom-0.5 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-brand-500 transition-all duration-300 dark:bg-blue-400 ${
+                        isActive ? "opacity-100" : "opacity-0"
+                      }`}
+                    />
+                  </>
+                )}
               </NavLink>
             </li>
           ))}
@@ -95,7 +104,17 @@ export default function Navbar() {
               <button onClick={logout} className="btn-primary rounded-full px-7 py-2.5">Log out</button>
             </>
           ) : (
-            <Link to="/login" className="btn-glow-strong inline-flex items-center rounded-xl border-2 border-blue-500 bg-white px-8 py-2.5 text-sm font-bold tracking-wide text-brand-600 transition-all duration-300 hover:-translate-y-0.5 hover:scale-105 hover:bg-brand-50 hover:text-brand-700">LOGIN</Link>
+            <Link
+              to="/login"
+              className="btn-cta group/login relative inline-flex items-center gap-2.5 rounded-full py-2.5 pl-7 pr-2 text-sm font-bold tracking-wide text-white shadow-glow transition-all duration-300 ease-apple hover:-translate-y-0.5 hover:shadow-lift active:scale-[0.97]"
+            >
+              LOGIN
+              <span className="grid h-8 w-8 place-items-center rounded-full bg-white/15 text-white ring-1 ring-white/25 transition-all duration-500 ease-apple group-hover/login:-rotate-45 group-hover/login:bg-white group-hover/login:text-brand-700">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" className="h-3.5 w-3.5">
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
+              </span>
+            </Link>
           )}
         </div>
 
@@ -111,6 +130,9 @@ export default function Navbar() {
         </div>
       </nav>
 
+      {/* Fine gradient hairline under the header */}
+      <div className="h-px bg-gradient-to-r from-transparent via-brand-300/50 to-transparent dark:via-blue-400/30" />
+
       {open && (
         <div className="animate-fadeIn border-t border-slate-100 bg-white lg:hidden dark:border-white/10 dark:bg-brand-dark">
           <ul className="container-page flex flex-col py-3">
@@ -121,10 +143,10 @@ export default function Navbar() {
                   end={m.to === "/"}
                   onClick={() => setOpen(false)}
                   className={({ isActive }) =>
-                    `block py-2.5 text-sm font-semibold ${
+                    `my-0.5 block rounded-xl px-4 py-2.5 text-sm font-semibold transition-colors duration-200 ${
                       isActive
-                        ? "text-brand-600 dark:text-blue-400"
-                        : "text-brand-dark dark:text-slate-200"
+                        ? "bg-brand-50 text-brand-700 dark:bg-white/10 dark:text-blue-300"
+                        : "text-slate-600 dark:text-slate-300"
                     }`
                   }
                 >
@@ -133,7 +155,7 @@ export default function Navbar() {
               </li>
             ))}
             <li className="mt-3">
-              <Link to="/login" className="btn-glow-strong block w-full rounded-xl border-2 border-blue-500 bg-white py-2.5 text-center text-sm font-bold tracking-wide text-brand-600" onClick={() => setOpen(false)}>LOGIN</Link>
+              <Link to="/login" className="btn-cta block w-full rounded-full py-3 text-center text-sm font-bold tracking-wide text-white shadow-glow" onClick={() => setOpen(false)}>LOGIN</Link>
             </li>
           </ul>
         </div>

@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout.jsx";
+import ScrollToTop from "./components/ScrollToTop.jsx";
 import AdminRoute from "./components/AdminRoute.jsx";
 import DashboardLayout from "./components/dashboard/DashboardLayout.jsx";
 import AdminUsers from "./pages/admin/AdminUsers.jsx";
@@ -24,6 +25,8 @@ import NotFound from "./pages/NotFound.jsx";
 
 export default function App() {
   return (
+    <>
+    <ScrollToTop />
     <Routes>
       {/* Public marketing site */}
       <Route element={<Layout />}>
@@ -66,5 +69,6 @@ export default function App() {
         <Route path="settings" element={<DashboardPlaceholder title="Settings" />} />
       </Route>
     </Routes>
+    </>
   );
 }
