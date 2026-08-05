@@ -210,11 +210,13 @@ function CourseDetailsModal({ course, onClose }) {
   // Apple-style section: quiet headline, hairline separator, generous air.
   const Sec = ({ title, delay, last, children }) => (
     <section
-      className={`anim-rise py-7 ${last ? "" : "border-b border-slate-200/70 dark:border-white/10"}`}
+      className={`anim-rise py-8 ${last ? "pb-10" : "border-b border-slate-200/70 dark:border-white/10"}`}
       style={{ animationDelay: `${delay}ms` }}
     >
-      <h3 className="text-[19px] font-semibold tracking-tight text-slate-900 dark:text-white">{title}</h3>
-      <div className="mt-4">{children}</div>
+      <h3 className="text-[21px] font-semibold leading-tight tracking-tight text-slate-900 dark:text-white">
+        {title}
+      </h3>
+      <div className="mt-5">{children}</div>
     </section>
   );
 
@@ -320,6 +322,21 @@ function CourseDetailsModal({ course, onClose }) {
 
           {/* Scrollable body */}
           <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-6 sm:px-10">
+            {/* Eyebrow header (desktop) */}
+            <div className="anim-rise hidden items-baseline justify-between gap-4 border-b border-slate-200/70 pb-5 pt-7 md:flex dark:border-white/10">
+              <div>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-400">
+                  Course details
+                </p>
+                <h2 className="mt-1.5 text-[26px] font-semibold leading-tight tracking-tight text-slate-900 dark:text-white">
+                  {course.name}
+                </h2>
+              </div>
+              <span className="shrink-0 rounded-full bg-[#f5f5f7] px-3 py-1 text-[12px] font-medium text-slate-600 dark:bg-white/10 dark:text-slate-300">
+                {course.durationMonths} months
+              </span>
+            </div>
+
             <Sec title="Overview" delay={60}>
               <p className="max-w-prose text-[15px] leading-relaxed text-slate-600 dark:text-slate-300">
                 {course.description}
@@ -356,13 +373,18 @@ function CourseDetailsModal({ course, onClose }) {
                   { title: "On-site in Kigali", price: course.monthlyFee, note: "Hands-on classes at our campus." },
                   { title: "Online / Self-coaching", price: ONLINE_MONTHLY_FEE, note: "Learn from anywhere with a coach." },
                 ].map((o) => (
-                  <div key={o.title} className="rounded-2xl bg-[#f5f5f7] p-5 transition-colors duration-300 hover:bg-slate-100 dark:bg-white/[0.06] dark:hover:bg-white/10">
+                  <div
+                    key={o.title}
+                    className="rounded-2xl bg-[#f5f5f7] p-5 ring-1 ring-transparent transition-all duration-300 ease-apple hover:-translate-y-0.5 hover:bg-white hover:shadow-soft hover:ring-slate-200 dark:bg-white/[0.06] dark:hover:bg-white/10 dark:hover:ring-white/10"
+                  >
                     <p className="text-[15px] font-semibold text-slate-900 dark:text-white">{o.title}</p>
-                    <p className="mt-2.5 text-[22px] font-semibold tracking-tight text-slate-900 dark:text-white">
+                    <p className="mt-2.5 text-[24px] font-semibold leading-none tracking-tight text-slate-900 dark:text-white">
                       {rwf(o.price)}
-                      <span className="text-[13px] font-normal text-slate-500"> /month</span>
                     </p>
-                    <p className="mt-1 text-[13px] leading-relaxed text-slate-500 dark:text-slate-400">{o.note}</p>
+                    <p className="mt-1.5 text-[13px] text-slate-500 dark:text-slate-400">per month</p>
+                    <p className="mt-3 border-t border-slate-200/80 pt-3 text-[13px] leading-relaxed text-slate-500 dark:border-white/10 dark:text-slate-400">
+                      {o.note}
+                    </p>
                   </div>
                 ))}
               </div>
@@ -396,31 +418,29 @@ function CourseDetailsModal({ course, onClose }) {
           </div>
 
           {/* Apple-style buy bar */}
-          <div className="shrink-0 border-t border-slate-200/80 bg-white/95 px-6 py-4 backdrop-blur sm:px-10 dark:border-white/10 dark:bg-transparent">
-            <div className="flex flex-col gap-3.5 sm:flex-row sm:items-center sm:justify-between">
-              <div className="hidden sm:block">
-                <p className="text-sm font-semibold text-slate-900 dark:text-white">{course.name}</p>
-                <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
-                  From {rwf(course.monthlyFee)}/month, {rwf(REGISTRATION_FEE)} registration
+          <div className="shrink-0 border-t border-slate-200/80 bg-white/90 px-6 py-3.5 backdrop-blur-xl sm:px-10 dark:border-white/10 dark:bg-[#0f1830]/90">
+            <div className="flex items-center justify-between gap-5">
+              <div className="min-w-0">
+                <p className="truncate text-[13px] font-semibold text-slate-900 dark:text-white">
+                  {rwf(course.monthlyFee)}
+                  <span className="font-normal text-slate-500 dark:text-slate-400">/month</span>
                 </p>
-              </div>
-              <div className="flex items-center justify-between gap-6 sm:justify-end">
                 <button
                   onClick={downloadOutline}
-                  className="group/dl inline-flex items-center gap-1.5 text-sm font-medium text-blue-600 transition-colors duration-200 hover:text-blue-700 dark:text-blue-400"
+                  className="group/dl mt-0.5 inline-flex items-center gap-1 whitespace-nowrap text-[13px] font-medium text-blue-600 transition-colors duration-200 hover:text-blue-700 dark:text-blue-400"
                 >
-                  Download Outline (PDF)
+                  Download outline
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-3.5 w-3.5 transition-transform duration-200 group-hover/dl:translate-y-0.5">
                     <path d="M12 4v12m0 0 4.5-4.5M12 16l-4.5-4.5" />
                   </svg>
                 </button>
-                <Link
-                  to="/register"
-                  className="rounded-full bg-blue-600 px-7 py-2.5 text-sm font-medium text-white shadow-sm transition-all duration-200 ease-apple hover:bg-blue-700 hover:shadow-md active:scale-[0.96]"
-                >
-                  Apply Now
-                </Link>
               </div>
+              <Link
+                to="/register"
+                className="shrink-0 whitespace-nowrap rounded-full bg-blue-600 px-8 py-2.5 text-[15px] font-medium text-white transition-all duration-200 ease-apple hover:bg-blue-700 active:scale-[0.96]"
+              >
+                Apply Now
+              </Link>
             </div>
           </div>
         </div>
