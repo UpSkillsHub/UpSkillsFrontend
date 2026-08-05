@@ -307,9 +307,9 @@ function CourseDetailsModal({ course, onClose }) {
           <button
             onClick={onClose}
             aria-label="Back to courses"
-            className="absolute right-4 top-4 z-20 grid h-9 w-9 place-items-center rounded-full bg-[#f5f5f7]/90 text-slate-500 backdrop-blur transition-colors duration-200 hover:bg-slate-200 hover:text-slate-800 dark:bg-white/10 dark:text-slate-300 dark:hover:bg-white/20"
+            className="btn-live-red group/x absolute right-4 top-4 z-20 grid h-10 w-10 place-items-center rounded-full bg-gradient-to-b from-red-500 to-red-600 text-white shadow-[0_4px_14px_-4px_rgba(220,38,38,0.8)] transition-all duration-300 ease-apple hover:scale-110 hover:from-red-400 hover:to-red-500 active:scale-95"
           >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 transition-transform duration-300 ease-apple group-hover/x:rotate-90">
               <path d="M18 6 6 18M6 6l12 12" />
             </svg>
           </button>
@@ -418,21 +418,12 @@ function CourseDetailsModal({ course, onClose }) {
           </div>
 
           {/* Apple-style buy bar */}
-          <div className="shrink-0 border-t border-slate-200/80 bg-white/90 px-6 py-4 backdrop-blur-xl sm:flex sm:items-center sm:justify-between sm:gap-6 sm:px-10 dark:border-white/10 dark:bg-[#0f1830]/90">
-            <div className="mb-3 min-w-0 sm:mb-0">
-              <p className="truncate text-[15px] font-semibold tracking-tight text-slate-900 dark:text-white">
-                {rwf(course.monthlyFee)}
-                <span className="text-[13px] font-normal text-slate-500 dark:text-slate-400"> /month</span>
-              </p>
-              <p className="mt-0.5 truncate text-[12px] text-slate-500 dark:text-slate-400">
-                {rwf(REGISTRATION_FEE)} registration, one-time
-              </p>
-            </div>
-            <div className="flex items-center gap-3">
+          <div className="shrink-0 border-t border-slate-200/80 bg-white/90 px-6 py-4 backdrop-blur-xl sm:px-10 dark:border-white/10 dark:bg-[#0f1830]/90">
+            <div className="flex items-center justify-end gap-3">
               {/* Secondary: outlined, icon slides down on hover */}
               <button
                 onClick={downloadOutline}
-                className="group/dl inline-flex h-12 flex-1 items-center justify-center gap-2.5 whitespace-nowrap rounded-2xl border border-slate-300 bg-white text-[14px] font-semibold text-slate-800 transition-all duration-300 ease-apple hover:border-slate-400 hover:bg-slate-50 hover:shadow-soft active:scale-[0.98] sm:flex-none sm:px-7 dark:border-white/20 dark:bg-white/5 dark:text-slate-100 dark:hover:bg-white/10"
+                className="btn-live-soft group/dl inline-flex h-12 flex-1 items-center justify-center gap-2.5 whitespace-nowrap rounded-2xl border-2 border-blue-200 bg-white text-[14px] font-semibold text-blue-700 transition-all duration-300 ease-apple hover:-translate-y-0.5 hover:border-blue-400 hover:bg-blue-50 hover:shadow-soft active:scale-[0.98] sm:flex-none sm:px-7 dark:border-blue-400/30 dark:bg-white/5 dark:text-blue-200 dark:hover:bg-white/10"
               >
                 <span className="relative grid h-5 w-5 shrink-0 place-items-center overflow-hidden">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" className="h-[18px] w-[18px] transition-transform duration-300 ease-apple group-hover/dl:translate-y-5">
@@ -448,7 +439,7 @@ function CourseDetailsModal({ course, onClose }) {
               {/* Primary: deep gradient, sheen sweep, arrow */}
               <Link
                 to="/register"
-                className="group/ap relative inline-flex h-12 flex-1 items-center justify-center gap-2.5 overflow-hidden whitespace-nowrap rounded-2xl bg-gradient-to-b from-brand-500 to-brand-700 text-[14px] font-semibold text-white shadow-[0_6px_18px_-6px_rgba(27,42,74,0.65)] transition-all duration-300 ease-apple hover:-translate-y-0.5 hover:shadow-[0_12px_26px_-8px_rgba(27,42,74,0.75)] active:translate-y-0 active:scale-[0.98] sm:flex-none sm:px-9"
+                className="btn-live-blue group/ap relative inline-flex h-12 flex-1 items-center justify-center gap-2.5 overflow-hidden whitespace-nowrap rounded-2xl bg-gradient-to-b from-blue-500 to-blue-600 text-[14px] font-semibold text-white shadow-[0_6px_18px_-6px_rgba(59,130,246,0.7)] transition-all duration-300 ease-apple hover:-translate-y-0.5 hover:from-blue-400 hover:to-blue-500 hover:shadow-[0_12px_28px_-8px_rgba(59,130,246,0.8)] active:translate-y-0 active:scale-[0.98] sm:flex-none sm:px-9"
               >
                 {/* top inner highlight */}
                 <span className="pointer-events-none absolute inset-x-0 top-0 h-px bg-white/35" />
