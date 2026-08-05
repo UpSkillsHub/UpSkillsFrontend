@@ -1,6 +1,5 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import Reveal from "../components/Reveal.jsx";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Modal from "../components/Modal.jsx";
 import { IconCheck, IconUser, IconGrad, IconCard, IconMail } from "../components/icons.jsx";
 import {
@@ -29,10 +28,29 @@ const EMPTY = {
 };
 
 export default function Registration() {
+  const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [form, setForm] = useState(EMPTY);
   const [done, setDone] = useState(false);
   const [error, setError] = useState("");
+
+  // Close returns to the page the visitor came from, or home as a fallback.
+  const close = () => {
+    if (window.history.length > 1) navigate(-1);
+    else navigate("/");
+  };
+
+  // Lock the page behind the modal and close on Escape.
+  useEffect(() => {
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKey = (e) => e.key === "Escape" && close();
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = prev;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, []);
 
   const set = (k, v) => setForm((f) => ({ ...f, [k]: v }));
   const handle = (e) => set(e.target.name, e.target.value);
@@ -68,12 +86,12 @@ export default function Registration() {
     if (msg) return setError(msg);
     setError("");
     setStep((s) => Math.min(3, s + 1));
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    document.querySelector("[role=dialog]")?.scrollTo({ top: 0, behavior: "smooth" });
   };
   const back = () => {
     setError("");
     setStep((s) => Math.max(1, s - 1));
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    document.querySelector("[role=dialog]")?.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const submit = (e) => {
@@ -116,42 +134,55 @@ export default function Registration() {
   );
 
   return (
-    <div>
-      {/* ================= Hero ================= */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-brand-700 via-brand-600 to-brand-500">
-        <div className="anim-drift pointer-events-none absolute -left-24 -top-24 h-80 w-80 rounded-full border border-white/10 bg-blue-400/20 blur-2xl" />
-        <div className="anim-drift-b pointer-events-none absolute -bottom-28 -right-20 h-96 w-96 rounded-full border border-white/10 bg-white/10 blur-2xl" />
-        <div className="container-page relative py-14 text-center sm:py-16">
-          <Reveal>
-            <span className="inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.2em] text-white ring-1 ring-white/25 backdrop-blur">
-              <span className="relative flex h-2 w-2">
+    <div
+      className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto overscroll-contain bg-brand-900/75 p-4 backdrop-blur-md sm:p-6"
+      onClick={close}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Training and internship registration"
+    >
+      <div
+        className="anim-pop relative my-auto w-full max-w-3xl overflow-hidden rounded-[2rem] bg-white shadow-lift dark:bg-[#0f1830]"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* ---------- Modal header ---------- */}
+        <div className="relative overflow-hidden bg-gradient-to-br from-brand-700 via-brand-600 to-brand-500 px-7 py-7 sm:px-9">
+          <div className="anim-drift pointer-events-none absolute -left-16 -top-16 h-44 w-44 rounded-full border border-white/10 bg-blue-300/25" />
+          <div className="anim-drift-b pointer-events-none absolute -bottom-16 -right-14 h-48 w-48 rounded-full border border-white/10 bg-white/10" />
+
+          {/* Close / back */}
+          <button
+            onClick={close}
+            aria-label="Back to previous page"
+            className="btn-live-red group/x absolute right-4 top-4 z-20 grid h-7 w-7 place-items-center rounded-full bg-gradient-to-b from-red-500 to-red-600 text-white shadow-[0_3px_10px_-3px_rgba(220,38,38,0.8)] transition-all duration-300 ease-apple hover:scale-110 hover:from-red-400 hover:to-red-500 active:scale-95"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round" className="h-3 w-3 transition-transform duration-300 ease-apple group-hover/x:rotate-90">
+              <path d="M18 6 6 18M6 6l12 12" />
+            </svg>
+          </button>
+
+          <div className="relative pr-10">
+            <span className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3.5 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-white ring-1 ring-white/25 backdrop-blur">
+              <span className="relative flex h-1.5 w-1.5">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
               </span>
               Enrollment open
             </span>
-            <h1 className="mx-auto mt-5 max-w-2xl text-4xl font-extrabold !text-white sm:text-5xl">
+            <h1 className="mt-3 text-2xl font-extrabold leading-tight !text-white sm:text-3xl">
               Training & Internship Registration
             </h1>
-            <p className="mx-auto mt-4 max-w-xl leading-relaxed text-blue-100/90">
-              Hands-on IT training, short courses, and internship programs. Our programs are
-              continuous, so you can join anytime.
+            <p className="mt-2 max-w-lg text-sm leading-relaxed text-blue-100/90">
+              Our programs are continuous, so you can join anytime. Online and on-site, weekdays and
+              weekends.
             </p>
-            <div className="mx-auto mt-6 flex max-w-2xl flex-wrap items-center justify-center gap-2.5 text-[12px] font-medium text-blue-50">
-              {["Online & On-site", "Weekdays & Weekends", "Remera, KG 173 Street", "+250 781 796 283"].map((t) => (
-                <span key={t} className="rounded-full bg-white/10 px-3.5 py-1.5 ring-1 ring-white/20">{t}</span>
-              ))}
-            </div>
-          </Reveal>
+          </div>
         </div>
-      </section>
 
-      {/* ================= Form ================= */}
-      <section className="container-page py-12 sm:py-14">
-        <div className="mx-auto max-w-3xl">
+        {/* ---------- Body ---------- */}
+        <div className="px-7 py-7 sm:px-9">
           {/* Stepper */}
-          <Reveal>
-            <ol className="mb-9 flex items-center">
+          <ol className="mb-8 flex items-center">
               {STEPS.map((s, i) => {
                 const active = step === s.n;
                 const complete = step > s.n;
@@ -185,15 +216,9 @@ export default function Registration() {
                   </li>
                 );
               })}
-            </ol>
-          </Reveal>
+          </ol>
 
-          <Reveal delay={80}>
-            <form
-              onSubmit={submit}
-              className="relative overflow-hidden rounded-[2rem] bg-white p-7 shadow-lift ring-1 ring-slate-100 sm:p-9 dark:bg-white/5 dark:ring-white/10"
-            >
-              <div className="pointer-events-none absolute -right-16 -top-16 h-44 w-44 rounded-full bg-blue-50 blur-2xl dark:bg-blue-400/10" />
+          <form onSubmit={submit} className="relative">
 
               {/* ---------------- Step 1 ---------------- */}
               {step === 1 && (
@@ -443,15 +468,14 @@ export default function Registration() {
                   </button>
                 )}
               </div>
-            </form>
-          </Reveal>
+          </form>
 
           <p className="mt-6 text-center text-sm text-slate-500 dark:text-slate-400">
             Want to post tasks and hire our talent instead?{" "}
             <Link to="/register" className="font-semibold text-blue-600 hover:underline">Create an employer account</Link>
           </p>
         </div>
-      </section>
+      </div>
 
       {/* Success */}
       <Modal open={done} onClose={() => setDone(false)} title="Registration received">
