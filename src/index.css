@@ -327,6 +327,13 @@ section[id] {
 .spin-border-pill { border-radius: 9999px; padding: 2px; }
 .spin-border-pill > * { border-radius: 9999px; }
 
+/* Subtle decorative dot grid (hero visual backdrop) */
+.dots-deco {
+  background-image: radial-gradient(rgba(27, 42, 74, 0.3) 1.5px, transparent 1.5px);
+  background-size: 14px 14px;
+}
+.dark .dots-deco { background-image: radial-gradient(rgba(147, 197, 253, 0.25) 1.5px, transparent 1.5px); }
+
 /* Dotted glass panel */
 .dots-panel { background-image: radial-gradient(rgba(27, 42, 74, 0.09) 1px, transparent 1px); background-size: 18px 18px; }
 .dark .dots-panel { background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px); }
