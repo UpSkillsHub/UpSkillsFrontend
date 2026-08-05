@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import Reveal from "../components/Reveal.jsx";
 import ScrollScale from "../components/ScrollScale.jsx";
+import SectionHeading from "../components/SectionHeading.jsx";
 import {
   IconCode,
   IconPalette,
@@ -310,8 +311,8 @@ export default function Courses() {
         <Reveal effect="rich">
           <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
             <div>
-              <h2 className="text-3xl font-extrabold">Our Courses</h2>
-              <p className="mt-2 text-slate-500 dark:text-slate-400">
+              <SectionHeading align="left" eyebrow="Our Catalog" title="Our" accent="Courses" />
+              <p className="mt-4 text-slate-500 dark:text-slate-400">
                 Choose from {courses.length} hands-on programs designed for real jobs.
               </p>
             </div>
@@ -446,8 +447,7 @@ export default function Courses() {
       <section className="relative bg-brand-50/60 py-16 dark:bg-white/[0.03] sm:py-20">
         <div className="container-page">
           <Reveal effect="rich" className="mx-auto max-w-2xl text-center">
-            <span className="badge">Academic Internship Program</span>
-            <h2 className="mt-4 text-3xl font-extrabold sm:text-4xl">Internship Program</h2>
+            <SectionHeading eyebrow="Academic Internship Program" title="Internship" accent="Program" />
             <p className="mt-3 leading-relaxed text-slate-600 dark:text-slate-300">
               A trusted, straightforward internship designed for IT students. Practice your coding,
               work on real projects, and receive expert mentorship from IT industry professionals.

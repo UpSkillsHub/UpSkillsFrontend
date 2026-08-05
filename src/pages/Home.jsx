@@ -4,6 +4,7 @@ import Reveal from "../components/Reveal.jsx";
 import Testimonials from "../components/Testimonials.jsx";
 import ScrollScale from "../components/ScrollScale.jsx";
 import HeroActions from "../components/HeroActions.jsx";
+import SectionHeading from "../components/SectionHeading.jsx";
 import { IconMail, IconPhone, IconMapPin, IconUser, IconUsers, IconClipboard, IconCard, IconCheck, IconGrad, IconBriefcase, IconCode, IconHeadset, IconPalette, IconMegaphone } from "../components/icons.jsx";
 
 // Rotating hero background images. Drop hero-1.jpg … hero-5.jpg into
@@ -226,10 +227,7 @@ export default function Home() {
       <section id="about" className="bg-slate-50/70 pb-16 pt-8 sm:pb-24 sm:pt-10 dark:bg-transparent">
         <div className="container-page">
           <Reveal className="mx-auto max-w-3xl text-center">
-            <h2 className="inline-block text-3xl font-extrabold text-brand-dark sm:text-4xl">
-              What is Up Skills Hub?
-              <span className="mt-3 block h-1 w-24 rounded-full bg-brand-600 mx-auto" />
-            </h2>
+            <SectionHeading eyebrow="About Us" title="What is" accent="Up Skills Hub?" />
             <p className="mt-6 text-slate-500">
               Up Skills Hub is positioned as a practical, career-focused platform designed to bridge
               the gap between learning and real-world employment in tech.
@@ -272,10 +270,7 @@ export default function Home() {
       <section id="courses" className="pb-16 pt-8 sm:pb-24 sm:pt-10">
         <div className="container-page">
           <Reveal className="text-center">
-            <h2 className="inline-block text-3xl font-extrabold text-brand-dark sm:text-4xl">
-              Our Courses
-              <span className="mt-3 block h-1 w-24 rounded-full bg-brand-600 mx-auto" />
-            </h2>
+            <SectionHeading eyebrow="Learn a Skill" title="Our" accent="Courses" />
           </Reveal>
 
           {/* Interactive spotlight: pick a course on the left, preview it on the right */}
@@ -430,10 +425,7 @@ export default function Home() {
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-brand-dark/95 via-brand-900/90 to-brand-dark/95" />
         <div className="container-page relative">
           <Reveal className="mx-auto max-w-2xl text-center">
-            <h2 className="inline-block text-3xl font-extrabold text-white sm:text-4xl">
-              Our Internship Programs
-              <span className="mt-3 block h-1 w-24 rounded-full bg-white/70 mx-auto" />
-            </h2>
+            <SectionHeading dark eyebrow="Hands-On Experience" title="Our" accent="Internship Programs" />
             <p className="mt-6 text-brand-100">
               Kick start your career with hands-on experience and real-world impact. Our internship
               program is designed to help you grow, learn, and stand out.
@@ -473,11 +465,7 @@ export default function Home() {
       <section id="talent" className="relative overflow-hidden bg-white pb-10 pt-8 sm:pb-14 sm:pt-10 dark:bg-brand-dark">
         <div className="container-page">
           <Reveal className="mx-auto max-w-2xl text-center">
-            <span className="badge mb-4">Talent Marketplace</span>
-            <h2 className="inline-block text-3xl font-extrabold text-brand-dark sm:text-4xl">
-              How Employers Hire Our Talent
-              <span className="mt-3 block h-1 w-24 rounded-full bg-brand-600 mx-auto" />
-            </h2>
+            <SectionHeading eyebrow="Talent Marketplace" title="How Employers Hire Our" accent="Talent" />
             <p className="mt-6 text-slate-500">
               Companies get real work done while our trainees gain paid, real-world experience.
               Here's exactly how it works, from posting a task to getting paid.
@@ -545,10 +533,7 @@ export default function Home() {
 
         <div className="container-page relative z-10">
           <Reveal className="mx-auto max-w-2xl text-center">
-            <h2 className="inline-block text-3xl font-extrabold text-white sm:text-4xl">
-              Our Services
-              <span className="mt-3 block h-1 w-24 rounded-full bg-brand-300 mx-auto" />
-            </h2>
+            <SectionHeading dark eyebrow="What We Offer" title="Our" accent="Services" />
             <p className="mt-6 text-slate-200">
               Beyond training, Up Skills Hub delivers real digital services for individuals and
               businesses, from building your website to growing your brand.
@@ -575,10 +560,7 @@ export default function Home() {
       <section id="success" className="relative overflow-hidden bg-white pb-16 pt-2 sm:pb-24 sm:pt-4 dark:bg-brand-dark">
         <div className="container-page">
           <Reveal className="mx-auto max-w-2xl text-center">
-            <h2 className="inline-block text-3xl font-extrabold text-brand-dark sm:text-4xl">
-              Success Stories
-              <span className="mt-3 block h-1 w-24 rounded-full bg-brand-600 mx-auto" />
-            </h2>
+            <SectionHeading eyebrow="Testimonials" title="Success" accent="Stories" />
             <p className="mt-6 text-slate-500">
               Real trainees, real results. Hear how Up Skills Hub helped them gain skills, land jobs,
               and launch their tech careers.
