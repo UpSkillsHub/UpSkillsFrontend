@@ -250,7 +250,7 @@ export default function Home() {
                     {/* Accent bar slides in on hover */}
                     <span className={`absolute inset-x-0 top-0 h-1 origin-left scale-x-0 bg-gradient-to-r ${a.bar} transition-transform duration-500 ease-apple group-hover:scale-x-100`} />
                     {/* Ghost number */}
-                    <span className="pointer-events-none absolute -right-2 -top-7 select-none text-[7.5rem] font-extrabold leading-none tracking-tighter text-slate-100 transition-all duration-500 ease-apple group-hover:-translate-y-1 group-hover:text-brand-100 dark:text-white/5 dark:group-hover:text-white/10">
+                    <span className="pointer-events-none absolute -right-1 -top-4 select-none text-[4.5rem] font-extrabold leading-none tracking-tighter text-slate-100 transition-all duration-500 ease-apple group-hover:-translate-y-1 group-hover:text-brand-100 sm:-right-2 sm:-top-7 sm:text-[7.5rem] dark:text-white/5 dark:group-hover:text-white/10">
                       0{i + 1}
                     </span>
                     <span className={`relative grid h-12 w-12 place-items-center rounded-2xl ${a.chip} ring-1 ring-black/5 transition-transform duration-500 ease-apple group-hover:-rotate-6 group-hover:scale-110 dark:bg-white/10 dark:ring-white/10`}>
@@ -454,9 +454,22 @@ export default function Home() {
           </div>
 
           <Reveal className="mt-12 text-center">
-            <Link to="/register" className="btn rounded-full bg-white px-8 text-brand-dark hover:-translate-y-0.5 hover:bg-brand-50">
-              Apply for Internship
-            </Link>
+            {/* White pill wrapped in a rotating light border: unique to this section */}
+            <div className="spin-border spin-border-pill inline-block shadow-lift transition-transform duration-300 ease-apple hover:-translate-y-1">
+              <Link
+                to="/register"
+                className="group/btn flex items-center gap-3 bg-white p-1.5 pl-8 text-sm font-bold text-brand-800 transition-colors duration-300 hover:bg-blue-50 active:scale-[0.98]"
+              >
+                <span className="tracking-wide transition-transform duration-300 ease-apple group-hover/btn:translate-x-1">
+                  Apply for Internship
+                </span>
+                <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-gradient-to-br from-brand-700 to-brand-500 text-white shadow-glow transition-all duration-500 ease-apple group-hover/btn:-rotate-45 group-hover/btn:scale-110">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
+                    <path d="M5 12h14M13 6l6 6-6 6" />
+                  </svg>
+                </span>
+              </Link>
+            </div>
           </Reveal>
         </div>
       </section>

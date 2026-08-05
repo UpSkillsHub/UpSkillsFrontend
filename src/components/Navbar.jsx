@@ -89,7 +89,7 @@ export default function Navbar() {
                 to={m.to}
                 end={m.to === "/"}
                 className={({ isActive }) =>
-                  `relative block rounded-full px-3 py-2 text-[13px] font-semibold tracking-wide transition-all duration-300 ease-apple xl:px-3.5 ${
+                  `relative block rounded-full px-2.5 py-2 text-[13px] font-semibold tracking-wide transition-all duration-300 ease-apple xl:px-3.5 ${
                     isActive
                       ? "bg-brand-50 text-brand-700 shadow-inner dark:bg-white/10 dark:text-blue-300"
                       : "text-slate-600 hover:-translate-y-0.5 hover:bg-slate-50 hover:text-brand-700 dark:text-slate-300 dark:hover:bg-white/5 dark:hover:text-blue-300"

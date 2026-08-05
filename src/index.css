@@ -322,6 +322,10 @@ section[id] {
   animation: orbitSpin 5s linear infinite;
 }
 .spin-border > * { position: relative; border-radius: calc(1.6rem - 1.5px); }
+.spin-border:hover::before { animation-duration: 2s; }
+/* Pill variant: same rotating light, fully rounded */
+.spin-border-pill { border-radius: 9999px; padding: 2px; }
+.spin-border-pill > * { border-radius: 9999px; }
 
 /* Dotted glass panel */
 .dots-panel { background-image: radial-gradient(rgba(27, 42, 74, 0.09) 1px, transparent 1px); background-size: 18px 18px; }
