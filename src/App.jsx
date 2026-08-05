@@ -32,7 +32,8 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/programs" element={<Programs />} />
         <Route path="/courses" element={<Courses />} />
-        <Route path="/courses/:id" element={<UnderConstruction title="Course Details" />} />
+        {/* Course details open as a modal over the courses page */}
+        <Route path="/courses/:slug" element={<Courses />} />
         <Route path="/category/:category" element={<CategoryCourses />} />
         <Route path="/internship" element={<UnderConstruction title="Internship Program" />} />
         <Route path="/talent" element={<UnderConstruction title="Talent Marketplace" />} />

@@ -7,6 +7,13 @@ export const REGISTRATION_FEE = 5000;
 // Online learning or self-coaching flat rate, per month, for any course.
 export const ONLINE_MONTHLY_FEE = 100000;
 
+// Shared schedule shown on every course's details.
+export const courseSchedule = [
+  "New cohorts start every month, so you can enroll anytime.",
+  "On-site: weekday sessions at our Kigali campus (KG 173 Street, Remera).",
+  "Online: flexible, self-paced learning with weekly mentor check-ins.",
+];
+
 export const courses = [
   {
     slug: "cybersecurity-ethical-hacking",
@@ -16,6 +23,19 @@ export const courses = [
     durationMonths: 3,
     monthlyFee: 100000,
     category: "IT & Security",
+    skills: [
+      "Network security fundamentals",
+      "Penetration testing",
+      "Vulnerability assessment",
+      "Ethical hacking tools",
+      "Threat analysis and reporting",
+      "Security best practices",
+    ],
+    requirements: [
+      "Basic computer literacy",
+      "A laptop is recommended",
+      "Curiosity about how systems work",
+    ],
   },
   {
     slug: "frontend-development",
@@ -25,6 +45,15 @@ export const courses = [
     durationMonths: 3,
     monthlyFee: 70000,
     category: "Software Development",
+    skills: [
+      "HTML5 and CSS3",
+      "Modern JavaScript",
+      "React",
+      "Responsive design",
+      "Tailwind CSS",
+      "Git and GitHub",
+    ],
+    requirements: ["Basic computer literacy", "A laptop is recommended"],
   },
   {
     slug: "backend-development",
@@ -34,6 +63,19 @@ export const courses = [
     durationMonths: 3,
     monthlyFee: 70000,
     category: "Software Development",
+    skills: [
+      "Node.js and Express",
+      "REST API design",
+      "Databases (MySQL)",
+      "Authentication and security",
+      "Deployment",
+      "Git workflows",
+    ],
+    requirements: [
+      "Basic computer literacy",
+      "A laptop is recommended",
+      "Some programming basics are helpful",
+    ],
   },
   {
     slug: "python-with-programming",
@@ -43,6 +85,15 @@ export const courses = [
     durationMonths: 3,
     monthlyFee: 70000,
     category: "Software Development",
+    skills: [
+      "Python fundamentals",
+      "Data structures",
+      "Object-oriented programming",
+      "Automation scripts",
+      "Working with files and APIs",
+      "Debugging and testing",
+    ],
+    requirements: ["Basic computer literacy", "A laptop is recommended", "No prior coding needed"],
   },
   {
     slug: "web-design",
@@ -52,6 +103,15 @@ export const courses = [
     durationMonths: 2,
     monthlyFee: 70000,
     category: "Design",
+    skills: [
+      "Layout and composition",
+      "Figma",
+      "HTML and CSS basics",
+      "Responsive design",
+      "Color and typography",
+      "Prototyping",
+    ],
+    requirements: ["Basic computer literacy", "A laptop is recommended", "An eye for detail"],
   },
   {
     slug: "machine-learning",
@@ -61,6 +121,19 @@ export const courses = [
     durationMonths: 3,
     monthlyFee: 80000,
     category: "AI & Data",
+    skills: [
+      "Python for machine learning",
+      "Data preprocessing",
+      "Supervised learning",
+      "Model evaluation",
+      "scikit-learn",
+      "Real-world ML projects",
+    ],
+    requirements: [
+      "Basic computer literacy",
+      "A laptop is recommended",
+      "Python basics are helpful (covered early in the course)",
+    ],
   },
   {
     slug: "ai-engineer",
@@ -70,6 +143,19 @@ export const courses = [
     durationMonths: 3,
     monthlyFee: 80000,
     category: "AI & Data",
+    skills: [
+      "Large language models",
+      "Prompt engineering",
+      "Building AI-powered apps",
+      "Working with AI model APIs",
+      "Python",
+      "Deploying AI applications",
+    ],
+    requirements: [
+      "Basic computer literacy",
+      "A laptop is recommended",
+      "Programming basics are helpful",
+    ],
   },
   {
     slug: "mobile-development",
@@ -79,6 +165,19 @@ export const courses = [
     durationMonths: 3,
     monthlyFee: 70000,
     category: "Software Development",
+    skills: [
+      "Cross-platform app development",
+      "Mobile UI design",
+      "State management",
+      "Connecting apps to APIs",
+      "Testing",
+      "Publishing to app stores",
+    ],
+    requirements: [
+      "Basic computer literacy",
+      "A laptop is recommended",
+      "Programming basics are helpful",
+    ],
   },
   {
     slug: "digital-marketing-seo-wordpress",
@@ -88,6 +187,15 @@ export const courses = [
     durationMonths: 2,
     monthlyFee: 100000,
     category: "Marketing",
+    skills: [
+      "Search engine optimization (SEO)",
+      "Content marketing",
+      "Social media strategy",
+      "Building WordPress websites",
+      "Web analytics",
+      "Campaign management",
+    ],
+    requirements: ["Basic computer literacy", "A laptop is recommended"],
   },
   {
     slug: "copy-writing",
@@ -97,6 +205,15 @@ export const courses = [
     durationMonths: 2,
     monthlyFee: 70000,
     category: "Marketing",
+    skills: [
+      "Persuasive writing",
+      "Ad copy",
+      "Email marketing",
+      "Landing page copy",
+      "Brand voice",
+      "Editing and proofreading",
+    ],
+    requirements: ["Good written English", "Basic computer literacy"],
   },
   {
     slug: "multimedia-videography",
@@ -106,6 +223,15 @@ export const courses = [
     durationMonths: 2,
     monthlyFee: 100000,
     category: "Media",
+    skills: [
+      "Camera operation",
+      "Video editing",
+      "Lighting and sound",
+      "Visual storytelling",
+      "Motion graphics basics",
+      "Publishing content",
+    ],
+    requirements: ["Basic computer literacy", "A laptop is recommended"],
   },
   {
     slug: "microsoft-office",
@@ -115,6 +241,15 @@ export const courses = [
     durationMonths: 2,
     monthlyFee: 70000,
     category: "Office Skills",
+    skills: [
+      "Microsoft Word",
+      "Excel formulas and charts",
+      "PowerPoint presentations",
+      "Email and calendar tools",
+      "File management",
+      "Office productivity workflows",
+    ],
+    requirements: ["Basic computer literacy", "No prior experience needed"],
   },
   {
     slug: "graphic-design-ui-ux",
@@ -124,6 +259,15 @@ export const courses = [
     durationMonths: 2,
     monthlyFee: 70000,
     category: "Design",
+    skills: [
+      "Figma",
+      "UI design",
+      "UX principles",
+      "Brand identity",
+      "Logo and poster design",
+      "Building a design portfolio",
+    ],
+    requirements: ["Basic computer literacy", "A laptop is recommended", "An eye for detail"],
   },
   {
     slug: "power-bi-data-analysis",
@@ -133,6 +277,15 @@ export const courses = [
     durationMonths: 3,
     monthlyFee: 70000,
     category: "AI & Data",
+    skills: [
+      "Excel for analysis",
+      "Power BI dashboards",
+      "Data modeling",
+      "DAX basics",
+      "Data visualization",
+      "Reporting insights",
+    ],
+    requirements: ["Basic computer literacy", "A laptop is recommended"],
   },
   {
     slug: "project-management",
@@ -142,6 +295,15 @@ export const courses = [
     durationMonths: 2,
     monthlyFee: 70000,
     category: "Business",
+    skills: [
+      "Project planning",
+      "Agile and Scrum basics",
+      "Budgeting",
+      "Risk management",
+      "Team leadership",
+      "Progress reporting",
+    ],
+    requirements: ["Basic computer literacy", "No prior experience needed"],
   },
 ];
 

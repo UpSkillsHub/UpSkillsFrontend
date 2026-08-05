@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Reveal from "../components/Reveal.jsx";
 import ScrollScale from "../components/ScrollScale.jsx";
 import SectionHeading from "../components/SectionHeading.jsx";
@@ -17,6 +17,7 @@ import {
   internshipPrograms,
   whoCanApply,
   eligibility,
+  courseSchedule,
   REGISTRATION_FEE,
   ONLINE_MONTHLY_FEE,
 } from "../data/programs.js";
@@ -181,9 +182,252 @@ function CourseCard({ course }) {
   );
 }
 
+/* ================= Course Details modal (doc section 4) ================= */
+function CourseDetailsModal({ course, onClose }) {
+  const Icon = categoryIcons[course.category] || IconCode;
+
+  // Lock page scroll and close on Escape while the modal is open.
+  useEffect(() => {
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKey = (e) => e.key === "Escape" && onClose();
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = prev;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [onClose]);
+
+  // Build and download a plain-text course outline.
+  const downloadOutline = () => {
+    const L = [];
+    L.push("UP SKILLS HUB - COURSE OUTLINE");
+    L.push("=".repeat(40));
+    L.push("");
+    L.push(`Course: ${course.name}`);
+    L.push(`Category: ${course.category}`);
+    L.push(`Duration: ${course.durationMonths} months`);
+    L.push("");
+    L.push("COURSE OVERVIEW");
+    L.push(course.description);
+    L.push("");
+    L.push("SKILLS YOU WILL LEARN");
+    course.skills.forEach((s) => L.push(`  - ${s}`));
+    L.push("");
+    L.push("COURSE SCHEDULE");
+    courseSchedule.forEach((s) => L.push(`  - ${s}`));
+    L.push("");
+    L.push("REQUIREMENTS");
+    course.requirements.forEach((s) => L.push(`  - ${s}`));
+    L.push("");
+    L.push("FEES");
+    L.push(`  - Registration fee (one-time): ${rwf(REGISTRATION_FEE)}`);
+    L.push(`  - Program fee (on-site): ${rwf(course.monthlyFee)} per month`);
+    L.push(`  - Online / self-coaching: ${rwf(ONLINE_MONTHLY_FEE)} per month`);
+    L.push("");
+    L.push("Upon successful completion, trainees receive a recognized certificate.");
+    L.push("");
+    L.push("Contact: upskillshub.info@gmail.com | +250 781 796 283");
+    L.push("KG 173 Street, Remera, Kigali, Rwanda | www.upskillshub.com");
+
+    const blob = new Blob([L.join("\n")], { type: "text/plain;charset=utf-8" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = `${course.slug}-course-outline.txt`;
+    a.click();
+    URL.revokeObjectURL(a.href);
+  };
+
+  const SectionLabel = ({ children }) => (
+    <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-500 dark:text-blue-300">{children}</p>
+  );
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-brand-900/70 p-4 backdrop-blur-sm"
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-label={`${course.name} details`}
+    >
+      <div
+        className="animate-scaleIn relative flex max-h-[92vh] w-full max-w-3xl flex-col overflow-hidden rounded-[2rem] bg-white shadow-lift dark:bg-[#0f1830]"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Header */}
+        <div className="relative shrink-0 overflow-hidden bg-gradient-to-br from-brand-800 via-brand-600 to-brand-500 px-7 py-6">
+          <div className="anim-drift pointer-events-none absolute -right-12 -top-12 h-40 w-40 rounded-full bg-blue-400/25 blur-2xl" />
+          <div className="relative flex items-start justify-between gap-4">
+            <div className="flex items-center gap-4">
+              <span className="grid h-12 w-12 shrink-0 animate-float place-items-center rounded-2xl bg-white/15 text-white ring-1 ring-white/25 backdrop-blur">
+                <Icon className="h-6 w-6" />
+              </span>
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-blue-200/90">{course.category}</p>
+                <h2 className="mt-0.5 text-xl font-extrabold leading-snug !text-white sm:text-2xl">{course.name}</h2>
+              </div>
+            </div>
+            {/* Back / close */}
+            <button
+              onClick={onClose}
+              aria-label="Go back"
+              className="x-live grid h-10 w-10 shrink-0 place-items-center rounded-full bg-white/10 text-white ring-1 ring-white/25 transition-all duration-300 hover:rotate-90 hover:bg-white/20"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
+                <path d="M18 6 6 18M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        {/* Scrollable body */}
+        <div className="flex-1 space-y-7 overflow-y-auto px-7 py-6">
+          {/* Overview */}
+          <div>
+            <SectionLabel>Course Overview</SectionLabel>
+            <p className="mt-2 leading-relaxed text-slate-600 dark:text-slate-300">{course.description}</p>
+          </div>
+
+          {/* Skills */}
+          <div>
+            <SectionLabel>Skills You Will Learn</SectionLabel>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {course.skills.map((s) => (
+                <span key={s} className="inline-flex items-center gap-2 rounded-full bg-brand-50/80 px-3.5 py-1.5 text-sm font-semibold text-brand-700 ring-1 ring-brand-100 dark:bg-white/5 dark:text-blue-200 dark:ring-white/10">
+                  <IconCheck className="h-3.5 w-3.5 text-emerald-500" />
+                  {s}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* Duration + Schedule */}
+          <div className="grid gap-5 sm:grid-cols-2">
+            <div className="rounded-2xl bg-brand-50/60 p-5 ring-1 ring-brand-100/70 dark:bg-white/5 dark:ring-white/10">
+              <SectionLabel>Duration</SectionLabel>
+              <p className="mt-2 flex items-center gap-2.5 text-lg font-extrabold text-brand-dark dark:text-white">
+                <IconClock className="h-5 w-5 text-brand-500 dark:text-blue-400" />
+                {course.durationMonths} months
+              </p>
+            </div>
+            <div className="rounded-2xl bg-brand-50/60 p-5 ring-1 ring-brand-100/70 dark:bg-white/5 dark:ring-white/10">
+              <SectionLabel>Course Schedule</SectionLabel>
+              <ul className="mt-2 space-y-1.5 text-sm text-slate-600 dark:text-slate-300">
+                {courseSchedule.map((s) => (
+                  <li key={s} className="flex items-start gap-2">
+                    <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-400" />
+                    {s}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          {/* Online / On-site options */}
+          <div>
+            <SectionLabel>Online / On-site Options</SectionLabel>
+            <div className="mt-3 grid gap-4 sm:grid-cols-2">
+              <div className="flex items-start gap-3 rounded-2xl p-4 ring-1 ring-brand-100 dark:ring-white/10">
+                <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand-50 text-brand-600 dark:bg-white/10 dark:text-blue-300">
+                  <IconMapPinSmall />
+                </span>
+                <div>
+                  <p className="text-sm font-bold text-slate-800 dark:text-white">On-site in Kigali</p>
+                  <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+                    {rwf(course.monthlyFee)} per month, hands-on classes at our campus.
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3 rounded-2xl p-4 ring-1 ring-brand-100 dark:ring-white/10">
+                <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand-50 text-brand-600 dark:bg-white/10 dark:text-blue-300">
+                  <IconGlobe className="h-5 w-5" />
+                </span>
+                <div>
+                  <p className="text-sm font-bold text-slate-800 dark:text-white">Online / Self-coaching</p>
+                  <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+                    {rwf(ONLINE_MONTHLY_FEE)} per month, learn from anywhere with a coach.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Requirements + Fee */}
+          <div className="grid gap-5 sm:grid-cols-2">
+            <div>
+              <SectionLabel>Requirements</SectionLabel>
+              <ul className="mt-3 space-y-2 text-sm text-slate-600 dark:text-slate-300">
+                {course.requirements.map((r) => (
+                  <li key={r} className="flex items-start gap-2.5">
+                    <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-emerald-50 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-300">
+                      <IconCheck className="h-3 w-3" />
+                    </span>
+                    {r}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="rounded-2xl bg-gradient-to-br from-brand-50 to-blue-50 p-5 ring-1 ring-brand-100 dark:from-white/5 dark:to-white/5 dark:ring-white/10">
+              <SectionLabel>Fee</SectionLabel>
+              <div className="mt-3 space-y-2 text-sm">
+                <div className="flex items-center justify-between">
+                  <span className="text-slate-500 dark:text-slate-400">Registration (one-time)</span>
+                  <span className="font-bold text-slate-800 dark:text-white">{rwf(REGISTRATION_FEE)}</span>
+                </div>
+                <div className="flex items-center justify-between border-t border-brand-100/70 pt-2 dark:border-white/10">
+                  <span className="text-slate-500 dark:text-slate-400">Program fee</span>
+                  <span className="text-base font-extrabold text-brand-600 dark:text-blue-400">
+                    {rwf(course.monthlyFee)}<span className="text-xs font-semibold text-slate-400"> /month</span>
+                  </span>
+                </div>
+                <p className="border-t border-brand-100/70 pt-2 text-xs leading-relaxed text-slate-500 dark:border-white/10 dark:text-slate-400">
+                  Recognized certificate upon successful completion.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Footer actions */}
+        <div className="flex shrink-0 flex-col gap-3 border-t border-slate-100 px-7 py-5 sm:flex-row dark:border-white/10">
+          <Link
+            to="/register"
+            className="btn-cta group/btn relative flex flex-1 items-center justify-between rounded-full p-1.5 pl-6 text-sm font-bold text-white shadow-glow transition-all duration-300 ease-apple hover:-translate-y-0.5 hover:shadow-lift active:scale-[0.97]"
+          >
+            <span className="tracking-wide transition-transform duration-300 ease-apple group-hover/btn:translate-x-1.5">Apply Now</span>
+            <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white text-brand-700 shadow-soft transition-all duration-500 ease-apple group-hover/btn:-rotate-45 group-hover/btn:bg-blue-100">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg>
+            </span>
+          </Link>
+          <button
+            onClick={downloadOutline}
+            className="group/dl flex flex-1 items-center justify-center gap-2.5 rounded-full border-2 border-brand-200 px-6 py-3 text-sm font-bold text-brand-600 transition-all duration-300 ease-apple hover:-translate-y-0.5 hover:border-brand-400 hover:bg-brand-50 dark:border-white/20 dark:text-blue-300 dark:hover:bg-white/5"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 transition-transform duration-300 group-hover/dl:translate-y-0.5">
+              <path d="M12 3v12m0 0 4-4m-4 4-4-4" /><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" />
+            </svg>
+            Download Course Outline
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const IconMapPinSmall = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
+    <path d="M12 21s-7-5.3-7-11a7 7 0 1 1 14 0c0 5.7-7 11-7 11Z" /><circle cx="12" cy="10" r="2.6" />
+  </svg>
+);
+
 export default function Courses() {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("All");
+  const { slug } = useParams();
+  const navigate = useNavigate();
+  const activeCourse = slug ? courses.find((c) => c.slug === slug) : null;
 
   const categories = useMemo(
     () => ["All", ...new Set(courses.map((c) => c.category))],
@@ -198,6 +442,11 @@ export default function Courses() {
 
   return (
     <div>
+      {/* Course details modal: closing returns to the course list */}
+      {activeCourse && (
+        <CourseDetailsModal course={activeCourse} onClose={() => navigate("/courses")} />
+      )}
+
       {/* ================= Hero ================= */}
       <section className="relative overflow-hidden bg-brand-900">
         {/* Background slideshow: course1 and course2 crossfade forever, each slowly zooming */}
