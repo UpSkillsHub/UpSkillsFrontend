@@ -20,6 +20,14 @@ const WhatsAppIcon = ({ className = "h-6 w-6" }) => (
     <path fill="#fff" d="M22.3 19.1c-.3-.2-2-1-2.3-1.1-.3-.1-.5-.2-.8.2s-.9 1.1-1.1 1.3c-.2.2-.4.3-.8.1a9.4 9.4 0 0 1-2.8-1.7 10.4 10.4 0 0 1-1.9-2.4c-.2-.4 0-.6.2-.8l.6-.7c.2-.2.2-.4.3-.6a.7.7 0 0 0 0-.7c0-.2-.8-1.9-1-2.6-.3-.7-.6-.6-.8-.6h-.7a1.3 1.3 0 0 0-1 .4 4 4 0 0 0-1.2 3 7 7 0 0 0 1.5 3.7 15.9 15.9 0 0 0 6.1 5.4c2.1.8 2.9.9 4 .7a3.4 3.4 0 0 0 2.2-1.6 2.8 2.8 0 0 0 .2-1.6c-.1-.2-.3-.3-.7-.4Z" />
   </svg>
 );
+const PhoneIcon = ({ className = "h-6 w-6" }) => (
+  <svg viewBox="0 0 24 24" className={className}>
+    <path
+      fill="#2f4f83"
+      d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.4 0 .8-.2 1l-2.3 2.2Z"
+    />
+  </svg>
+);
 const MapsIcon = ({ className = "h-6 w-6" }) => (
   <svg viewBox="0 0 48 48" className={className}>
     <path fill="#EA4335" d="M24 4a13 13 0 0 0-13 13c0 9.8 13 27 13 27s13-17.2 13-27A13 13 0 0 0 24 4Z" />
@@ -50,18 +58,18 @@ const details = [
     dash: "border-red-200 dark:border-red-400/30",
   },
   {
-    icon: WhatsAppIcon,
-    label: "Call or WhatsApp",
+    icon: PhoneIcon,
+    label: "Call us",
     value: CONTACT.phone,
-    href: `https://wa.me/${CONTACT.phoneDial.replace("+", "")}`,
+    href: `tel:${CONTACT.phoneDial}`,
     note: "Monday to Friday, 8am to 6pm",
-    // WhatsApp green
-    ring: "from-emerald-300/70 via-slate-100 to-green-200/60 dark:from-emerald-400/25 dark:via-white/5 dark:to-green-400/20",
-    glow: "bg-emerald-100/70 dark:bg-emerald-400/10",
-    label_c: "text-emerald-600 dark:text-emerald-300",
-    hover_t: "group-hover:text-emerald-600",
-    chip: "bg-emerald-50 text-emerald-600 group-hover:bg-emerald-500 dark:bg-emerald-500/10 dark:text-emerald-300",
-    dash: "border-emerald-200 dark:border-emerald-400/30",
+    // Brand navy
+    ring: "from-brand-300/70 via-slate-100 to-blue-200/60 dark:from-white/20 dark:via-white/5 dark:to-blue-400/20",
+    glow: "bg-brand-100/70 dark:bg-blue-400/10",
+    label_c: "text-brand-600 dark:text-blue-300",
+    hover_t: "group-hover:text-brand-700",
+    chip: "bg-brand-50 text-brand-600 group-hover:bg-brand-600 dark:bg-white/10 dark:text-blue-300",
+    dash: "border-brand-200 dark:border-blue-400/30",
   },
   {
     icon: MapsIcon,
@@ -244,14 +252,28 @@ export default function Contact() {
               </p>
 
               {/* Assurances as a drawing list */}
-              <ul className="relative mt-9 space-y-6 pl-8">
-                <span className="draw-line absolute bottom-3 left-[9px] top-3 w-px bg-gradient-to-b from-brand-400 via-brand-200 to-transparent dark:from-blue-400 dark:via-blue-400/30" />
+              <ul className="relative mt-9 space-y-5 pl-11">
+                {/* Connector line that draws itself */}
+                <span className="draw-line absolute bottom-4 left-[15px] top-4 w-px bg-gradient-to-b from-emerald-400 via-emerald-300/60 to-transparent" />
                 {assurances.map((a, i) => (
-                  <li key={a.title} className="pop-item relative" style={{ transitionDelay: `${250 + i * 160}ms` }}>
-                    <span className="absolute -left-8 top-0.5 grid h-[18px] w-[18px] place-items-center rounded-full bg-gradient-to-br from-brand-600 to-blue-500 text-white shadow-glow ring-4 ring-white dark:ring-brand-900">
-                      <IconCheck className="h-2.5 w-2.5" />
+                  <li
+                    key={a.title}
+                    className="pop-item group/as relative rounded-2xl px-3 py-2.5 transition-all duration-300 ease-apple hover:-translate-y-0.5 hover:bg-emerald-50/60 dark:hover:bg-emerald-500/10"
+                    style={{ transitionDelay: `${250 + i * 180}ms` }}
+                  >
+                    {/* Animated green check node */}
+                    <span className="absolute -left-11 top-2.5 grid h-8 w-8 place-items-center">
+                      <span
+                        className="absolute inset-0 rounded-full bg-emerald-400/40 opacity-70"
+                        style={{ animation: `ping 2.4s cubic-bezier(0,0,0.2,1) ${i * 0.5}s infinite` }}
+                      />
+                      <span className="relative grid h-8 w-8 place-items-center rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 text-white shadow-[0_6px_16px_-6px_rgba(16,185,129,0.9)] ring-4 ring-white transition-transform duration-500 ease-apple group-hover/as:scale-110 dark:ring-brand-900">
+                        <IconCheck className="h-4 w-4" />
+                      </span>
                     </span>
-                    <p className="text-[15px] font-bold text-slate-800 dark:text-white">{a.title}</p>
+                    <p className="text-[15px] font-bold text-slate-800 transition-colors duration-300 group-hover/as:text-emerald-700 dark:text-white dark:group-hover/as:text-emerald-300">
+                      {a.title}
+                    </p>
                     <p className="mt-1 text-sm leading-relaxed text-slate-500 dark:text-slate-400">{a.text}</p>
                   </li>
                 ))}
