@@ -132,6 +132,8 @@ const scrollTo = (id) => (e) => {
 };
 
 export default function Home() {
+  // Interactive course spotlight: which course is previewed in the panel.
+  const [activeCourse, setActiveCourse] = useState(0);
   return (
     <>
       {/* HERO / HOME */}
@@ -234,15 +236,34 @@ export default function Home() {
             </p>
           </Reveal>
 
-          <div className="mt-14 grid gap-6 md:grid-cols-2">
-            {whatCards.map((c, i) => (
-              <Reveal key={c.t} delay={(i % 2) * 100}>
-                <div className="card-hover h-full rounded-2xl bg-brand-50 p-8 ring-1 ring-brand-100">
-                  <h3 className="text-xl font-bold text-brand-dark">{c.t}</h3>
-                  <p className="mt-3 leading-relaxed text-slate-500">{c.d}</p>
-                </div>
-              </Reveal>
-            ))}
+          {/* Editorial bento grid: asymmetric cards with ghost numbers */}
+          <div className="mt-14 grid gap-6 md:grid-cols-6">
+            {whatCards.map((c, i) => {
+              const accents = [
+                { span: "md:col-span-4", bar: "from-brand-500 to-blue-500", icon: IconGrad, chip: "bg-brand-50 text-brand-600" },
+                { span: "md:col-span-2", bar: "from-emerald-400 to-teal-500", icon: IconBriefcase, chip: "bg-emerald-50 text-emerald-600" },
+                { span: "md:col-span-2", bar: "from-cyan-400 to-blue-500", icon: IconCode, chip: "bg-cyan-50 text-cyan-600" },
+                { span: "md:col-span-4", bar: "from-amber-400 to-orange-500", icon: IconUsers, chip: "bg-amber-50 text-amber-600" },
+              ];
+              const a = accents[i];
+              return (
+                <Reveal key={c.t} delay={i * 90} className={a.span}>
+                  <div className="group relative h-full overflow-hidden rounded-3xl bg-white p-8 shadow-soft ring-1 ring-slate-100 transition-all duration-500 ease-apple hover:-translate-y-1.5 hover:shadow-lift dark:bg-white/5 dark:ring-white/10">
+                    {/* Accent bar slides in on hover */}
+                    <span className={`absolute inset-x-0 top-0 h-1 origin-left scale-x-0 bg-gradient-to-r ${a.bar} transition-transform duration-500 ease-apple group-hover:scale-x-100`} />
+                    {/* Ghost number */}
+                    <span className="pointer-events-none absolute -right-2 -top-7 select-none text-[7.5rem] font-extrabold leading-none tracking-tighter text-slate-100 transition-all duration-500 ease-apple group-hover:-translate-y-1 group-hover:text-brand-100 dark:text-white/5 dark:group-hover:text-white/10">
+                      0{i + 1}
+                    </span>
+                    <span className={`relative grid h-12 w-12 place-items-center rounded-2xl ${a.chip} ring-1 ring-black/5 transition-transform duration-500 ease-apple group-hover:-rotate-6 group-hover:scale-110 dark:bg-white/10 dark:ring-white/10`}>
+                      <a.icon className="h-6 w-6" />
+                    </span>
+                    <h3 className="relative mt-6 text-xl font-bold text-brand-dark">{c.t}</h3>
+                    <p className="relative mt-3 max-w-lg leading-relaxed text-slate-500 dark:text-slate-400">{c.d}</p>
+                  </div>
+                </Reveal>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -257,19 +278,145 @@ export default function Home() {
             </h2>
           </Reveal>
 
-          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {/* Interactive spotlight: pick a course on the left, preview it on the right */}
+          <Reveal className="mt-14 hidden gap-10 lg:grid lg:grid-cols-5">
+            {/* Course index */}
+            <div className="lg:col-span-3">
+              <ul className="divide-y divide-slate-100 dark:divide-white/10">
+                {courses.map((c, i) => {
+                  const active = i === activeCourse;
+                  return (
+                    <li key={c.t}>
+                      <button
+                        onMouseEnter={() => setActiveCourse(i)}
+                        onFocus={() => setActiveCourse(i)}
+                        onClick={() => setActiveCourse(i)}
+                        className={`group flex w-full items-center gap-5 px-4 py-5 text-left transition-all duration-300 ease-apple ${
+                          active ? "translate-x-2" : "hover:translate-x-1"
+                        }`}
+                      >
+                        <span
+                          className={`font-mono text-sm font-bold tabular-nums transition-colors duration-300 ${
+                            active ? "text-brand-600 dark:text-blue-400" : "text-slate-300 dark:text-slate-600"
+                          }`}
+                        >
+                          {String(i + 1).padStart(2, "0")}
+                        </span>
+                        <span
+                          className={`flex-1 text-lg font-bold transition-colors duration-300 sm:text-xl ${
+                            active
+                              ? "animate-gradient bg-gradient-to-r from-brand-700 via-blue-500 to-brand-700 bg-[length:200%_auto] bg-clip-text text-transparent dark:from-blue-300 dark:via-white dark:to-blue-300"
+                              : "text-slate-400 group-hover:text-slate-600 dark:text-slate-500 dark:group-hover:text-slate-300"
+                          }`}
+                        >
+                          {c.t}
+                        </span>
+                        <span
+                          className={`rounded-full px-3 py-1 text-xs font-semibold transition-all duration-300 ${
+                            active
+                              ? "bg-brand-50 text-brand-600 dark:bg-white/10 dark:text-blue-300"
+                              : "text-slate-300 dark:text-slate-600"
+                          }`}
+                        >
+                          {c.m}
+                        </span>
+                        <svg
+                          viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"
+                          className={`h-5 w-5 transition-all duration-300 ease-apple ${
+                            active ? "translate-x-0 text-brand-600 opacity-100 dark:text-blue-400" : "-translate-x-2 opacity-0"
+                          }`}
+                        >
+                          <path d="M5 12h14M13 6l6 6-6 6" />
+                        </svg>
+                      </button>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+
+            {/* Sticky preview panel */}
+            <div className="lg:col-span-2">
+              <div className="sticky top-28">
+                <div
+                  key={activeCourse}
+                  className="animate-scaleIn relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-brand-700 via-brand-600 to-brand-500 p-9 shadow-lift"
+                >
+                  <div className="anim-drift pointer-events-none absolute -right-14 -top-14 h-44 w-44 rounded-full border border-white/10 bg-blue-400/20" />
+                  <div className="anim-drift-b pointer-events-none absolute -bottom-16 -left-12 h-40 w-40 rounded-full border border-white/10 bg-white/10" />
+                  <span className="pointer-events-none absolute -bottom-10 -right-2 select-none text-[9rem] font-extrabold leading-none text-white/[0.06]">
+                    {String(activeCourse + 1).padStart(2, "0")}
+                  </span>
+
+                  <span className="relative inline-flex items-center gap-2 rounded-full bg-white/10 px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-widest text-blue-100 ring-1 ring-white/20">
+                    <span className="relative flex h-1.5 w-1.5">
+                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                      <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                    </span>
+                    Start Anytime
+                  </span>
+                  <h3 className="relative mt-4 text-2xl font-extrabold leading-snug !text-white">
+                    {courses[activeCourse].t}
+                  </h3>
+                  <p className="relative mt-3 leading-relaxed text-blue-100/90">{courses[activeCourse].d}</p>
+                  <div className="relative mt-5 flex flex-wrap gap-2.5">
+                    <span className="rounded-full bg-white/10 px-4 py-1.5 text-xs font-semibold text-white ring-1 ring-white/20">
+                      Duration: {courses[activeCourse].m}
+                    </span>
+                    <span className="rounded-full bg-white/10 px-4 py-1.5 text-xs font-semibold text-white ring-1 ring-white/20">
+                      Online / On-site
+                    </span>
+                  </div>
+                  <Link
+                    to="/register"
+                    className="group/btn relative mt-7 flex w-full items-center justify-between rounded-full bg-white p-1.5 pl-6 text-sm font-bold text-brand-800 shadow-soft transition-all duration-300 ease-apple hover:-translate-y-0.5 hover:shadow-lift active:scale-[0.97]"
+                  >
+                    <span className="tracking-wide transition-transform duration-300 ease-apple group-hover/btn:translate-x-1.5">Enroll</span>
+                    <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-brand-700 text-white transition-all duration-500 ease-apple group-hover/btn:-rotate-45 group-hover/btn:bg-brand-600">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
+                        <path d="M5 12h14M13 6l6 6-6 6" />
+                      </svg>
+                    </span>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </Reveal>
+
+          {/* Mobile fallback: compact stacked cards */}
+          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:hidden">
             {courses.map((c, i) => (
-              <Reveal key={c.t} delay={(i % 3) * 80}>
-                <div className="card-hover flex h-full flex-col rounded-2xl bg-brand-50 p-6 ring-1 ring-brand-100">
-                  <h3 className="text-lg font-bold text-brand-dark">{c.t}</h3>
-                  <p className="mt-3 flex-1 text-sm leading-relaxed text-slate-500">{c.d}</p>
-                  <p className="mt-4 text-sm text-slate-600">Duration: {c.m}</p>
-                  <p className="text-sm text-slate-600">Start Time:</p>
-                  <Link to="/register" className="mt-5 w-fit rounded-full bg-brand-600 px-8 py-2 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-brand-700">Enroll</Link>
+              <Reveal key={c.t} delay={(i % 2) * 90}>
+                <div className="group relative h-full overflow-hidden rounded-3xl bg-white p-6 shadow-soft ring-1 ring-slate-100 transition-all duration-500 ease-apple hover:-translate-y-1 hover:shadow-lift dark:bg-white/5 dark:ring-white/10">
+                  <span className="pointer-events-none absolute -right-1 -top-5 select-none text-6xl font-extrabold text-slate-100 dark:text-white/5">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <h3 className="relative text-lg font-bold text-brand-dark">{c.t}</h3>
+                  <p className="relative mt-2 text-sm leading-relaxed text-slate-500 dark:text-slate-400">{c.d}</p>
+                  <div className="relative mt-4 flex flex-wrap gap-2">
+                    <span className="rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold text-brand-600 dark:bg-white/10 dark:text-blue-300">{c.m}</span>
+                    <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-300">Start Anytime</span>
+                  </div>
+                  <Link to="/register" className="relative mt-5 inline-flex w-fit rounded-full bg-brand-600 px-8 py-2 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-brand-700">
+                    Enroll
+                  </Link>
                 </div>
               </Reveal>
             ))}
           </div>
+
+          {/* Funnel to the full catalog */}
+          <Reveal className="mt-12 text-center">
+            <Link
+              to="/courses"
+              className="group inline-flex items-center gap-2.5 rounded-full border-2 border-brand-200 px-9 py-3 text-sm font-bold text-brand-600 transition-all duration-300 ease-apple hover:-translate-y-0.5 hover:border-brand-400 hover:bg-brand-50 dark:border-white/20 dark:text-blue-300 dark:hover:bg-white/5"
+            >
+              View All Courses and Fees
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5">
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg>
+            </Link>
+          </Reveal>
         </div>
       </section>
 
