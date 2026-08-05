@@ -226,7 +226,7 @@ export default function Home() {
       {/* ABOUT US — What is Up Skills Hub? */}
       <section id="about" className="bg-slate-50/70 pb-16 pt-8 sm:pb-24 sm:pt-10 dark:bg-transparent">
         <div className="container-page">
-          <Reveal className="mx-auto max-w-3xl text-center">
+          <Reveal effect="rich" className="mx-auto max-w-3xl text-center">
             <SectionHeading eyebrow="About Us" title="What is" accent="Up Skills Hub?" />
             <p className="mt-6 text-slate-500">
               Up Skills Hub is positioned as a practical, career-focused platform designed to bridge
@@ -245,7 +245,7 @@ export default function Home() {
               ];
               const a = accents[i];
               return (
-                <Reveal key={c.t} delay={i * 90} className={a.span}>
+                <Reveal effect="rich" key={c.t} delay={i * 90} className={a.span}>
                   <div className="group relative h-full overflow-hidden rounded-3xl bg-white p-8 shadow-soft ring-1 ring-slate-100 transition-all duration-500 ease-apple hover:-translate-y-1.5 hover:shadow-lift dark:bg-white/5 dark:ring-white/10">
                     {/* Accent bar slides in on hover */}
                     <span className={`absolute inset-x-0 top-0 h-1 origin-left scale-x-0 bg-gradient-to-r ${a.bar} transition-transform duration-500 ease-apple group-hover:scale-x-100`} />
@@ -269,12 +269,12 @@ export default function Home() {
       {/* COURSES — Our Courses */}
       <section id="courses" className="pb-16 pt-8 sm:pb-24 sm:pt-10">
         <div className="container-page">
-          <Reveal className="text-center">
+          <Reveal effect="rich" className="text-center">
             <SectionHeading eyebrow="Learn a Skill" title="Our" accent="Courses" />
           </Reveal>
 
           {/* Interactive spotlight: pick a course on the left, preview it on the right */}
-          <Reveal className="mt-14 hidden gap-10 lg:grid lg:grid-cols-5">
+          <Reveal effect="rich" className="mt-14 hidden gap-10 lg:grid lg:grid-cols-5">
             {/* Course index */}
             <div className="lg:col-span-3">
               <ul className="divide-y divide-slate-100 dark:divide-white/10">
@@ -381,7 +381,7 @@ export default function Home() {
           {/* Mobile fallback: compact stacked cards */}
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:hidden">
             {courses.map((c, i) => (
-              <Reveal key={c.t} delay={(i % 2) * 90}>
+              <Reveal effect="rich" key={c.t} delay={(i % 2) * 90}>
                 <div className="group relative h-full overflow-hidden rounded-3xl bg-white p-6 shadow-soft ring-1 ring-slate-100 transition-all duration-500 ease-apple hover:-translate-y-1 hover:shadow-lift dark:bg-white/5 dark:ring-white/10">
                   <span className="pointer-events-none absolute -right-1 -top-5 select-none text-6xl font-extrabold text-slate-100 dark:text-white/5">
                     {String(i + 1).padStart(2, "0")}
@@ -401,7 +401,7 @@ export default function Home() {
           </div>
 
           {/* Funnel to the full catalog */}
-          <Reveal className="mt-12 text-center">
+          <Reveal effect="rich" className="mt-12 text-center">
             <Link
               to="/courses"
               className="group inline-flex items-center gap-2.5 rounded-full border-2 border-brand-200 px-9 py-3 text-sm font-bold text-brand-600 transition-all duration-300 ease-apple hover:-translate-y-0.5 hover:border-brand-400 hover:bg-brand-50 dark:border-white/20 dark:text-blue-300 dark:hover:bg-white/5"
@@ -424,7 +424,7 @@ export default function Home() {
         />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-brand-dark/95 via-brand-900/90 to-brand-dark/95" />
         <div className="container-page relative">
-          <Reveal className="mx-auto max-w-2xl text-center">
+          <Reveal effect="rich" className="mx-auto max-w-2xl text-center">
             <SectionHeading dark eyebrow="Hands-On Experience" title="Our" accent="Internship Programs" />
             <p className="mt-6 text-brand-100">
               Kick start your career with hands-on experience and real-world impact. Our internship
@@ -437,7 +437,7 @@ export default function Home() {
               { title: "Benefits", items: benefits },
               { title: "Why choose Us?", items: whyChoose },
             ].map((col, i) => (
-              <Reveal key={col.title} delay={i * 120}>
+              <Reveal effect="rich" key={col.title} delay={i * 120}>
                 <div className="rounded-2xl bg-white/5 p-8 ring-1 ring-white/10 backdrop-blur">
                   <h3 className="text-center text-xl font-bold text-white">{col.title}</h3>
                   <ul className="mt-6 space-y-5">
@@ -453,7 +453,7 @@ export default function Home() {
             ))}
           </div>
 
-          <Reveal className="mt-12 text-center">
+          <Reveal effect="rich" className="mt-12 text-center">
             {/* White pill wrapped in a rotating light border: unique to this section */}
             <div className="spin-border spin-border-pill inline-block shadow-lift transition-transform duration-300 ease-apple hover:-translate-y-1">
               <Link
@@ -477,7 +477,7 @@ export default function Home() {
       {/* TALENT MARKETPLACE — How employers hire our trainees */}
       <section id="talent" className="relative overflow-hidden bg-white pb-10 pt-8 sm:pb-14 sm:pt-10 dark:bg-brand-dark">
         <div className="container-page">
-          <Reveal className="mx-auto max-w-2xl text-center">
+          <Reveal effect="rich" className="mx-auto max-w-2xl text-center">
             <SectionHeading eyebrow="Talent Marketplace" title="How Employers Hire Our" accent="Talent" />
             <p className="mt-6 text-slate-500">
               Companies get real work done while our trainees gain paid, real-world experience.
@@ -495,7 +495,7 @@ export default function Home() {
 
             <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
               {talentSteps.map((s, i) => (
-                <Reveal key={s.title} delay={i * 140} className="relative text-center">
+                <Reveal effect="rich" key={s.title} delay={i * 140} className="relative text-center">
                   <div className="step-pulse relative mx-auto grid h-16 w-16 place-items-center rounded-2xl border border-brand-100 bg-white text-brand-600 dark:border-white/10 dark:bg-brand-900 dark:text-blue-300">
                     <s.icon className="h-7 w-7" />
                     <span className="absolute -right-2 -top-2 grid h-6 w-6 place-items-center rounded-full bg-brand-600 text-xs font-bold text-white">{i + 1}</span>
@@ -507,7 +507,7 @@ export default function Home() {
             </div>
           </div>
 
-          <Reveal className="mt-14 text-center">
+          <Reveal effect="rich" className="mt-14 text-center">
             <a
               href="#contact"
               onClick={scrollTo("contact")}
@@ -545,7 +545,7 @@ export default function Home() {
         </div>
 
         <div className="container-page relative z-10">
-          <Reveal className="mx-auto max-w-2xl text-center">
+          <Reveal effect="rich" className="mx-auto max-w-2xl text-center">
             <SectionHeading dark eyebrow="What We Offer" title="Our" accent="Services" />
             <p className="mt-6 text-slate-200">
               Beyond training, Up Skills Hub delivers real digital services for individuals and
@@ -555,7 +555,7 @@ export default function Home() {
 
           <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {services.map((s, i) => (
-              <Reveal key={s.title} delay={(i % 3) * 100}>
+              <Reveal effect="rich" key={s.title} delay={(i % 3) * 100}>
                 <div className="card-hover group flex h-full flex-col rounded-2xl bg-brand-50 p-8 ring-1 ring-brand-100">
                   <span className="grid h-14 w-14 place-items-center rounded-2xl bg-white text-brand-600 shadow-sm ring-1 ring-brand-100 transition-all duration-500 ease-apple group-hover:bg-brand-600 group-hover:text-white">
                     <s.icon className="h-7 w-7" />
@@ -572,7 +572,7 @@ export default function Home() {
       {/* SUCCESS STORIES — Testimonials from trainees */}
       <section id="success" className="relative overflow-hidden bg-white pb-16 pt-2 sm:pb-24 sm:pt-4 dark:bg-brand-dark">
         <div className="container-page">
-          <Reveal className="mx-auto max-w-2xl text-center">
+          <Reveal effect="rich" className="mx-auto max-w-2xl text-center">
             <SectionHeading eyebrow="Testimonials" title="Success" accent="Stories" />
             <p className="mt-6 text-slate-500">
               Real trainees, real results. Hear how Up Skills Hub helped them gain skills, land jobs,
