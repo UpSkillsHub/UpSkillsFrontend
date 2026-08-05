@@ -27,7 +27,26 @@ const esc = (s) =>
     .replace(/\)/g, "\\)");
 
 const col = (c) => c.map((v) => v.toFixed(3)).join(" ");
-const est = (s, size) => String(s).length * size * 0.52;
+
+// Per-character widths for Times (units of 1/1000 em), enough for accurate
+// centering and wrapping. Falls back to an average for anything unlisted.
+const WID_R = { " ": 250, ".": 250, ",": 250, ":": 278, ";": 278, "-": 333, "/": 278, "(": 333, ")": 333, "|": 200, "'": 333 };
+const charW = (ch, bold) => {
+  if (WID_R[ch] !== undefined) return WID_R[ch] * (bold ? 1.05 : 1);
+  const code = ch.charCodeAt(0);
+  const isUpper = code >= 65 && code <= 90;
+  const isDigit = code >= 48 && code <= 57;
+  if (isDigit) return bold ? 500 : 500;
+  if (isUpper) return bold ? 700 : 660;
+  return bold ? 520 : 470; // lowercase average
+};
+const est = (s, size, bold = false) => {
+  let w = 0;
+  for (const ch of String(s)) w += charW(ch, bold);
+  return (w / 1000) * size;
+};
+// 1.5 line spacing everywhere.
+const LH = (size) => size * 1.5;
 
 export function downloadCourseOutlinePdf(course, { registrationFee, onlineMonthlyFee, schedule, rwf }) {
   const pages = [];
@@ -44,23 +63,26 @@ export function downloadCourseOutlinePdf(course, { registrationFee, onlineMonthl
     ops.push(`${lw} w ${col(c)} RG ${x} ${(top - h).toFixed(1)} ${w} ${h} re S`);
   const raw = (str, x, yy, size, bold, c) =>
     ops.push(`BT /${bold ? "F2" : "F1"} ${size} Tf ${col(c)} rg ${x} ${yy.toFixed(1)} Td (${esc(str)}) Tj ET`);
-  const center = (str, yy, size, bold, c) => raw(str, (W - est(str, size)) / 2, yy, size, bold, c);
-  const rawRight = (str, xR, yy, size, bold, c) => raw(str, xR - est(str, size), yy, size, bold, c);
+  const center = (str, yy, size, bold, c) => raw(str, (W - est(str, size, bold)) / 2, yy, size, bold, c);
+  const centerIn = (str, xL, boxW, yy, size, bold, c) =>
+    raw(str, xL + (boxW - est(str, size, bold)) / 2, yy, size, bold, c);
+  const rawRight = (str, xR, yy, size, bold, c) => raw(str, xR - est(str, size, bold), yy, size, bold, c);
   const ensure = (need) => {
     if (y - need < FOOT + 18) newPage();
   };
-  const wrap = (str, size, maxW) => {
-    const maxChars = Math.floor(maxW / (size * 0.5));
+  // Measured word wrap: breaks on real text width, so nothing runs off the page.
+  const wrap = (str, size, maxW, bold = false) => {
     const words = String(str).split(" ");
     const out = [];
     let cur = "";
     for (const w of words) {
-      if ((cur + " " + w).trim().length > maxChars) {
-        out.push(cur.trim());
+      const next = cur ? `${cur} ${w}` : w;
+      if (est(next, size, bold) > maxW && cur) {
+        out.push(cur);
         cur = w;
-      } else cur += " " + w;
+      } else cur = next;
     }
-    if (cur.trim()) out.push(cur.trim());
+    if (cur) out.push(cur);
     return out;
   };
 
@@ -68,59 +90,73 @@ export function downloadCourseOutlinePdf(course, { registrationFee, onlineMonthl
   const IW = W - M * 2 - 32; // inner width
 
   const numHeading = (n, title) => {
-    ensure(34);
-    y -= 24;
-    raw(`${n}. ${title}`, IX, y, 10.8, true, NAVY);
-    y -= 3;
-    rect(IX, y + 1, est(`${n}. ${title}`, 10.8) + 4, 0.9, ACCENT);
-    y -= 3;
+    ensure(38);
+    y -= 26;
+    const label = `${n}. ${title}`;
+    raw(label, IX, y, 11.5, true, NAVY);
+    y -= 4;
+    rect(IX, y + 1, est(label, 11.5, true) + 4, 0.9, ACCENT);
+    y -= 4;
   };
 
-  const bulletAt = (str, x, yy, maxW, size = 9.6) => {
+  const BSZ = 10; // body size
+  const BLH = LH(BSZ); // 1.5 line spacing
+
+  const bulletAt = (str, x, yy, maxW, size = BSZ) => {
     const ls = wrap(str, size, maxW);
     ls.forEach((l, i) => {
       if (i === 0) ops.push(`${col(NAVY)} rg ${x + 1} ${(yy - 2.4).toFixed(1)} 3 3 re f`);
-      raw(l, x + 10, yy - i * 12.5, size, false, GRAY);
+      raw(l, x + 11, yy - i * LH(size), size, false, GRAY);
     });
     return ls.length;
   };
   const bullets = (items, indent = 10) => {
     items.forEach((it) => {
-      const rows = wrap(it, 9.6, IW - indent - 10).length;
-      ensure(rows * 12.5 + 4);
-      y -= 14;
-      bulletAt(it, IX + indent, y, IW - indent - 10);
-      y -= (rows - 1) * 12.5;
+      const rows = wrap(it, BSZ, IW - indent - 12).length;
+      ensure(rows * BLH + 4);
+      y -= BLH;
+      bulletAt(it, IX + indent, y, IW - indent - 12);
+      y -= (rows - 1) * BLH;
     });
   };
 
   // ================= Letterhead (white) =================
   newPage();
 
-  // Logo top-left with a thin border
-  sRect(M, H - 40, 58, 58, BORDER, 0.8);
-  ops.push(`q 52 0 0 52 ${M + 3} ${H - 95} cm /Im1 Do Q`);
+  // Logo top-left (no frame around it)
+  ops.push(`q 56 0 0 56 ${M} ${H - 96} cm /Im1 Do Q`);
 
   center("UP SKILLS HUB", H - 66, 22, true, NAVY);
-  center("Excellence in IT Services", H - 82, 9, false, LIGHT);
-  center(course.name.toUpperCase(), H - 104, 14, true, ACCENT);
-  center("COURSE OUTLINE", H - 120, 8.5, true, GRAY);
-  rect((W - 76) / 2, H - 124, 76, 0.9, GRAY);
+  center("Excellence in IT Services", H - 84, 9.5, false, LIGHT);
+  {
+    // Course name may need two centered lines on long titles.
+    let ty = H - 108;
+    wrap(course.name.toUpperCase(), 14, W - M * 2 - 80, true).forEach((l) => {
+      center(l, ty, 14, true, ACCENT);
+      ty -= 19;
+    });
+    center("COURSE OUTLINE", ty - 2, 9, true, GRAY);
+    const cw = est("COURSE OUTLINE", 9, true);
+    rect((W - cw) / 2, ty - 6, cw, 0.9, GRAY);
+    y = ty - 24;
+  }
 
-  // Topics strip (skills in caps, like the reference)
-  y = H - 142;
-  wrap(course.skills.join(",  ").toUpperCase(), 8, W - M * 2).forEach((l) => {
-    center(l, y, 8, true, INK);
-    y -= 11.5;
+  // Topics strip (skills in caps, like the reference), wrapped and centered
+  wrap(course.skills.join(",  ").toUpperCase(), 8.5, W - M * 2 - 10, true).forEach((l) => {
+    center(l, y, 8.5, true, INK);
+    y -= 13;
   });
-  y -= 4;
+  y -= 6;
 
   // ================= Level band =================
   const bandTop = y;
-  rect(M, bandTop, W - M * 2, 21, BLUE);
-  sRect(M, bandTop, W - M * 2, 21, NAVY, 0.9);
-  center(`${course.category.toUpperCase()}  -  ${course.durationMonths} MONTHS  -  ONLINE / ON-SITE`, bandTop - 14.5, 9.5, true, [1, 1, 1]);
-  y = bandTop - 21;
+  rect(M, bandTop, W - M * 2, 23, BLUE);
+  sRect(M, bandTop, W - M * 2, 23, NAVY, 0.9);
+  centerIn(
+    `${course.category.toUpperCase()}   -   ${course.durationMonths} MONTHS   -   ONLINE / ON-SITE`,
+    M, W - M * 2, bandTop - 15.5, 10, true, [1, 1, 1],
+  );
+  y = bandTop - 23;
 
   // ================= Framed content =================
   const frameTopPage = pages.length;
@@ -128,10 +164,10 @@ export function downloadCourseOutlinePdf(course, { registrationFee, onlineMonthl
   y -= 4;
 
   numHeading(1, "Course Overview");
-  wrap(course.description, 9.8, IW).forEach((l) => {
-    ensure(13.5);
-    y -= 13.5;
-    raw(l, IX, y, 9.8, false, INK);
+  wrap(course.description, BSZ, IW).forEach((l) => {
+    ensure(BLH);
+    y -= BLH;
+    raw(l, IX, y, BSZ, false, INK);
   });
 
   numHeading(2, "Skills You Will Learn");
@@ -139,12 +175,12 @@ export function downloadCourseOutlinePdf(course, { registrationFee, onlineMonthl
     const colW = IW / 2;
     const rows = Math.ceil(course.skills.length / 2);
     for (let r = 0; r < rows; r++) {
-      ensure(15);
-      y -= 14;
+      ensure(BLH + 2);
+      y -= BLH;
       const a = course.skills[r];
       const b = course.skills[r + rows];
-      if (a) bulletAt(a, IX + 10, y, colW - 26);
-      if (b) bulletAt(b, IX + colW + 4, y, colW - 26);
+      if (a) bulletAt(a, IX + 10, y, colW - 30);
+      if (b) bulletAt(b, IX + colW + 6, y, colW - 30);
     }
   }
 
@@ -165,51 +201,54 @@ export function downloadCourseOutlinePdf(course, { registrationFee, onlineMonthl
 
   // ================= Bottom boxes =================
   {
-    const gap = 12;
+    const gap = 14;
     const boxW = (W - M * 2 - gap) / 2;
-    const reqSize = 9.2;
-    const reqHeights = course.requirements.map((r) => wrap(r, reqSize, boxW - 40).length);
+    const rSize = 9.5;
+    const rLH = LH(rSize);
+    const reqHeights = course.requirements.map((r) => wrap(r, rSize, boxW - 42).length);
     const reqRows = reqHeights.reduce((a, b) => a + b, 0);
-    const innerH = Math.max(reqRows * 12.5 + 6, 3 * 16 + 24);
-    const boxH = innerH + 40;
+    const certLines = wrap("(A recognized certificate is awarded upon successful completion)", 8, boxW - 30, true);
+    const innerH = Math.max(reqRows * rLH + 6, 3 * 17 + certLines.length * 11 + 8);
+    const boxH = innerH + 42;
 
-    ensure(boxH + 26);
-    y -= 18;
+    ensure(boxH + 28);
+    y -= 20;
     const top = y;
 
     // Requirements (bordered, white)
     sRect(M, top, boxW, boxH, NAVY, 1);
-    raw("REQUIREMENTS", M + 14, top - 17, 9.8, true, NAVY);
-    rect(M + 14, top - 20.5, est("REQUIREMENTS", 9.8), 0.9, NAVY);
-    let ry = top - 37;
-    course.requirements.forEach((r, i) => {
-      const ls = wrap(r, reqSize, boxW - 40);
+    raw("REQUIREMENTS", M + 14, top - 18, 10, true, NAVY);
+    rect(M + 14, top - 22, est("REQUIREMENTS", 10, true), 0.9, NAVY);
+    let ry = top - 40;
+    course.requirements.forEach((r) => {
+      const ls = wrap(r, rSize, boxW - 42);
       ls.forEach((l, j) => {
         if (j === 0) ops.push(`${col(NAVY)} rg ${M + 16} ${(ry - 2.4).toFixed(1)} 3 3 re f`);
-        raw(l, M + 25, ry - j * 12.5, reqSize, false, GRAY);
+        raw(l, M + 26, ry - j * rLH, rSize, false, GRAY);
       });
-      ry -= ls.length * 12.5 + 1.5;
+      ry -= ls.length * rLH + 2;
     });
 
     // Course fee (filled + bordered, like the highlighted fee box)
     const fx = M + boxW + gap;
     rect(fx, top, boxW, boxH, FEEBG);
     sRect(fx, top, boxW, boxH, NAVY, 1);
-    raw("COURSE FEE", fx + 14, top - 17, 9.8, true, NAVY);
-    rect(fx + 14, top - 20.5, est("COURSE FEE", 9.8), 0.9, NAVY);
-    let fy = top - 37;
+    raw("COURSE FEE", fx + 14, top - 18, 10, true, NAVY);
+    rect(fx + 14, top - 22, est("COURSE FEE", 10, true), 0.9, NAVY);
+    let fy = top - 40;
     [
       ["Registration (one-time)", rwf(registrationFee)],
       ["On-site program fee", `${rwf(course.monthlyFee)} /mo`],
       ["Online / self-coaching", `${rwf(onlineMonthlyFee)} /mo`],
     ].forEach(([label, value]) => {
-      raw(label, fx + 14, fy, 8.6, false, GRAY);
-      rawRight(value, fx + boxW - 14, fy, 9.4, true, NAVY);
-      fy -= 16;
+      raw(label, fx + 14, fy, 8.8, false, GRAY);
+      rawRight(value, fx + boxW - 14, fy, 9.6, true, NAVY);
+      fy -= 17;
     });
-    wrap("(A recognized certificate is awarded upon successful completion)", 7.6, boxW - 28).forEach((l) => {
-      raw(l, fx + 14, fy, 7.6, true, RED);
-      fy -= 10;
+    fy -= 2;
+    certLines.forEach((l) => {
+      raw(l, fx + 14, fy, 8, true, RED);
+      fy -= 11;
     });
 
     y = top - boxH;
@@ -220,12 +259,12 @@ export function downloadCourseOutlinePdf(course, { registrationFee, onlineMonthl
   pages.forEach((p, i) => {
     const saved = ops;
     ops = p;
-    rect(M, FOOT - 8, W - M * 2, 0.9, BORDER);
+    rect(M, FOOT - 6, W - M * 2, 0.9, BORDER);
     const l1 = "Up Skills Hub  |  KG 173 Street, Remera, Kigali, Rwanda";
     const l2 = "upskillshub.info@gmail.com  |  +250 781 796 283  |  www.upskillshub.com";
-    raw(l1, (W - est(l1, 8)) / 2, FOOT - 22, 8, false, LIGHT);
-    raw(l2, (W - est(l2, 8)) / 2, FOOT - 34, 8, false, LIGHT);
-    if (total > 1) rawRight(`Page ${i + 1} of ${total}`, W - M, FOOT - 22, 8, false, LIGHT);
+    raw(l1, (W - est(l1, 8.5)) / 2, FOOT - 22, 8.5, false, LIGHT);
+    raw(l2, (W - est(l2, 8.5)) / 2, FOOT - 35, 8.5, false, LIGHT);
+    if (total > 1) rawRight(`Page ${i + 1} of ${total}`, W - M, FOOT - 22, 8.5, false, LIGHT);
     ops = saved;
   });
 
@@ -234,8 +273,8 @@ export function downloadCourseOutlinePdf(course, { registrationFee, onlineMonthl
   const objs = [];
   objs[1] = `<< /Type /Catalog /Pages 2 0 R >>`;
   objs[2] = `<< /Type /Pages /Kids [${pages.map((_, i) => `${6 + i * 2} 0 R`).join(" ")}] /Count ${pages.length} >>`;
-  objs[3] = `<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>`;
-  objs[4] = `<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>`;
+  objs[3] = `<< /Type /Font /Subtype /Type1 /BaseFont /Times-Roman >>`;
+  objs[4] = `<< /Type /Font /Subtype /Type1 /BaseFont /Times-Bold >>`;
   objs[5] = `<< /Type /XObject /Subtype /Image /Width ${LOGO_SIZE} /Height ${LOGO_SIZE} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${logoBin.length} >>\nstream\n${logoBin}\nendstream`;
   pages.forEach((p, i) => {
     const stream = p.join("\n");
