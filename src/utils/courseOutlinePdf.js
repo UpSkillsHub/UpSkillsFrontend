@@ -1,23 +1,23 @@
 // Dependency-free PDF generator for course outlines.
-// Brochure-style A4: navy masthead with logo, filled section bands, compact
-// content, side-by-side Requirements / Fees boxes, navy footer band.
-// Typical courses fit on a single page.
+// Styled after the reference brochure: white page, centered letterhead with the
+// logo, a topics strip, a colored level band, a framed content area with
+// numbered sections, and bordered Requirements / Course Fee boxes at the bottom.
 
 import { LOGO_JPEG_B64, LOGO_SIZE } from "./logoData.js";
 
 const W = 595;
 const H = 842;
-const M = 50;
-const NAVY = [0.106, 0.165, 0.29]; // #1b2a4a
-const ACCENT = [0.231, 0.51, 0.965]; // #3b82f6
-const BAND = [0.918, 0.943, 0.985]; // light blue band
-const PANEL = [0.955, 0.965, 0.985];
+const M = 46;
+const NAVY = [0.106, 0.165, 0.29];
+const BLUE = [0.184, 0.31, 0.514];
+const ACCENT = [0.231, 0.51, 0.965];
+const RED = [0.78, 0.12, 0.12];
+const INK = [0.13, 0.16, 0.22];
+const GRAY = [0.32, 0.37, 0.45];
+const LIGHT = [0.58, 0.63, 0.71];
+const BORDER = [0.72, 0.76, 0.82];
 const FEEBG = [0.878, 0.922, 0.988];
-const INK = [0.16, 0.2, 0.27];
-const GRAY = [0.33, 0.38, 0.46];
-const LIGHT = [0.62, 0.68, 0.76];
-const RULE = [0.87, 0.9, 0.94];
-const FOOT_H = 46;
+const FOOT = 58;
 
 const esc = (s) =>
   String(s)
@@ -27,6 +27,7 @@ const esc = (s) =>
     .replace(/\)/g, "\\)");
 
 const col = (c) => c.map((v) => v.toFixed(3)).join(" ");
+const est = (s, size) => String(s).length * size * 0.52;
 
 export function downloadCourseOutlinePdf(course, { registrationFee, onlineMonthlyFee, schedule, rwf }) {
   const pages = [];
@@ -36,17 +37,17 @@ export function downloadCourseOutlinePdf(course, { registrationFee, onlineMonthl
   const newPage = () => {
     ops = [];
     pages.push(ops);
-    y = H - 64;
+    y = H - 56;
   };
   const rect = (x, top, w, h, c) => ops.push(`${col(c)} rg ${x} ${(top - h).toFixed(1)} ${w} ${h} re f`);
+  const sRect = (x, top, w, h, c = BORDER, lw = 0.9) =>
+    ops.push(`${lw} w ${col(c)} RG ${x} ${(top - h).toFixed(1)} ${w} ${h} re S`);
   const raw = (str, x, yy, size, bold, c) =>
     ops.push(`BT /${bold ? "F2" : "F1"} ${size} Tf ${col(c)} rg ${x} ${yy.toFixed(1)} Td (${esc(str)}) Tj ET`);
-  const rawRight = (str, xRight, yy, size, bold, c) => {
-    const w = String(str).length * size * 0.52;
-    raw(str, xRight - w, yy, size, bold, c);
-  };
+  const center = (str, yy, size, bold, c) => raw(str, (W - est(str, size)) / 2, yy, size, bold, c);
+  const rawRight = (str, xR, yy, size, bold, c) => raw(str, xR - est(str, size), yy, size, bold, c);
   const ensure = (need) => {
-    if (y - need < FOOT_H + 24) newPage();
+    if (y - need < FOOT + 18) newPage();
   };
   const wrap = (str, size, maxW) => {
     const maxChars = Math.floor(maxW / (size * 0.5));
@@ -63,156 +64,172 @@ export function downloadCourseOutlinePdf(course, { registrationFee, onlineMonthl
     return out;
   };
 
-  // Filled section band with accent edge (like the reference brochure).
-  const band = (title) => {
-    ensure(42);
-    y -= 28;
-    rect(M, y + 16, W - M * 2, 19, BAND);
-    rect(M, y + 16, 3.5, 19, ACCENT);
-    raw(title.toUpperCase(), M + 13, y + 3.2, 10.5, true, NAVY);
-    y -= 4;
+  const IX = M + 16; // inner x inside the frame
+  const IW = W - M * 2 - 32; // inner width
+
+  const numHeading = (n, title) => {
+    ensure(34);
+    y -= 24;
+    raw(`${n}. ${title}`, IX, y, 10.8, true, NAVY);
+    y -= 3;
+    rect(IX, y + 1, est(`${n}. ${title}`, 10.8) + 4, 0.9, ACCENT);
+    y -= 3;
   };
 
-  const bulletAt = (str, x, yy, maxW, size = 9.8, c = GRAY) => {
+  const bulletAt = (str, x, yy, maxW, size = 9.6) => {
     const ls = wrap(str, size, maxW);
     ls.forEach((l, i) => {
-      if (i === 0) ops.push(`${col(ACCENT)} rg ${x + 1.5} ${(yy - 2.5).toFixed(1)} 3.2 3.2 re f`);
-      raw(l, x + 11, yy - i * 13, size, false, c);
+      if (i === 0) ops.push(`${col(NAVY)} rg ${x + 1} ${(yy - 2.4).toFixed(1)} 3 3 re f`);
+      raw(l, x + 10, yy - i * 12.5, size, false, GRAY);
     });
     return ls.length;
   };
-
-  const bullets = (items, size = 9.8) => {
+  const bullets = (items, indent = 10) => {
     items.forEach((it) => {
-      const rows = wrap(it, size, W - M * 2 - 11).length;
-      ensure(rows * 13 + 4);
-      y -= 14.5;
-      bulletAt(it, M + 2, y, W - M * 2 - 11, size);
-      y -= (rows - 1) * 13;
+      const rows = wrap(it, 9.6, IW - indent - 10).length;
+      ensure(rows * 12.5 + 4);
+      y -= 14;
+      bulletAt(it, IX + indent, y, IW - indent - 10);
+      y -= (rows - 1) * 12.5;
     });
   };
 
-  // ---------- Masthead ----------
+  // ================= Letterhead (white) =================
   newPage();
-  const nameLines = wrap(course.name, 19, W - M * 2);
-  const bandH = 128 + (nameLines.length - 1) * 23;
-  rect(0, H, W, bandH, NAVY);
-  rect(0, H - bandH + 3.5, W, 3.5, ACCENT);
 
-  rect(M, H - 22, 52, 52, [1, 1, 1]);
-  ops.push(`q 46 0 0 46 ${M + 3} ${H - 71} cm /Im1 Do Q`);
+  // Logo top-left with a thin border
+  sRect(M, H - 40, 58, 58, BORDER, 0.8);
+  ops.push(`q 52 0 0 52 ${M + 3} ${H - 95} cm /Im1 Do Q`);
 
-  raw("UP SKILLS HUB", M + 64, H - 42, 11.5, true, [1, 1, 1]);
-  raw("Excellence in IT Services", M + 64, H - 56, 8, false, [0.66, 0.76, 0.95]);
-  rawRight("COURSE OUTLINE", W - M, H - 42, 8.5, true, [0.66, 0.76, 0.95]);
+  center("UP SKILLS HUB", H - 66, 22, true, NAVY);
+  center("Excellence in IT Services", H - 82, 9, false, LIGHT);
+  center(course.name.toUpperCase(), H - 104, 14, true, ACCENT);
+  center("COURSE OUTLINE", H - 120, 8.5, true, GRAY);
+  rect((W - 76) / 2, H - 124, 76, 0.9, GRAY);
 
-  let hy = H - 95;
-  nameLines.forEach((l) => {
-    raw(l, M, hy, 19, true, [1, 1, 1]);
-    hy -= 23;
+  // Topics strip (skills in caps, like the reference)
+  y = H - 142;
+  wrap(course.skills.join(",  ").toUpperCase(), 8, W - M * 2).forEach((l) => {
+    center(l, y, 8, true, INK);
+    y -= 11.5;
   });
-  raw(`${course.category}   |   ${course.durationMonths} months   |   Online / On-site   |   Recognized certificate`, M, hy + 5, 9, false, [0.75, 0.82, 0.95]);
+  y -= 4;
 
-  y = H - bandH - 10;
+  // ================= Level band =================
+  const bandTop = y;
+  rect(M, bandTop, W - M * 2, 21, BLUE);
+  sRect(M, bandTop, W - M * 2, 21, NAVY, 0.9);
+  center(`${course.category.toUpperCase()}  -  ${course.durationMonths} MONTHS  -  ONLINE / ON-SITE`, bandTop - 14.5, 9.5, true, [1, 1, 1]);
+  y = bandTop - 21;
 
-  // ---------- Overview ----------
-  band("Course Overview");
-  wrap(course.description, 10, W - M * 2).forEach((l) => {
-    ensure(14);
-    y -= 14;
-    raw(l, M + 2, y, 10, false, INK);
+  // ================= Framed content =================
+  const frameTopPage = pages.length;
+  const frameTop = y;
+  y -= 4;
+
+  numHeading(1, "Course Overview");
+  wrap(course.description, 9.8, IW).forEach((l) => {
+    ensure(13.5);
+    y -= 13.5;
+    raw(l, IX, y, 9.8, false, INK);
   });
 
-  // ---------- Skills (two columns) ----------
-  band("Skills You Will Learn");
+  numHeading(2, "Skills You Will Learn");
   {
-    const colW = (W - M * 2) / 2;
+    const colW = IW / 2;
     const rows = Math.ceil(course.skills.length / 2);
     for (let r = 0; r < rows; r++) {
-      ensure(16);
-      y -= 14.5;
-      const left = course.skills[r];
-      const right = course.skills[r + rows];
-      if (left) bulletAt(left, M + 2, y, colW - 22);
-      if (right) bulletAt(right, M + colW + 6, y, colW - 22);
+      ensure(15);
+      y -= 14;
+      const a = course.skills[r];
+      const b = course.skills[r + rows];
+      if (a) bulletAt(a, IX + 10, y, colW - 26);
+      if (b) bulletAt(b, IX + colW + 4, y, colW - 26);
     }
   }
 
-  // ---------- Duration & Schedule ----------
-  band("Duration and Schedule");
+  numHeading(3, "Duration and Schedule");
   bullets([`Duration: ${course.durationMonths} months`, ...schedule]);
 
-  // ---------- Online / On-site ----------
-  band("Online / On-site Options");
+  numHeading(4, "Online / On-site Options");
   bullets([
     `On-site in Kigali: ${rwf(course.monthlyFee)} per month, hands-on classes at our campus.`,
     `Online / self-coaching: ${rwf(onlineMonthlyFee)} per month, learn from anywhere.`,
   ]);
 
-  // ---------- Bottom row: Requirements box + Fees box ----------
-  {
-    const gap = 14;
-    const boxW = (W - M * 2 - gap) / 2;
-    const reqSize = 9.5;
-    const reqRowHeights = course.requirements.map((r) => wrap(r, reqSize, boxW - 34).length);
-    const reqRows = reqRowHeights.reduce((a, b) => a + b, 0);
-    const feeRows = 3;
-    const innerH = Math.max(reqRows * 13 + 8, feeRows * 17 + 26);
-    const boxH = innerH + 38;
+  y -= 10;
+  // Close the frame only if everything stayed on one page.
+  if (pages.length === frameTopPage) {
+    sRect(M, frameTop, W - M * 2, frameTop - y, BORDER, 0.9);
+  }
 
-    ensure(boxH + 34);
-    y -= 24;
+  // ================= Bottom boxes =================
+  {
+    const gap = 12;
+    const boxW = (W - M * 2 - gap) / 2;
+    const reqSize = 9.2;
+    const reqHeights = course.requirements.map((r) => wrap(r, reqSize, boxW - 40).length);
+    const reqRows = reqHeights.reduce((a, b) => a + b, 0);
+    const innerH = Math.max(reqRows * 12.5 + 6, 3 * 16 + 24);
+    const boxH = innerH + 40;
+
+    ensure(boxH + 26);
+    y -= 18;
     const top = y;
 
-    // Requirements box
-    rect(M, top, boxW, boxH, PANEL);
-    rect(M, top, boxW, 20, BAND);
-    rect(M, top, 3.5, boxH, ACCENT);
-    raw("REQUIREMENTS", M + 13, top - 13.5, 9.5, true, NAVY);
-    let ry = top - 34;
+    // Requirements (bordered, white)
+    sRect(M, top, boxW, boxH, NAVY, 1);
+    raw("REQUIREMENTS", M + 14, top - 17, 9.8, true, NAVY);
+    rect(M + 14, top - 20.5, est("REQUIREMENTS", 9.8), 0.9, NAVY);
+    let ry = top - 37;
     course.requirements.forEach((r, i) => {
-      bulletAt(r, M + 12, ry, boxW - 34, reqSize);
-      ry -= reqRowHeights[i] * 13 + 1;
+      const ls = wrap(r, reqSize, boxW - 40);
+      ls.forEach((l, j) => {
+        if (j === 0) ops.push(`${col(NAVY)} rg ${M + 16} ${(ry - 2.4).toFixed(1)} 3 3 re f`);
+        raw(l, M + 25, ry - j * 12.5, reqSize, false, GRAY);
+      });
+      ry -= ls.length * 12.5 + 1.5;
     });
 
-    // Fees box
+    // Course fee (filled + bordered, like the highlighted fee box)
     const fx = M + boxW + gap;
     rect(fx, top, boxW, boxH, FEEBG);
-    rect(fx, top, boxW, 20, NAVY);
-    raw("FEES", fx + 13, top - 13.5, 9.5, true, [1, 1, 1]);
-    let fy = top - 36;
+    sRect(fx, top, boxW, boxH, NAVY, 1);
+    raw("COURSE FEE", fx + 14, top - 17, 9.8, true, NAVY);
+    rect(fx + 14, top - 20.5, est("COURSE FEE", 9.8), 0.9, NAVY);
+    let fy = top - 37;
     [
       ["Registration (one-time)", rwf(registrationFee)],
       ["On-site program fee", `${rwf(course.monthlyFee)} /mo`],
       ["Online / self-coaching", `${rwf(onlineMonthlyFee)} /mo`],
     ].forEach(([label, value]) => {
-      raw(label, fx + 13, fy, 8.8, false, GRAY);
-      rawRight(value, fx + boxW - 13, fy, 9.5, true, NAVY);
-      fy -= 17;
+      raw(label, fx + 14, fy, 8.6, false, GRAY);
+      rawRight(value, fx + boxW - 14, fy, 9.4, true, NAVY);
+      fy -= 16;
     });
-    wrap("A recognized certificate is awarded upon successful completion.", 7.8, boxW - 26).forEach((l) => {
-      raw(l, fx + 13, fy, 7.8, false, [0.35, 0.45, 0.6]);
+    wrap("(A recognized certificate is awarded upon successful completion)", 7.6, boxW - 28).forEach((l) => {
+      raw(l, fx + 14, fy, 7.6, true, RED);
       fy -= 10;
     });
 
     y = top - boxH;
   }
 
-  // ---------- Navy footer band on every page ----------
+  // ================= White footer on every page =================
   const total = pages.length;
   pages.forEach((p, i) => {
     const saved = ops;
     ops = p;
-    rect(0, FOOT_H, W, FOOT_H, NAVY);
-    rect(0, FOOT_H, W, 2, ACCENT);
-    raw("Up Skills Hub  |  KG 173 Street, Remera, Kigali, Rwanda", M, FOOT_H - 19, 7.8, false, [0.78, 0.84, 0.95]);
-    raw("upskillshub.info@gmail.com   |   +250 781 796 283   |   www.upskillshub.com", M, FOOT_H - 32, 7.8, false, [0.78, 0.84, 0.95]);
-    if (total > 1) rawRight(`Page ${i + 1} of ${total}`, W - M, FOOT_H - 19, 7.8, false, [0.78, 0.84, 0.95]);
-    rawRight("Learn. Practice. Grow. Succeed.", W - M, FOOT_H - 32, 7.8, true, [0.66, 0.76, 0.95]);
+    rect(M, FOOT - 8, W - M * 2, 0.9, BORDER);
+    const l1 = "Up Skills Hub  |  KG 173 Street, Remera, Kigali, Rwanda";
+    const l2 = "upskillshub.info@gmail.com  |  +250 781 796 283  |  www.upskillshub.com";
+    raw(l1, (W - est(l1, 8)) / 2, FOOT - 22, 8, false, LIGHT);
+    raw(l2, (W - est(l2, 8)) / 2, FOOT - 34, 8, false, LIGHT);
+    if (total > 1) rawRight(`Page ${i + 1} of ${total}`, W - M, FOOT - 22, 8, false, LIGHT);
     ops = saved;
   });
 
-  // ---------- Assemble (binary-safe) ----------
+  // ================= Assemble (binary-safe) =================
   const logoBin = atob(LOGO_JPEG_B64);
   const objs = [];
   objs[1] = `<< /Type /Catalog /Pages 2 0 R >>`;
