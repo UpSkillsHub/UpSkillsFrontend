@@ -183,6 +183,19 @@ section[id] {
 }
 .anim-kenburns { animation: kenBurns 22s ease-in-out infinite alternate; will-change: transform; }
 
+/* Hero background slideshow: two photos crossfade indefinitely, each with its own slow zoom */
+@keyframes heroXfade {
+  0%, 40% { opacity: 1; }
+  50%, 90% { opacity: 0; }
+  100% { opacity: 1; }
+}
+.hero-xfade {
+  animation:
+    heroXfade 16s ease-in-out infinite,
+    kenBurns 22s ease-in-out infinite alternate;
+  will-change: opacity, transform;
+}
+
 /* Courses hero: tiny glowing particles drifting upward */
 @keyframes particleRise {
   0% { transform: translateY(0) scale(1); opacity: 0; }

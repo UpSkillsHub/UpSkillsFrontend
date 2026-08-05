@@ -10,14 +10,22 @@ export default function Reveal({ children, as: Tag = "div", delay = 0, className
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    // Keep observing so the entrance replays when scrolling back up or down.
+    // "rich" reveals replay in both scroll directions; the default reveal fires
+    // once and stays, which keeps busy pages (like Home) smooth and stable.
     const obs = new IntersectionObserver(
-      ([entry]) => setVisible(entry.isIntersecting),
+      ([entry]) => {
+        if (effect === "rich") {
+          setVisible(entry.isIntersecting);
+        } else if (entry.isIntersecting) {
+          setVisible(true);
+          obs.disconnect();
+        }
+      },
       { threshold: 0.12, rootMargin: "0px 0px -40px 0px" },
     );
     obs.observe(el);
     return () => obs.disconnect();
-  }, []);
+  }, [effect]);
 
   return (
     <Tag

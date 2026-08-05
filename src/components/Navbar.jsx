@@ -40,16 +40,33 @@ export default function Navbar() {
     setDark(next);
   };
 
+  // Day/night switch: gradient track, sliding knob, stars at night and a soft cloud by day.
   const ThemeToggle = ({ className = "" }) => (
     <button
       onClick={toggleTheme}
       aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
       title={dark ? "Light mode" : "Dark mode"}
-      className={`group grid h-10 w-10 place-items-center rounded-xl border-2 border-brand-600 text-brand-600 transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-50 dark:border-blue-400 dark:text-blue-300 dark:hover:bg-white/10 ${className}`}
+      className={`relative h-9 w-[4.25rem] shrink-0 overflow-hidden rounded-full p-1 shadow-inner ring-1 transition-all duration-500 ease-apple hover:scale-105 active:scale-95 ${
+        dark
+          ? "bg-gradient-to-r from-brand-900 via-brand-800 to-brand-600 ring-white/15"
+          : "bg-gradient-to-r from-sky-300 via-sky-400 to-blue-400 ring-black/5"
+      } ${className}`}
     >
-      <span className="relative h-[17px] w-[17px] transition-transform duration-500 ease-apple group-hover:rotate-45">
-        <IconSun className={`absolute inset-0 h-[17px] w-[17px] transition-all duration-500 ease-apple ${dark ? "rotate-0 scale-100 opacity-100" : "-rotate-90 scale-0 opacity-0"}`} />
-        <IconMoon className={`absolute inset-0 h-[17px] w-[17px] transition-all duration-500 ease-apple ${dark ? "rotate-90 scale-0 opacity-0" : "rotate-0 scale-100 opacity-100"}`} />
+      {/* Night stars */}
+      <span className={`absolute left-2.5 top-2 h-1 w-1 rounded-full bg-white transition-opacity duration-500 ${dark ? "opacity-90" : "opacity-0"}`} />
+      <span className={`absolute left-5 top-5 h-[3px] w-[3px] rounded-full bg-blue-200 transition-opacity duration-500 ${dark ? "opacity-80" : "opacity-0"}`} />
+      <span className={`absolute left-7 top-2.5 h-[2px] w-[2px] rounded-full bg-white transition-opacity duration-500 ${dark ? "opacity-70" : "opacity-0"}`} />
+      {/* Day cloud */}
+      <span className={`absolute right-3 top-2.5 h-2 w-5 rounded-full bg-white/70 blur-[1px] transition-opacity duration-500 ${dark ? "opacity-0" : "opacity-90"}`} />
+      <span className={`absolute right-5 top-4 h-1.5 w-4 rounded-full bg-white/50 blur-[1px] transition-opacity duration-500 ${dark ? "opacity-0" : "opacity-80"}`} />
+      {/* Sliding knob */}
+      <span
+        className={`relative grid h-7 w-7 place-items-center rounded-full bg-white shadow-soft transition-all duration-500 ease-apple ${
+          dark ? "translate-x-[2.25rem] rotate-[360deg]" : "translate-x-0"
+        }`}
+      >
+        <IconSun className={`absolute h-4 w-4 text-amber-500 transition-all duration-500 ease-apple ${dark ? "scale-0 opacity-0" : "scale-100 opacity-100"}`} />
+        <IconMoon className={`absolute h-4 w-4 text-brand-600 transition-all duration-500 ease-apple ${dark ? "scale-100 opacity-100" : "scale-0 opacity-0"}`} />
       </span>
     </button>
   );

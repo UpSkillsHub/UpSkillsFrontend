@@ -198,15 +198,20 @@ export default function Courses() {
   return (
     <div>
       {/* ================= Hero ================= */}
-      <section className="relative overflow-hidden">
-        {/* Background photo with a slow cinematic zoom */}
+      <section className="relative overflow-hidden bg-brand-900">
+        {/* Background slideshow: course1 and course2 crossfade forever, each slowly zooming */}
         <div className="absolute inset-0">
-          <img
-            src="/images/background.jpg"
-            alt=""
-            aria-hidden="true"
-            className="anim-kenburns h-full w-full object-cover"
-          />
+          {["/images/hero/course1.jpg", "/images/hero/course2.jpg"].map((src, i) => (
+            <img
+              key={src}
+              src={src}
+              alt=""
+              aria-hidden="true"
+              onError={(e) => { e.currentTarget.style.display = "none"; }}
+              className="hero-xfade absolute inset-0 h-full w-full object-cover"
+              style={{ animationDelay: i === 1 ? "-8s, -11s" : "0s, 0s" }}
+            />
+          ))}
           {/* Navy overlay keeps the text readable and on-brand */}
           <div className="absolute inset-0 bg-gradient-to-br from-brand-900/95 via-brand-800/85 to-brand-600/80" />
           <div className="absolute inset-0 bg-gradient-to-t from-brand-900/60 via-transparent to-transparent" />
@@ -453,10 +458,10 @@ export default function Courses() {
             {internshipPrograms.map((p, i) => (
               <Reveal key={p.slug} effect="rich" delay={i * 140}>
                 <div className="spin-border h-full shadow-lift transition-transform duration-500 ease-apple hover:-translate-y-2">
-                  <div className="relative flex h-full flex-col overflow-hidden bg-gradient-to-br from-brand-900 via-brand-800 to-brand-700 p-7">
+                  <div className="relative flex h-full flex-col overflow-hidden bg-gradient-to-br from-brand-400 via-brand-500 to-brand-600 p-7">
                     {/* Ambience */}
-                    <div className="anim-drift pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-blue-500/20 blur-3xl" />
-                    <div className="anim-drift-b pointer-events-none absolute -bottom-20 -left-16 h-48 w-48 rounded-full bg-brand-400/15 blur-3xl" />
+                    <div className="anim-drift pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-blue-300/25 blur-3xl" />
+                    <div className="anim-drift-b pointer-events-none absolute -bottom-20 -left-16 h-48 w-48 rounded-full bg-white/10 blur-3xl" />
                     {/* Giant watermark icon */}
                     <div className="pointer-events-none absolute -bottom-8 -right-6 text-white/[0.04]">
                       {i === 0 ? <IconBook className="h-44 w-44" /> : <IconGrad className="h-44 w-44" />}
@@ -500,7 +505,7 @@ export default function Courses() {
                           className="stagger-item relative flex items-center justify-between gap-4 py-3"
                           style={{ transitionDelay: `${250 + j * 140}ms` }}
                         >
-                          <span className={`absolute -left-7 top-1/2 h-3.5 w-3.5 -translate-y-1/2 rounded-full border-2 ${row.free ? "border-emerald-400 bg-emerald-400/30" : "border-blue-300 bg-brand-800"}`}>
+                          <span className={`absolute -left-7 top-1/2 h-3.5 w-3.5 -translate-y-1/2 rounded-full border-2 ${row.free ? "border-emerald-300 bg-emerald-400/40" : "border-blue-200 bg-brand-500"}`}>
                             {row.free && <span className="absolute inset-0 animate-ping rounded-full bg-emerald-400/60" />}
                           </span>
                           <p className="text-sm text-blue-200/80">{row.label}</p>
@@ -608,33 +613,23 @@ export default function Courses() {
       </section>
 
       {/* ================= CTA ================= */}
-      <section className="py-14 sm:py-16">
+      <section className="container-page py-14 sm:py-16">
         <Reveal effect="rich">
-          <ScrollScale min={0.96}>
-            <div className="cta-clip relative overflow-hidden bg-brand-900 py-24 text-center sm:py-32">
-              {/* Living aurora background */}
-              <div className="anim-aurora pointer-events-none absolute -left-24 top-0 h-[26rem] w-[26rem] rounded-full bg-blue-500/25 blur-3xl" />
-              <div className="anim-aurora-b pointer-events-none absolute -right-24 bottom-0 h-[26rem] w-[26rem] rounded-full bg-brand-400/25 blur-3xl" />
-              <div className="anim-aurora pointer-events-none absolute left-1/2 top-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-300/10 blur-3xl" style={{ animationDelay: "3s" }} />
-              {/* Rising particles */}
-              <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
-                {PARTICLES.slice(0, 10).map((p, i) => (
-                  <span
-                    key={i}
-                    className="hero-particle"
-                    style={{
-                      left: p.left,
-                      width: `${p.size}px`,
-                      height: `${p.size}px`,
-                      animationDuration: `${p.duration}s`,
-                      animationDelay: `${p.delay}s`,
-                      "--po": p.opacity,
-                    }}
-                  />
-                ))}
-              </div>
+          <ScrollScale min={0.95}>
+            <div className="relative overflow-hidden rounded-[3rem] bg-gradient-to-br from-brand-700 via-brand-600 to-brand-500 py-20 text-center shadow-lift sm:py-24">
+              {/* Overlapping translucent circles, always in slow motion */}
+              <div className="anim-aurora pointer-events-none absolute -left-28 -top-24 h-[26rem] w-[26rem] rounded-full border border-white/15 bg-blue-400/20" />
+              <div className="anim-aurora-b pointer-events-none absolute -bottom-32 -right-24 h-[28rem] w-[28rem] rounded-full border border-white/10 bg-brand-300/20" />
+              <div className="anim-aurora pointer-events-none absolute -bottom-20 left-1/4 h-72 w-72 rounded-full border border-white/10 bg-blue-300/15" style={{ animationDelay: "4s" }} />
+              {/* Rotating dashed ring */}
+              <div className="orbit-ring pointer-events-none absolute -top-24 right-1/4 h-72 w-72 rounded-full border-2 border-dashed border-blue-200/40" style={{ animationDuration: "18s" }} />
+              {/* Small floating bubbles */}
+              <span className="animate-float pointer-events-none absolute left-[12%] top-1/3 h-3 w-3 rounded-full bg-blue-200/60" />
+              <span className="animate-float pointer-events-none absolute right-[15%] top-1/4 h-2 w-2 rounded-full bg-white/50" style={{ animationDelay: "1.5s" }} />
+              <span className="animate-float pointer-events-none absolute bottom-1/4 left-[28%] h-2.5 w-2.5 rounded-full bg-blue-100/50" style={{ animationDelay: "3s" }} />
+              <span className="animate-float pointer-events-none absolute bottom-1/3 right-[30%] h-2 w-2 rounded-full bg-white/40" style={{ animationDelay: "4.5s" }} />
 
-              <div className="container-page relative">
+              <div className="relative px-6">
                 <span className="pop-item inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-blue-100 ring-1 ring-white/20 backdrop-blur" style={{ transitionDelay: "200ms" }}>
                   <span className="relative flex h-2 w-2">
                     <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
