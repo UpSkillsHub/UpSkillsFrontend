@@ -8,7 +8,6 @@ import AdminCourses from "./pages/admin/AdminCourses.jsx";
 import Home from "./pages/Home.jsx";
 import Programs from "./pages/Programs.jsx";
 import Courses from "./pages/Courses.jsx";
-import CourseDetail from "./pages/CourseDetail.jsx";
 import CategoryCourses from "./pages/CategoryCourses.jsx";
 import Pricing from "./pages/Pricing.jsx";
 import Trainers from "./pages/Trainers.jsx";
@@ -33,7 +32,7 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/programs" element={<Programs />} />
         <Route path="/courses" element={<Courses />} />
-        <Route path="/courses/:id" element={<CourseDetail />} />
+        <Route path="/courses/:id" element={<UnderConstruction title="Course Details" />} />
         <Route path="/category/:category" element={<CategoryCourses />} />
         <Route path="/internship" element={<UnderConstruction title="Internship Program" />} />
         <Route path="/talent" element={<UnderConstruction title="Talent Marketplace" />} />

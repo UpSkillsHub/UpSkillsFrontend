@@ -165,8 +165,8 @@ export default function Home() {
 
           {/* Right visual: internship photo + floating cards */}
           <div className="relative hidden h-[460px] animate-scaleIn lg:block">
-            {/* Faint dot grids peeking from behind the photo corners */}
-            <div className="dots-deco pointer-events-none absolute -right-10 -top-10 h-44 w-44 opacity-50" />
+            {/* Faint dot grids peeking from behind the photo, on the left side */}
+            <div className="dots-deco pointer-events-none absolute -left-10 -top-10 h-44 w-44 opacity-50" />
             <div className="dots-deco pointer-events-none absolute -bottom-10 -left-10 h-44 w-44 opacity-40" />
             <div className="absolute inset-0 overflow-hidden rounded-[2rem] shadow-lift ring-1 ring-brand-100">
               <img
