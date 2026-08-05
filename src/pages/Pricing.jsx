@@ -99,7 +99,7 @@ export default function Pricing() {
                     {p.cta}
                   </button>
                 ) : (
-                  <Link to="/register" className={p.highlight ? "btn-primary mt-8" : "btn-secondary mt-8"}>
+                  <Link to="/registration" className={p.highlight ? "btn-primary mt-8" : "btn-secondary mt-8"}>
                     {p.cta}
                   </Link>
                 )}

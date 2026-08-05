@@ -15,6 +15,7 @@ import Contact from "./pages/Contact.jsx";
 import Faq from "./pages/Faq.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
+import Registration from "./pages/Registration.jsx";
 import ForgotPassword from "./pages/ForgotPassword.jsx";
 import ComingSoon from "./pages/ComingSoon.jsx";
 import UnderConstruction from "./pages/UnderConstruction.jsx";
@@ -35,6 +36,7 @@ export default function App() {
         {/* Course details open as a modal over the courses page */}
         <Route path="/courses/:slug" element={<Courses />} />
         <Route path="/category/:category" element={<CategoryCourses />} />
+        <Route path="/registration" element={<Registration />} />
         <Route path="/internship" element={<UnderConstruction title="Internship Program" />} />
         <Route path="/talent" element={<UnderConstruction title="Talent Marketplace" />} />
         <Route path="/services" element={<UnderConstruction title="Services" />} />

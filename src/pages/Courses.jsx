@@ -462,7 +462,7 @@ function CourseDetailsModal({ course, onClose }) {
 
               {/* Primary: deep gradient, sheen sweep, arrow */}
               <Link
-                to="/register"
+                to="/registration"
                 className="btn-live-blue group/ap relative inline-flex h-12 flex-1 items-center justify-center gap-2.5 overflow-hidden whitespace-nowrap rounded-2xl bg-blue-600 text-[14px] font-semibold text-white shadow-[0_6px_18px_-6px_rgba(37,99,235,0.65)] transition-all duration-300 ease-apple hover:-translate-y-0.5 hover:bg-blue-700 hover:shadow-[0_12px_28px_-8px_rgba(37,99,235,0.75)] active:translate-y-0 active:scale-[0.98] sm:flex-none sm:px-9"
               >
                 {/* top inner highlight */}
@@ -581,7 +581,7 @@ export default function Courses() {
                 Browse Courses
               </a>
               <Link
-                to="/register"
+                to="/registration"
                 className="btn-live rounded-full border-2 border-white/50 px-9 py-2.5 text-sm font-bold text-white backdrop-blur transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/10"
               >
                 Apply Now
@@ -846,7 +846,7 @@ export default function Courses() {
 
                     {/* Apply: inverted white pill */}
                     <Link
-                      to="/register"
+                      to="/registration"
                       className="group/btn relative mt-6 flex w-full items-center justify-between rounded-full bg-white p-1.5 pl-6 text-sm font-bold text-brand-800 shadow-soft transition-all duration-300 ease-apple hover:-translate-y-0.5 hover:shadow-lift active:scale-[0.97]"
                     >
                       <span className="tracking-wide transition-transform duration-300 ease-apple group-hover/btn:translate-x-1.5">
@@ -976,7 +976,7 @@ export default function Courses() {
                 </p>
                 <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
                   <Link
-                    to="/register"
+                    to="/registration"
                     className="group/btn flex items-center gap-3 rounded-full bg-white p-1.5 pl-8 text-sm font-bold text-brand-800 shadow-lift transition-all duration-300 ease-apple hover:-translate-y-1 hover:scale-[1.03] active:scale-[0.97]"
                   >
                     Apply Now

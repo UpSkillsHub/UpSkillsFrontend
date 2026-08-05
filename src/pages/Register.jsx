@@ -64,16 +64,46 @@ export default function Register() {
 
   return (
     <AuthShell
-      brandTitle="Hello, Student!"
-      brandText="Enter your details and start your journey to a real tech career with us."
-      features={["Free to get started", "Industry-relevant courses", "Build real, job-ready projects"]}
+      brandTitle="Hello, Employer!"
+      brandText="Create an employer account to post tasks and hire trained talent from Up Skills Hub."
+      features={["Post tasks in minutes", "Hire reviewed, job-ready trainees", "Pay securely when work is delivered"]}
       ctaText="Already have an account?"
       ctaLabel="Log in"
       ctaTo="/login"
     >
       <div className="text-center">
-        <h1 className="animate-gradient bg-gradient-to-r from-brand-800 via-blue-500 to-brand-800 bg-[length:200%_auto] bg-clip-text text-3xl font-extrabold text-transparent dark:from-white dark:via-blue-300 dark:to-white">Create account</h1>
-        <p className="mt-1 text-sm text-slate-500">Start learning job-ready skills today.</p>
+        <h1 className="animate-gradient bg-gradient-to-r from-brand-800 via-blue-500 to-brand-800 bg-[length:200%_auto] bg-clip-text text-3xl font-extrabold text-transparent dark:from-white dark:via-blue-300 dark:to-white">Create employer account</h1>
+        <p className="mt-1 text-sm text-slate-500">Post tasks and hire our talent.</p>
+      </div>
+
+      {/* Continue with Google */}
+      <button
+        type="button"
+        onClick={() => setError("Google sign-up is coming soon. Please use your email for now.")}
+        className="mt-6 flex h-12 w-full items-center justify-center gap-3 rounded-2xl border-2 border-slate-200 bg-white text-sm font-semibold text-slate-700 transition-all duration-300 ease-apple hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-soft active:scale-[0.98] dark:border-white/15 dark:bg-white/5 dark:text-slate-100"
+      >
+        <svg viewBox="0 0 24 24" className="h-5 w-5">
+          <path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5a5.6 5.6 0 0 1-2.4 3.7v3h3.9c2.3-2.1 3.5-5.2 3.5-8.9Z" />
+          <path fill="#34A853" d="M12 24c3.2 0 5.9-1.1 7.9-2.9l-3.9-3c-1.1.7-2.5 1.2-4 1.2-3.1 0-5.7-2.1-6.6-4.9H1.4v3.1A12 12 0 0 0 12 24Z" />
+          <path fill="#FBBC05" d="M5.4 14.4a7.2 7.2 0 0 1 0-4.6V6.7H1.4a12 12 0 0 0 0 10.8l4-3.1Z" />
+          <path fill="#EA4335" d="M12 4.8c1.8 0 3.4.6 4.6 1.8l3.4-3.4A12 12 0 0 0 1.4 6.7l4 3.1C6.3 6.9 8.9 4.8 12 4.8Z" />
+        </svg>
+        Continue with Google
+      </button>
+
+      <div className="my-5 flex items-center gap-3">
+        <span className="h-px flex-1 bg-slate-200 dark:bg-white/10" />
+        <span className="text-xs font-medium uppercase tracking-wide text-slate-400">or</span>
+        <span className="h-px flex-1 bg-slate-200 dark:bg-white/10" />
+      </div>
+
+      {/* Trainee redirect notice */}
+      <div className="rounded-2xl bg-blue-50 px-4 py-3 text-center text-[13px] leading-relaxed text-blue-800 ring-1 ring-blue-100 dark:bg-blue-500/10 dark:text-blue-200 dark:ring-blue-500/20">
+        Are you a trainee or intern?{" "}
+        <Link to="/registration" className="font-bold underline underline-offset-2">
+          Use the registration form
+        </Link>{" "}
+        to enroll and get your Trainee ID.
       </div>
       {error && <p className="mt-4 rounded-xl bg-red-50 px-4 py-2.5 text-center text-sm text-red-600">{error}</p>}
       <form onSubmit={submit} className="mt-6 space-y-4">

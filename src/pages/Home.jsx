@@ -366,7 +366,7 @@ export default function Home() {
                     </span>
                   </div>
                   <Link
-                    to="/register"
+                    to="/registration"
                     className="group/btn relative mt-7 flex w-full items-center justify-between rounded-full bg-white p-1.5 pl-6 text-sm font-bold text-brand-800 shadow-soft transition-all duration-300 ease-apple hover:-translate-y-0.5 hover:shadow-lift active:scale-[0.97]"
                   >
                     <span className="tracking-wide transition-transform duration-300 ease-apple group-hover/btn:translate-x-1.5">Enroll</span>
@@ -395,7 +395,7 @@ export default function Home() {
                     <span className="rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold text-brand-600 dark:bg-white/10 dark:text-blue-300">{c.m}</span>
                     <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-300">Start Anytime</span>
                   </div>
-                  <Link to="/register" className="relative mt-5 inline-flex w-fit rounded-full bg-brand-600 px-8 py-2 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-brand-700">
+                  <Link to="/registration" className="relative mt-5 inline-flex w-fit rounded-full bg-brand-600 px-8 py-2 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-brand-700">
                     Enroll
                   </Link>
                 </div>
@@ -460,7 +460,7 @@ export default function Home() {
             {/* White pill wrapped in a rotating light border: unique to this section */}
             <div className="spin-border spin-border-pill inline-block shadow-lift transition-transform duration-300 ease-apple hover:-translate-y-1">
               <Link
-                to="/register"
+                to="/registration"
                 className="group/btn flex items-center gap-3 bg-white p-1.5 pl-8 text-sm font-bold text-brand-800 transition-colors duration-300 hover:bg-blue-50 active:scale-[0.98]"
               >
                 <span className="tracking-wide transition-transform duration-300 ease-apple group-hover/btn:translate-x-1">
