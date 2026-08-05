@@ -141,6 +141,9 @@ export default function Home() {
       <section id="home" className="relative overflow-hidden bg-white dark:bg-brand-dark">
         <div className="pointer-events-none absolute -right-24 -top-24 h-96 w-96 animate-float rounded-full bg-brand-100/60 blur-3xl" />
         <div className="pointer-events-none absolute -left-20 top-40 h-72 w-72 animate-float rounded-full bg-brand-200/40 blur-3xl" style={{ animationDelay: "2s" }} />
+        {/* Faint dot grids in the background of the left (text) side */}
+        <div className="dots-deco pointer-events-none absolute left-0 top-10 h-64 w-72 opacity-40 [mask-image:radial-gradient(closest-side,black,transparent)]" />
+        <div className="dots-deco pointer-events-none absolute bottom-8 left-24 h-56 w-64 opacity-30 [mask-image:radial-gradient(closest-side,black,transparent)]" />
         <div className="container-page relative grid items-start gap-12 pb-8 pt-4 lg:grid-cols-2 lg:pb-10 lg:pt-6">
           <div className="animate-fadeUp">
             <span className="badge mb-5">IT Training &amp; Internship Hub</span>
@@ -165,9 +168,6 @@ export default function Home() {
 
           {/* Right visual: internship photo + floating cards */}
           <div className="relative hidden h-[460px] animate-scaleIn lg:block">
-            {/* Faint dot grids peeking from behind the photo, on the left side */}
-            <div className="dots-deco pointer-events-none absolute -left-10 -top-10 h-44 w-44 opacity-50" />
-            <div className="dots-deco pointer-events-none absolute -bottom-10 -left-10 h-44 w-44 opacity-40" />
             <div className="absolute inset-0 overflow-hidden rounded-[2rem] shadow-lift ring-1 ring-brand-100">
               <img
                 src="/images/internshipTrue.jpg"

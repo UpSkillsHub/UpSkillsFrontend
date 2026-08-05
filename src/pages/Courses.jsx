@@ -868,17 +868,25 @@ export default function Courses() {
             <div className="relative overflow-hidden rounded-[3rem] bg-gradient-to-br from-brand-700 via-brand-600 to-brand-500 py-20 text-center shadow-lift sm:py-24">
               {/* Drifting photo bubbles: real moments inside the moving circles */}
               {[
-                { src: "/images/cta/dwat1.jpg", cls: "anim-aurora -left-24 -top-20 h-[24rem] w-[24rem] opacity-40 ring-white/25", imgDelay: "0s", delay: "0s" },
+                { src: "/images/cta/dwat1.jpg", fallback: "/images/hero/course1.jpg", cls: "anim-aurora -left-24 -top-20 h-[24rem] w-[24rem] opacity-40 ring-white/25", imgDelay: "0s", delay: "0s" },
                 { src: "/images/cta/dwat2.jpg", cls: "anim-aurora-b -bottom-28 -right-20 h-[26rem] w-[26rem] opacity-40 ring-white/20", imgDelay: "-8s", delay: "0s" },
                 { src: "/images/cta/dwat3.jpg", cls: "anim-aurora -bottom-16 left-1/4 h-60 w-60 opacity-35 ring-white/20", imgDelay: "-14s", delay: "4s" },
-                { src: "/images/cta/dwat4.jpg", cls: "anim-aurora-b -top-24 left-[55%] h-64 w-64 opacity-35 ring-white/20", imgDelay: "-5s", delay: "2s" },
+                { src: "/images/cta/dwat4.jpeg", cls: "anim-aurora-b -top-24 left-[55%] h-64 w-64 opacity-35 ring-white/20", imgDelay: "-5s", delay: "2s" },
               ].map((b) => (
                 <div key={b.src} className={`pointer-events-none absolute overflow-hidden rounded-full ring-2 ${b.cls}`} style={{ animationDelay: b.delay }}>
                   <img
                     src={b.src}
                     alt=""
                     aria-hidden="true"
-                    onError={(e) => { e.currentTarget.style.display = "none"; }}
+                    onError={(e) => {
+                      // Fall back to another photo once; hide only if that fails too.
+                      if (b.fallback && !e.currentTarget.dataset.fb) {
+                        e.currentTarget.dataset.fb = "1";
+                        e.currentTarget.src = b.fallback;
+                      } else {
+                        e.currentTarget.style.display = "none";
+                      }
+                    }}
                     className="anim-kenburns h-full w-full object-cover"
                     style={{ animationDelay: b.imgDelay }}
                   />
