@@ -418,28 +418,46 @@ function CourseDetailsModal({ course, onClose }) {
           </div>
 
           {/* Apple-style buy bar */}
-          <div className="shrink-0 border-t border-slate-200/80 bg-white/90 px-6 py-3.5 backdrop-blur-xl sm:px-10 dark:border-white/10 dark:bg-[#0f1830]/90">
-            <div className="flex items-center justify-between gap-5">
-              <div className="min-w-0">
-                <p className="truncate text-[13px] font-semibold text-slate-900 dark:text-white">
-                  {rwf(course.monthlyFee)}
-                  <span className="font-normal text-slate-500 dark:text-slate-400">/month</span>
-                </p>
-                <button
-                  onClick={downloadOutline}
-                  className="group/dl mt-0.5 inline-flex items-center gap-1 whitespace-nowrap text-[13px] font-medium text-blue-600 transition-colors duration-200 hover:text-blue-700 dark:text-blue-400"
-                >
-                  Download outline
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-3.5 w-3.5 transition-transform duration-200 group-hover/dl:translate-y-0.5">
-                    <path d="M12 4v12m0 0 4.5-4.5M12 16l-4.5-4.5" />
+          <div className="shrink-0 border-t border-slate-200/80 bg-white/90 px-6 py-4 backdrop-blur-xl sm:flex sm:items-center sm:justify-between sm:gap-6 sm:px-10 dark:border-white/10 dark:bg-[#0f1830]/90">
+            <div className="mb-3 min-w-0 sm:mb-0">
+              <p className="truncate text-[15px] font-semibold tracking-tight text-slate-900 dark:text-white">
+                {rwf(course.monthlyFee)}
+                <span className="text-[13px] font-normal text-slate-500 dark:text-slate-400"> /month</span>
+              </p>
+              <p className="mt-0.5 truncate text-[12px] text-slate-500 dark:text-slate-400">
+                {rwf(REGISTRATION_FEE)} registration, one-time
+              </p>
+            </div>
+            <div className="flex items-center gap-3">
+              {/* Secondary: outlined, icon slides down on hover */}
+              <button
+                onClick={downloadOutline}
+                className="group/dl inline-flex h-12 flex-1 items-center justify-center gap-2.5 whitespace-nowrap rounded-2xl border border-slate-300 bg-white text-[14px] font-semibold text-slate-800 transition-all duration-300 ease-apple hover:border-slate-400 hover:bg-slate-50 hover:shadow-soft active:scale-[0.98] sm:flex-none sm:px-7 dark:border-white/20 dark:bg-white/5 dark:text-slate-100 dark:hover:bg-white/10"
+              >
+                <span className="relative grid h-5 w-5 shrink-0 place-items-center overflow-hidden">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" className="h-[18px] w-[18px] transition-transform duration-300 ease-apple group-hover/dl:translate-y-5">
+                    <path d="M12 3.5v11m0 0 4-4m-4 4-4-4M4.5 18.5h15" />
                   </svg>
-                </button>
-              </div>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" className="absolute h-[18px] w-[18px] -translate-y-5 transition-transform duration-300 ease-apple group-hover/dl:translate-y-0">
+                    <path d="M12 3.5v11m0 0 4-4m-4 4-4-4M4.5 18.5h15" />
+                  </svg>
+                </span>
+                Download PDF
+              </button>
+
+              {/* Primary: deep gradient, sheen sweep, arrow */}
               <Link
                 to="/register"
-                className="shrink-0 whitespace-nowrap rounded-full bg-blue-600 px-8 py-2.5 text-[15px] font-medium text-white transition-all duration-200 ease-apple hover:bg-blue-700 active:scale-[0.96]"
+                className="group/ap relative inline-flex h-12 flex-1 items-center justify-center gap-2.5 overflow-hidden whitespace-nowrap rounded-2xl bg-gradient-to-b from-brand-500 to-brand-700 text-[14px] font-semibold text-white shadow-[0_6px_18px_-6px_rgba(27,42,74,0.65)] transition-all duration-300 ease-apple hover:-translate-y-0.5 hover:shadow-[0_12px_26px_-8px_rgba(27,42,74,0.75)] active:translate-y-0 active:scale-[0.98] sm:flex-none sm:px-9"
               >
-                Apply Now
+                {/* top inner highlight */}
+                <span className="pointer-events-none absolute inset-x-0 top-0 h-px bg-white/35" />
+                {/* sheen sweep */}
+                <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 ease-apple group-hover/ap:translate-x-full" />
+                <span className="relative">Apply Now</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round" className="relative h-4 w-4 transition-transform duration-300 ease-apple group-hover/ap:translate-x-1">
+                  <path d="M5 12h13M12.5 6l5.5 6-5.5 6" />
+                </svg>
               </Link>
             </div>
           </div>
