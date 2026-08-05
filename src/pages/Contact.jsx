@@ -296,38 +296,76 @@ export default function Contact() {
 
           {/* Right: form, matched height */}
           <Reveal effect="rich" delay={120} className="h-full">
-            <div className="relative flex h-full flex-col overflow-hidden rounded-[2rem] bg-white/85 p-8 shadow-lift ring-1 ring-slate-100 backdrop-blur-xl sm:p-10 dark:bg-white/5 dark:ring-white/10">
-              <div className="dots-deco pointer-events-none absolute inset-0 opacity-40 [mask-image:radial-gradient(ellipse_at_top_right,black,transparent_70%)]" />
+            <div className="h-full rounded-[2.25rem] bg-gradient-to-br from-brand-300/60 via-slate-100 to-blue-200/60 p-px shadow-lift dark:from-white/15 dark:via-white/5 dark:to-blue-400/20">
+              <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(2.25rem-1px)] bg-white/90 backdrop-blur-xl dark:bg-[#111a2e]/90">
+                <div className="dots-deco pointer-events-none absolute inset-0 opacity-40 [mask-image:radial-gradient(ellipse_at_top_right,black,transparent_70%)]" />
+                <div className="card-glow pointer-events-none absolute -right-16 -top-16 h-52 w-52 rounded-full bg-brand-100/60 blur-3xl dark:bg-blue-400/10" />
 
-              <div className="relative">
-                <h2 className="text-2xl font-extrabold tracking-tight">Send us a message</h2>
-                <p className="mt-1.5 text-sm text-slate-500 dark:text-slate-400">
-                  Fill in the form and we will get back to you shortly.
-                </p>
-              </div>
+                {/* Header bar */}
+                <div className="relative flex items-center gap-4 border-b border-slate-100 px-8 py-6 sm:px-10 dark:border-white/10">
+                  <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-brand-600 to-brand-500 text-white shadow-glow">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6">
+                      <path d="m4 12 16-8-6 16-2.5-6.5L4 12Z" />
+                    </svg>
+                  </span>
+                  <div className="min-w-0">
+                    <h2 className="text-xl font-extrabold tracking-tight sm:text-2xl">Send us a message</h2>
+                    <p className="mt-0.5 text-sm text-slate-500 dark:text-slate-400">
+                      We reply within one business day.
+                    </p>
+                  </div>
+                  <span className="ml-auto hidden shrink-0 items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1 text-[10px] font-bold uppercase tracking-wide text-emerald-700 ring-1 ring-emerald-100 sm:inline-flex dark:bg-emerald-500/10 dark:text-emerald-300 dark:ring-emerald-500/20">
+                    <span className="relative flex h-1.5 w-1.5">
+                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                      <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                    </span>
+                    Online
+                  </span>
+                </div>
 
-              <form onSubmit={submit} className="relative mt-7 flex flex-1 flex-col gap-5">
+              <form onSubmit={submit} className="relative flex flex-1 flex-col gap-5 px-8 py-7 sm:px-10">
                 <div className="grid gap-5 sm:grid-cols-2">
                   <div>
                     <label className="label">Your name</label>
-                    <input name="name" value={form.name} onChange={handle} placeholder="Ardent Matabaro" required className="input" />
+                    <div className="group/f relative">
+                      <span className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 transition-colors duration-200 group-focus-within/f:text-brand-600">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="h-[18px] w-[18px]">
+                          <circle cx="12" cy="8" r="4" /><path d="M4 21c0-4 4-6 8-6s8 2 8 6" />
+                        </svg>
+                      </span>
+                      <input name="name" value={form.name} onChange={handle} placeholder="Ardent Matabaro" required className="input pl-11" />
+                    </div>
                   </div>
                   <div>
                     <label className="label">Your email</label>
-                    <input name="email" type="email" value={form.email} onChange={handle} placeholder="your@email.com" required className="input" />
+                    <div className="group/f relative">
+                      <span className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 transition-colors duration-200 group-focus-within/f:text-brand-600">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="h-[18px] w-[18px]">
+                          <rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3 7 9 6 9-6" />
+                        </svg>
+                      </span>
+                      <input name="email" type="email" value={form.email} onChange={handle} placeholder="your@email.com" required className="input pl-11" />
+                    </div>
                   </div>
                 </div>
 
                 <div>
                   <label className="label">Subject</label>
-                  <select name="subject" value={form.subject} onChange={handle} required className="input">
+                  <div className="group/f relative">
+                    <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 transition-transform duration-300 group-focus-within/f:rotate-180">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
+                        <path d="m6 9 6 6 6-6" />
+                      </svg>
+                    </span>
+                    <select name="subject" value={form.subject} onChange={handle} required className="input appearance-none pr-11">
                     <option value="">Select a subject</option>
                     <option>Course enrollment</option>
                     <option>Internship program</option>
                     <option>Hire our talent</option>
                     <option>Request a service</option>
                     <option>Something else</option>
-                  </select>
+                    </select>
+                  </div>
                 </div>
 
                 <div className="flex flex-1 flex-col">
@@ -340,6 +378,7 @@ export default function Contact() {
                     required
                     className="input min-h-[150px] flex-1 resize-none"
                   />
+                  <p className="mt-1.5 text-right text-[11px] text-slate-400">{form.message.length} characters</p>
                 </div>
 
                 <button
@@ -356,6 +395,7 @@ export default function Contact() {
                   By sending this message you agree to be contacted by Up Skills Hub.
                 </p>
               </form>
+              </div>
             </div>
           </Reveal>
         </div>
