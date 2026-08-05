@@ -507,7 +507,26 @@ export default function Home() {
           </div>
 
           <Reveal className="mt-14 text-center">
-            <a href="#contact" onClick={scrollTo("contact")} className="btn-primary rounded-full px-8">Browse Talent</a>
+            <a
+              href="#contact"
+              onClick={scrollTo("contact")}
+              className="btn-cta group/btn relative inline-flex items-center gap-3 rounded-full p-1.5 pl-8 text-sm font-bold text-white shadow-glow transition-all duration-300 ease-apple hover:-translate-y-1 hover:scale-[1.03] hover:shadow-lift active:scale-[0.97]"
+            >
+              {/* Pulsing halo */}
+              <span className="pointer-events-none absolute inset-0 -z-10 animate-ping rounded-full bg-brand-400/30" style={{ animationDuration: "2.4s" }} />
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+              </span>
+              <span className="tracking-wide transition-transform duration-300 ease-apple group-hover/btn:translate-x-1">
+                Browse Talent
+              </span>
+              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-white text-brand-700 shadow-soft transition-all duration-500 ease-apple group-hover/btn:-rotate-45 group-hover/btn:bg-blue-100 group-hover/btn:shadow-glow">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
+              </span>
+            </a>
           </Reveal>
         </div>
       </section>

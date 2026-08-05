@@ -10,22 +10,28 @@ export default function Reveal({ children, as: Tag = "div", delay = 0, className
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    // "rich" reveals replay in both scroll directions; the default reveal fires
-    // once and stays, which keeps busy pages (like Home) smooth and stable.
-    const obs = new IntersectionObserver(
+    // Bidirectional replay with hysteresis: the entrance fires crisply once the
+    // element is properly inside the viewport, but it only resets after the
+    // element has fully left (plus a margin), so nothing flickers at the edges.
+    const showObs = new IntersectionObserver(
       ([entry]) => {
-        if (effect === "rich") {
-          setVisible(entry.isIntersecting);
-        } else if (entry.isIntersecting) {
-          setVisible(true);
-          obs.disconnect();
-        }
+        if (entry.isIntersecting) setVisible(true);
       },
       { threshold: 0.12, rootMargin: "0px 0px -40px 0px" },
     );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, [effect]);
+    const hideObs = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) setVisible(false);
+      },
+      { threshold: 0, rootMargin: "140px 0px 140px 0px" },
+    );
+    showObs.observe(el);
+    hideObs.observe(el);
+    return () => {
+      showObs.disconnect();
+      hideObs.disconnect();
+    };
+  }, []);
 
   return (
     <Tag

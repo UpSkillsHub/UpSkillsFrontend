@@ -617,11 +617,21 @@ export default function Courses() {
         <Reveal effect="rich">
           <ScrollScale min={0.95}>
             <div className="relative overflow-hidden rounded-[3rem] bg-gradient-to-br from-brand-700 via-brand-600 to-brand-500 py-20 text-center shadow-lift sm:py-24">
-              {/* Overlapping translucent circles, always in slow motion */}
-              <div className="anim-aurora pointer-events-none absolute -left-28 -top-24 h-[26rem] w-[26rem] rounded-full border border-white/15 bg-blue-400/20" />
-              <div className="anim-aurora-b pointer-events-none absolute -bottom-32 -right-24 h-[28rem] w-[28rem] rounded-full border border-white/10 bg-brand-300/20" />
-              <div className="anim-aurora pointer-events-none absolute -bottom-20 left-1/4 h-72 w-72 rounded-full border border-white/10 bg-blue-300/15" style={{ animationDelay: "4s" }} />
-              {/* Rotating dashed ring */}
+              {/* Drifting photo bubbles: real moments inside the moving circles */}
+              <div className="anim-aurora pointer-events-none absolute -left-24 -top-20 h-[24rem] w-[24rem] overflow-hidden rounded-full opacity-40 ring-2 ring-white/25">
+                <img src="/images/hero/course1.jpg" alt="" aria-hidden="true" onError={(e) => { e.currentTarget.style.display = "none"; }} className="anim-kenburns h-full w-full object-cover" />
+                <div className="absolute inset-0 bg-brand-700/50" />
+              </div>
+              <div className="anim-aurora-b pointer-events-none absolute -bottom-28 -right-20 h-[26rem] w-[26rem] overflow-hidden rounded-full opacity-40 ring-2 ring-white/20">
+                <img src="/images/call-to-action.jpg" alt="" aria-hidden="true" onError={(e) => { e.currentTarget.style.display = "none"; }} className="anim-kenburns h-full w-full object-cover" style={{ animationDelay: "-8s" }} />
+                <div className="absolute inset-0 bg-brand-700/50" />
+              </div>
+              <div className="anim-aurora pointer-events-none absolute -bottom-16 left-1/4 h-60 w-60 overflow-hidden rounded-full opacity-35 ring-2 ring-white/20" style={{ animationDelay: "4s" }}>
+                <img src="/images/hero/course2.jpg" alt="" aria-hidden="true" onError={(e) => { e.currentTarget.style.display = "none"; }} className="anim-kenburns h-full w-full object-cover" style={{ animationDelay: "-14s" }} />
+                <div className="absolute inset-0 bg-brand-700/50" />
+              </div>
+              {/* Translucent companion circle + rotating dashed ring */}
+              <div className="anim-aurora-b pointer-events-none absolute -top-24 left-[55%] h-64 w-64 rounded-full border border-white/10 bg-blue-300/10" style={{ animationDelay: "2s" }} />
               <div className="orbit-ring pointer-events-none absolute -top-24 right-1/4 h-72 w-72 rounded-full border-2 border-dashed border-blue-200/40" style={{ animationDuration: "18s" }} />
               {/* Small floating bubbles */}
               <span className="animate-float pointer-events-none absolute left-[12%] top-1/3 h-3 w-3 rounded-full bg-blue-200/60" />
