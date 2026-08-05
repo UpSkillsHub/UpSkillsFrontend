@@ -66,15 +66,15 @@ export default function Contact() {
       <section className="relative overflow-hidden bg-brand-900">
         {/* Crossfading photos with a slow cinematic zoom */}
         <div className="absolute inset-0">
-          {["/images/hero/course1.jpg", "/images/cta/dwat2.jpg"].map((src, i) => (
+          {["contact1", "contact2", "contact3", "contact4"].map((name, i) => (
             <img
-              key={src}
-              src={src}
+              key={name}
+              src={`/images/contact/${name}.jpg`}
               alt=""
               aria-hidden="true"
               onError={(e) => { e.currentTarget.style.display = "none"; }}
-              className="hero-xfade absolute inset-0 h-full w-full object-cover"
-              style={{ animationDelay: i === 1 ? "-8s, -11s" : "0s, 0s" }}
+              className="hero-slide absolute inset-0 h-full w-full object-cover"
+              style={{ animationDelay: `${i * 6}s, ${-i * 5}s` }}
             />
           ))}
           <div className="absolute inset-0 bg-gradient-to-br from-brand-900/95 via-brand-800/88 to-brand-600/82" />
@@ -132,17 +132,40 @@ export default function Contact() {
                 href={d.href}
                 target={d.href.startsWith("http") ? "_blank" : undefined}
                 rel="noopener noreferrer"
-                className="group relative flex h-full flex-col overflow-hidden rounded-3xl bg-white p-6 shadow-soft ring-1 ring-slate-100 transition-all duration-500 ease-apple hover:-translate-y-1.5 hover:shadow-lift hover:ring-brand-200 dark:bg-white/5 dark:ring-white/10"
+                className="group relative block h-full rounded-[1.75rem] bg-gradient-to-br from-brand-200/70 via-slate-100 to-blue-200/60 p-px shadow-soft transition-all duration-500 ease-apple hover:-translate-y-2 hover:shadow-lift dark:from-white/15 dark:via-white/5 dark:to-blue-400/20"
               >
-                <span className="absolute inset-x-0 top-0 h-1 origin-left scale-x-0 bg-gradient-to-r from-brand-600 to-blue-400 transition-transform duration-500 ease-apple group-hover:scale-x-100" />
-                <span className="grid h-12 w-12 place-items-center rounded-2xl bg-brand-50 text-brand-600 ring-1 ring-brand-100 transition-all duration-500 ease-apple group-hover:-rotate-6 group-hover:scale-110 dark:bg-white/10 dark:text-blue-300 dark:ring-white/10">
-                  <d.icon className="h-6 w-6" />
-                </span>
-                <p className="mt-5 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-400">{d.label}</p>
-                <p className="mt-1.5 break-words text-[15px] font-semibold text-slate-800 transition-colors duration-300 group-hover:text-brand-700 dark:text-white">
-                  {d.value}
-                </p>
-                <p className="mt-auto pt-3 text-[13px] text-slate-500 dark:text-slate-400">{d.note}</p>
+                <div className="course-card relative flex h-full flex-col overflow-hidden rounded-[calc(1.75rem-1px)] bg-white p-7 dark:bg-[#111a2e]">
+                  {/* Light sweeps across on hover */}
+                  <div className="service-sheen pointer-events-none absolute inset-0 z-10" />
+                  {/* Slow floating glow */}
+                  <div className="card-glow pointer-events-none absolute -right-10 -top-10 h-36 w-36 rounded-full bg-brand-100/60 blur-2xl dark:bg-blue-400/10" />
+
+                  {/* Icon with pulsing halo + rotating dashed ring */}
+                  <div className="relative h-14 w-14">
+                    <span className="absolute inset-0 rounded-2xl bg-gradient-to-br from-brand-600 to-blue-500 opacity-20 blur-md transition-opacity duration-500 group-hover:opacity-40" />
+                    <span className="orbit-ring absolute -inset-1.5 rounded-full border border-dashed border-brand-200 opacity-0 transition-opacity duration-500 group-hover:opacity-100 dark:border-blue-400/30" style={{ animationDuration: "9s" }} />
+                    <span className="relative grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-brand-600 to-brand-500 text-white shadow-glow transition-all duration-500 ease-apple group-hover:-rotate-6 group-hover:scale-110">
+                      <d.icon className="h-6 w-6" />
+                    </span>
+                  </div>
+
+                  <p className="relative mt-6 text-[11px] font-bold uppercase tracking-[0.18em] text-brand-500 dark:text-blue-300">
+                    {d.label}
+                  </p>
+                  <p className="relative mt-2 break-words text-[15px] font-bold leading-snug text-slate-800 transition-colors duration-300 group-hover:text-brand-700 dark:text-white">
+                    {d.value}
+                  </p>
+
+                  {/* Footer row: note + arrow chip */}
+                  <div className="relative mt-auto flex items-center justify-between gap-3 border-t border-slate-100 pt-4 dark:border-white/10">
+                    <p className="text-[12.5px] text-slate-500 dark:text-slate-400">{d.note}</p>
+                    <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-brand-50 text-brand-600 transition-all duration-500 ease-apple group-hover:-rotate-45 group-hover:bg-brand-600 group-hover:text-white dark:bg-white/10 dark:text-blue-300">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round" className="h-3.5 w-3.5">
+                        <path d="M5 12h14M13 6l6 6-6 6" />
+                      </svg>
+                    </span>
+                  </div>
+                </div>
               </a>
             </Reveal>
           ))}
@@ -152,49 +175,47 @@ export default function Contact() {
       {/* ================= Message section ================= */}
       <section className="container-page py-16 sm:py-20">
         <div className="grid items-stretch gap-8 lg:grid-cols-2">
-          {/* Left: dark brand panel */}
+          {/* Left: open editorial text, no box */}
           <Reveal effect="rich" className="h-full">
-            <div className="relative flex h-full flex-col overflow-hidden rounded-[2rem] bg-gradient-to-br from-brand-700 via-brand-600 to-brand-500 p-8 shadow-lift sm:p-10">
-              <div className="anim-drift pointer-events-none absolute -left-16 -top-16 h-48 w-48 rounded-full border border-white/10 bg-blue-300/20" />
-              <div className="anim-drift-b pointer-events-none absolute -bottom-20 -right-16 h-56 w-56 rounded-full border border-white/10 bg-white/10" />
-
-              <span className="relative inline-flex w-fit items-center rounded-full bg-white/15 px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-white ring-1 ring-white/25">
+            <div className="relative flex h-full flex-col justify-center py-2 lg:pr-6">
+              <span className="inline-flex w-fit items-center gap-2.5 text-[11px] font-bold uppercase tracking-[0.24em] text-brand-500 dark:text-blue-300">
+                <span className="h-px w-7 bg-gradient-to-r from-brand-400 to-transparent" />
                 Contact
               </span>
-              <h2 className="relative mt-5 text-3xl font-extrabold leading-tight !text-white sm:text-4xl">
-                Get in Touch
+              <h2 className="mt-4 text-4xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl">
+                Get in{" "}
+                <span className="animate-gradient bg-gradient-to-r from-brand-600 via-blue-500 to-brand-600 bg-[length:200%_auto] bg-clip-text text-transparent dark:from-blue-300 dark:via-white dark:to-blue-300">
+                  Touch
+                </span>
               </h2>
-              <p className="relative mt-4 max-w-md leading-relaxed text-blue-100/90">
+              <p className="mt-5 max-w-md text-[17px] leading-relaxed text-slate-600 dark:text-slate-300">
                 Tell us what you are looking for and we will point you in the right direction.
                 Whether you want to start a course, apply for an internship, or hire our trained
                 talent, we are here to help.
               </p>
 
-              <ul className="relative mt-8 space-y-4">
+              {/* Assurances as a drawing list */}
+              <ul className="relative mt-9 space-y-6 pl-8">
+                <span className="draw-line absolute bottom-3 left-[9px] top-3 w-px bg-gradient-to-b from-brand-400 via-brand-200 to-transparent dark:from-blue-400 dark:via-blue-400/30" />
                 {assurances.map((a, i) => (
-                  <li
-                    key={a.title}
-                    className="stagger-item flex items-start gap-3.5 rounded-2xl bg-white/10 p-4 ring-1 ring-white/15 backdrop-blur transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/15"
-                    style={{ transitionDelay: `${200 + i * 130}ms` }}
-                  >
-                    <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-emerald-400/20 text-emerald-300 ring-1 ring-emerald-300/30">
-                      <IconCheck className="h-4 w-4" />
+                  <li key={a.title} className="pop-item relative" style={{ transitionDelay: `${250 + i * 160}ms` }}>
+                    <span className="absolute -left-8 top-0.5 grid h-[18px] w-[18px] place-items-center rounded-full bg-gradient-to-br from-brand-600 to-blue-500 text-white shadow-glow ring-4 ring-white dark:ring-brand-900">
+                      <IconCheck className="h-2.5 w-2.5" />
                     </span>
-                    <span>
-                      <span className="block text-sm font-bold text-white">{a.title}</span>
-                      <span className="mt-0.5 block text-[13px] leading-relaxed text-blue-100/80">{a.text}</span>
-                    </span>
+                    <p className="text-[15px] font-bold text-slate-800 dark:text-white">{a.title}</p>
+                    <p className="mt-1 text-sm leading-relaxed text-slate-500 dark:text-slate-400">{a.text}</p>
                   </li>
                 ))}
               </ul>
 
+              {/* WhatsApp */}
               <a
                 href={`https://wa.me/${CONTACT.phoneDial.replace("+", "")}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group/wa relative mt-8 inline-flex w-fit items-center gap-3 rounded-full bg-white px-5 py-3 text-sm font-bold text-emerald-700 shadow-soft transition-all duration-300 ease-apple hover:-translate-y-0.5 hover:shadow-lift"
+                className="group/wa mt-10 inline-flex w-fit items-center gap-3 rounded-full border-2 border-emerald-500/30 bg-white py-2.5 pl-2.5 pr-6 text-sm font-bold text-emerald-700 transition-all duration-300 ease-apple hover:-translate-y-0.5 hover:border-emerald-500 hover:shadow-soft dark:bg-white/5 dark:text-emerald-300"
               >
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-emerald-500 text-white transition-transform duration-300 group-hover/wa:scale-110">
+                <span className="grid h-9 w-9 place-items-center rounded-full bg-emerald-500 text-white transition-transform duration-300 group-hover/wa:scale-110">
                   <IconWhatsapp className="h-4 w-4" />
                 </span>
                 Chat with us on WhatsApp

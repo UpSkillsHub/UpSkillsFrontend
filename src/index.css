@@ -390,6 +390,25 @@ section[id] {
 .btn-live-soft { animation: liveSoft 2.2s ease-in-out infinite; }
 .btn-live-soft:hover { animation-play-state: paused; }
 
+/* Four-photo hero slideshow: each image shows for a quarter of the cycle */
+@keyframes heroSlide4 {
+  0%, 20% { opacity: 1; }
+  27%, 93% { opacity: 0; }
+  100% { opacity: 1; }
+}
+.hero-slide {
+  opacity: 0;
+  animation: heroSlide4 24s ease-in-out infinite, kenBurns 20s ease-in-out infinite alternate;
+  will-change: opacity, transform;
+}
+
+/* Contact cards: soft conic sheen that sweeps on hover */
+@keyframes cardGlow {
+  0%, 100% { transform: translate(-30%, -30%) scale(1); }
+  50% { transform: translate(20%, 10%) scale(1.25); }
+}
+.card-glow { animation: cardGlow 9s ease-in-out infinite; }
+
 /* Refined scrollbar */
 ::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-thumb { background: #cbd2f0; border-radius: 999px; border: 2px solid #fff; }
