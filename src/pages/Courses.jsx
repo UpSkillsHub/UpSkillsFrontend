@@ -246,13 +246,13 @@ function CourseDetailsModal({ course, onClose }) {
           <div className="anim-drift pointer-events-none absolute -left-14 -top-14 h-44 w-44 rounded-full border border-white/15 bg-blue-300/25" />
           <div className="anim-drift-b pointer-events-none absolute -bottom-10 -right-12 h-40 w-40 rounded-full border border-white/10 bg-white/10" />
           {/* Dashed ring with the Up Skills Hub logo at its center */}
-          <div className="pointer-events-none absolute -right-8 top-1/3 h-36 w-36">
+          <div className="pointer-events-none absolute -right-6 top-1/3 h-28 w-28">
             <div className="orbit-ring absolute inset-0 rounded-full border-2 border-dashed border-white/30" style={{ animationDuration: "16s" }} />
             <div className="absolute inset-0 grid place-items-center">
               <img
                 src="/images/logo.png"
                 alt="Up Skills Hub"
-                className="h-16 w-16 rounded-full bg-white object-contain p-1 shadow-soft ring-2 ring-white/40"
+                className="h-[5.5rem] w-[5.5rem] rounded-full bg-white object-contain p-1 shadow-soft ring-2 ring-white/40"
                 onError={(e) => { e.currentTarget.style.display = "none"; }}
               />
             </div>
