@@ -105,7 +105,7 @@ export function downloadCourseOutlinePdf(course, { registrationFee, onlineMonthl
   const bulletAt = (str, x, yy, maxW, size = BSZ) => {
     const ls = wrap(str, size, maxW);
     ls.forEach((l, i) => {
-      if (i === 0) ops.push(`${col(NAVY)} rg ${x + 1} ${(yy - 2.4).toFixed(1)} 3 3 re f`);
+      if (i === 0) ops.push(`${col(NAVY)} rg ${x + 1} ${(yy + size * 0.22).toFixed(1)} ${(size * 0.28).toFixed(2)} ${(size * 0.28).toFixed(2)} re f`);
       raw(l, x + 11, yy - i * LH(size), size, false, GRAY);
     });
     return ls.length;
@@ -223,7 +223,7 @@ export function downloadCourseOutlinePdf(course, { registrationFee, onlineMonthl
     course.requirements.forEach((r) => {
       const ls = wrap(r, rSize, boxW - 42);
       ls.forEach((l, j) => {
-        if (j === 0) ops.push(`${col(NAVY)} rg ${M + 16} ${(ry - 2.4).toFixed(1)} 3 3 re f`);
+        if (j === 0) ops.push(`${col(NAVY)} rg ${M + 16} ${(ry + rSize * 0.22).toFixed(1)} ${(rSize * 0.28).toFixed(2)} ${(rSize * 0.28).toFixed(2)} re f`);
         raw(l, M + 26, ry - j * rLH, rSize, false, GRAY);
       });
       ry -= ls.length * rLH + 2;

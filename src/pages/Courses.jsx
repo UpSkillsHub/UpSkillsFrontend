@@ -286,16 +286,40 @@ function CourseDetailsModal({ course, onClose }) {
           </ul>
 
           {/* Fee summary */}
-          <div className="relative mt-auto rounded-2xl bg-white/95 p-4 shadow-soft">
-            <div className="flex items-baseline justify-between text-xs text-slate-500">
-              <span>Registration (one-time)</span>
-              <span className="font-bold text-slate-700">{rwf(REGISTRATION_FEE)}</span>
+          <div className="relative mt-auto overflow-hidden rounded-2xl bg-white/95 shadow-lift ring-1 ring-white/60 backdrop-blur">
+            {/* Header strip */}
+            <div className="flex items-center justify-between bg-gradient-to-r from-slate-50 to-blue-50/70 px-4 py-2.5">
+              <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-slate-500">Investment</p>
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-emerald-700 ring-1 ring-emerald-100">
+                <span className="relative flex h-1.5 w-1.5">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                </span>
+                Enrolling
+              </span>
             </div>
-            <div className="mt-2 border-t border-slate-100 pt-2">
-              <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Program fee</p>
-              <p className="mt-0.5 text-2xl font-extrabold text-brand-600">
-                {rwf(course.monthlyFee)}
-                <span className="text-sm font-semibold text-slate-400"> /month</span>
+
+            <div className="px-4 pb-4 pt-3.5">
+              {/* Headline price */}
+              <div className="flex items-end gap-1.5">
+                <span className="bg-gradient-to-br from-brand-600 to-blue-500 bg-clip-text text-[28px] font-extrabold leading-none tracking-tight text-transparent">
+                  {rwf(course.monthlyFee)}
+                </span>
+              </div>
+              <p className="mt-1 text-[11px] font-medium text-slate-500">Program fee, per month</p>
+
+              {/* Registration row */}
+              <div className="mt-3 flex items-center justify-between rounded-xl bg-slate-50 px-3 py-2 ring-1 ring-slate-100">
+                <span className="text-[11px] text-slate-500">Registration, one-time</span>
+                <span className="text-[12px] font-bold text-slate-800">{rwf(REGISTRATION_FEE)}</span>
+              </div>
+
+              {/* Certificate note */}
+              <p className="mt-2.5 flex items-start gap-1.5 text-[10.5px] leading-snug text-slate-500">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="mt-px h-3 w-3 shrink-0 text-emerald-500">
+                  <path d="m5 12.5 4.5 4.5L19 7" />
+                </svg>
+                Certificate included on completion
               </p>
             </div>
           </div>
