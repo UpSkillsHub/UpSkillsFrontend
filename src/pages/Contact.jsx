@@ -1,7 +1,31 @@
 import { useState } from "react";
 import Reveal from "../components/Reveal.jsx";
 import Modal from "../components/Modal.jsx";
-import { IconMail, IconPhone, IconMapPin, IconWhatsapp, IconCheck } from "../components/icons.jsx";
+import { IconWhatsapp, IconCheck } from "../components/icons.jsx";
+
+
+/* Brand-accurate icons for the contact channels */
+const GmailIcon = ({ className = "h-6 w-6" }) => (
+  <svg viewBox="0 0 48 48" className={className}>
+    <path fill="#fff" d="M6 12h36v24H6z" />
+    <path fill="#4285F4" d="M42 38h-4V19.5L24 29 10 19.5V38H6a2 2 0 0 1-2-2V13a3 3 0 0 1 4.7-2.5L24 21l15.3-10.5A3 3 0 0 1 44 13v23a2 2 0 0 1-2 2Z" />
+    <path fill="#34A853" d="M4 36V17l6 4.3V38H6a2 2 0 0 1-2-2Z" />
+    <path fill="#FBBC04" d="M44 36V17l-6 4.3V38h4a2 2 0 0 0 2-2Z" />
+    <path fill="#EA4335" d="M4 13a3 3 0 0 1 4.7-2.5L24 21l15.3-10.5A3 3 0 0 1 44 13l-20 13.8L4 13Z" />
+  </svg>
+);
+const WhatsAppIcon = ({ className = "h-6 w-6" }) => (
+  <svg viewBox="0 0 32 32" className={className}>
+    <path fill="#25D366" d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3Z" />
+    <path fill="#fff" d="M22.3 19.1c-.3-.2-2-1-2.3-1.1-.3-.1-.5-.2-.8.2s-.9 1.1-1.1 1.3c-.2.2-.4.3-.8.1a9.4 9.4 0 0 1-2.8-1.7 10.4 10.4 0 0 1-1.9-2.4c-.2-.4 0-.6.2-.8l.6-.7c.2-.2.2-.4.3-.6a.7.7 0 0 0 0-.7c0-.2-.8-1.9-1-2.6-.3-.7-.6-.6-.8-.6h-.7a1.3 1.3 0 0 0-1 .4 4 4 0 0 0-1.2 3 7 7 0 0 0 1.5 3.7 15.9 15.9 0 0 0 6.1 5.4c2.1.8 2.9.9 4 .7a3.4 3.4 0 0 0 2.2-1.6 2.8 2.8 0 0 0 .2-1.6c-.1-.2-.3-.3-.7-.4Z" />
+  </svg>
+);
+const MapsIcon = ({ className = "h-6 w-6" }) => (
+  <svg viewBox="0 0 48 48" className={className}>
+    <path fill="#EA4335" d="M24 4a13 13 0 0 0-13 13c0 9.8 13 27 13 27s13-17.2 13-27A13 13 0 0 0 24 4Z" />
+    <circle cx="24" cy="17" r="5.4" fill="#fff" />
+  </svg>
+);
 
 const CONTACT = {
   email: "upskillshub.info@gmail.com",
@@ -12,25 +36,46 @@ const CONTACT = {
 
 const details = [
   {
-    icon: IconMail,
+    icon: GmailIcon,
     label: "Email us",
     value: CONTACT.email,
     href: `mailto:${CONTACT.email}`,
     note: "We usually reply within a day",
+    // Gmail red
+    ring: "from-red-300/70 via-slate-100 to-orange-200/60 dark:from-red-400/25 dark:via-white/5 dark:to-orange-400/20",
+    glow: "bg-red-100/70 dark:bg-red-400/10",
+    label_c: "text-red-600 dark:text-red-300",
+    hover_t: "group-hover:text-red-600",
+    chip: "bg-red-50 text-red-600 group-hover:bg-red-500 dark:bg-red-500/10 dark:text-red-300",
+    dash: "border-red-200 dark:border-red-400/30",
   },
   {
-    icon: IconPhone,
+    icon: WhatsAppIcon,
     label: "Call or WhatsApp",
     value: CONTACT.phone,
-    href: `tel:${CONTACT.phoneDial}`,
+    href: `https://wa.me/${CONTACT.phoneDial.replace("+", "")}`,
     note: "Monday to Friday, 8am to 6pm",
+    // WhatsApp green
+    ring: "from-emerald-300/70 via-slate-100 to-green-200/60 dark:from-emerald-400/25 dark:via-white/5 dark:to-green-400/20",
+    glow: "bg-emerald-100/70 dark:bg-emerald-400/10",
+    label_c: "text-emerald-600 dark:text-emerald-300",
+    hover_t: "group-hover:text-emerald-600",
+    chip: "bg-emerald-50 text-emerald-600 group-hover:bg-emerald-500 dark:bg-emerald-500/10 dark:text-emerald-300",
+    dash: "border-emerald-200 dark:border-emerald-400/30",
   },
   {
-    icon: IconMapPin,
+    icon: MapsIcon,
     label: "Visit our campus",
     value: CONTACT.address,
     href: "https://maps.google.com/?q=KG+173+Street+Remera+Kigali+Rwanda",
     note: "Walk in and meet our trainers",
+    // Google Maps blue
+    ring: "from-blue-300/70 via-slate-100 to-sky-200/60 dark:from-blue-400/25 dark:via-white/5 dark:to-sky-400/20",
+    glow: "bg-blue-100/70 dark:bg-blue-400/10",
+    label_c: "text-blue-600 dark:text-blue-300",
+    hover_t: "group-hover:text-blue-600",
+    chip: "bg-blue-50 text-blue-600 group-hover:bg-blue-600 dark:bg-blue-500/10 dark:text-blue-300",
+    dash: "border-blue-200 dark:border-blue-400/30",
   },
 ];
 
@@ -132,34 +177,33 @@ export default function Contact() {
                 href={d.href}
                 target={d.href.startsWith("http") ? "_blank" : undefined}
                 rel="noopener noreferrer"
-                className="group relative block h-full rounded-[1.75rem] bg-gradient-to-br from-brand-200/70 via-slate-100 to-blue-200/60 p-px shadow-soft transition-all duration-500 ease-apple hover:-translate-y-2 hover:shadow-lift dark:from-white/15 dark:via-white/5 dark:to-blue-400/20"
+                className={`group relative block h-full rounded-[1.75rem] bg-gradient-to-br ${d.ring} p-px shadow-soft transition-all duration-500 ease-apple hover:-translate-y-2 hover:shadow-lift`}
               >
                 <div className="course-card relative flex h-full flex-col overflow-hidden rounded-[calc(1.75rem-1px)] bg-white p-7 dark:bg-[#111a2e]">
                   {/* Light sweeps across on hover */}
                   <div className="service-sheen pointer-events-none absolute inset-0 z-10" />
                   {/* Slow floating glow */}
-                  <div className="card-glow pointer-events-none absolute -right-10 -top-10 h-36 w-36 rounded-full bg-brand-100/60 blur-2xl dark:bg-blue-400/10" />
+                  <div className={`card-glow pointer-events-none absolute -right-10 -top-10 h-36 w-36 rounded-full blur-2xl ${d.glow}`} />
 
                   {/* Icon with pulsing halo + rotating dashed ring */}
                   <div className="relative h-14 w-14">
-                    <span className="absolute inset-0 rounded-2xl bg-gradient-to-br from-brand-600 to-blue-500 opacity-20 blur-md transition-opacity duration-500 group-hover:opacity-40" />
-                    <span className="orbit-ring absolute -inset-1.5 rounded-full border border-dashed border-brand-200 opacity-0 transition-opacity duration-500 group-hover:opacity-100 dark:border-blue-400/30" style={{ animationDuration: "9s" }} />
-                    <span className="relative grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-brand-600 to-brand-500 text-white shadow-glow transition-all duration-500 ease-apple group-hover:-rotate-6 group-hover:scale-110">
-                      <d.icon className="h-6 w-6" />
+                    <span className={`orbit-ring absolute -inset-2 rounded-full border border-dashed opacity-0 transition-opacity duration-500 group-hover:opacity-100 ${d.dash}`} style={{ animationDuration: "9s" }} />
+                    <span className="relative grid h-14 w-14 place-items-center rounded-2xl bg-white shadow-soft ring-1 ring-slate-100 transition-all duration-500 ease-apple group-hover:-rotate-6 group-hover:scale-110 dark:bg-white/10 dark:ring-white/10">
+                      <d.icon className="h-7 w-7" />
                     </span>
                   </div>
 
-                  <p className="relative mt-6 text-[11px] font-bold uppercase tracking-[0.18em] text-brand-500 dark:text-blue-300">
+                  <p className={`relative mt-6 text-[11px] font-bold uppercase tracking-[0.18em] ${d.label_c}`}>
                     {d.label}
                   </p>
-                  <p className="relative mt-2 break-words text-[15px] font-bold leading-snug text-slate-800 transition-colors duration-300 group-hover:text-brand-700 dark:text-white">
+                  <p className={`relative mt-2 break-words text-[15px] font-bold leading-snug text-slate-800 transition-colors duration-300 dark:text-white ${d.hover_t}`}>
                     {d.value}
                   </p>
 
                   {/* Footer row: note + arrow chip */}
                   <div className="relative mt-auto flex items-center justify-between gap-3 border-t border-slate-100 pt-4 dark:border-white/10">
                     <p className="text-[12.5px] text-slate-500 dark:text-slate-400">{d.note}</p>
-                    <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-brand-50 text-brand-600 transition-all duration-500 ease-apple group-hover:-rotate-45 group-hover:bg-brand-600 group-hover:text-white dark:bg-white/10 dark:text-blue-300">
+                    <span className={`grid h-8 w-8 shrink-0 place-items-center rounded-full transition-all duration-500 ease-apple group-hover:-rotate-45 group-hover:text-white ${d.chip}`}>
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round" className="h-3.5 w-3.5">
                         <path d="M5 12h14M13 6l6 6-6 6" />
                       </svg>
@@ -173,8 +217,13 @@ export default function Contact() {
       </section>
 
       {/* ================= Message section ================= */}
-      <section className="container-page py-16 sm:py-20">
-        <div className="grid items-stretch gap-8 lg:grid-cols-2">
+      <section className="relative overflow-hidden py-16 sm:py-20">
+        {/* Shared decorative backdrop: dot grid + drifting glows, behind both columns */}
+        <div className="dots-deco pointer-events-none absolute inset-0 opacity-[0.55] [mask-image:radial-gradient(ellipse_at_center,black,transparent_75%)]" />
+        <div className="anim-drift pointer-events-none absolute -left-24 top-10 h-80 w-80 rounded-full bg-brand-100/50 blur-3xl dark:bg-blue-400/10" />
+        <div className="anim-drift-b pointer-events-none absolute -right-20 bottom-0 h-80 w-80 rounded-full bg-blue-100/50 blur-3xl dark:bg-brand-400/10" />
+
+        <div className="container-page relative grid items-stretch gap-8 lg:grid-cols-2">
           {/* Left: open editorial text, no box */}
           <Reveal effect="rich" className="h-full">
             <div className="relative flex h-full flex-col justify-center py-2 lg:pr-6">
@@ -225,8 +274,8 @@ export default function Contact() {
 
           {/* Right: form, matched height */}
           <Reveal effect="rich" delay={120} className="h-full">
-            <div className="relative flex h-full flex-col overflow-hidden rounded-[2rem] bg-white p-8 shadow-lift ring-1 ring-slate-100 sm:p-10 dark:bg-white/5 dark:ring-white/10">
-              <div className="pointer-events-none absolute -right-16 -top-16 h-44 w-44 rounded-full bg-brand-50 blur-2xl dark:bg-blue-400/10" />
+            <div className="relative flex h-full flex-col overflow-hidden rounded-[2rem] bg-white/85 p-8 shadow-lift ring-1 ring-slate-100 backdrop-blur-xl sm:p-10 dark:bg-white/5 dark:ring-white/10">
+              <div className="dots-deco pointer-events-none absolute inset-0 opacity-40 [mask-image:radial-gradient(ellipse_at_top_right,black,transparent_70%)]" />
 
               <div className="relative">
                 <h2 className="text-2xl font-extrabold tracking-tight">Send us a message</h2>
