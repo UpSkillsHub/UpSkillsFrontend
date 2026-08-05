@@ -276,7 +276,7 @@ export const courses = [
       "Turn raw data into insights and dashboards decision-makers actually use.",
     durationMonths: 3,
     monthlyFee: 70000,
-    category: "AI & Data",
+    category: "Business",
     skills: [
       "Excel for analysis",
       "Power BI dashboards",
