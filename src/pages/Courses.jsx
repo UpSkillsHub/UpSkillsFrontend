@@ -207,17 +207,20 @@ function CourseDetailsModal({ course, onClose }) {
       rwf,
     });
 
-  // Section wrapper: each block rises in one after another.
-  const Section = ({ label, delay, children }) => (
-    <div className="anim-rise" style={{ animationDelay: `${delay}ms` }}>
-      <p className="flex items-center gap-2.5 text-[11px] font-bold uppercase tracking-[0.22em] text-brand-500 dark:text-blue-300">
-        <span className="grid h-6 w-6 place-items-center rounded-lg bg-brand-50 ring-1 ring-brand-100 dark:bg-white/10 dark:ring-white/10">
-          <span className="h-1.5 w-1.5 rounded-full bg-brand-500 dark:bg-blue-400" />
+  // Rich section header: gradient icon chip + title + fading rule; content indented.
+  const Section = ({ icon: I, label, delay, children }) => (
+    <section className="anim-rise" style={{ animationDelay: `${delay}ms` }}>
+      <div className="flex items-center gap-3">
+        <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-brand-500 to-brand-700 text-white shadow-glow">
+          <I className="h-4 w-4" />
         </span>
-        {label}
-      </p>
-      <div className="mt-3">{children}</div>
-    </div>
+        <h3 className="text-[13px] font-extrabold uppercase tracking-[0.16em] text-brand-dark dark:text-white">
+          {label}
+        </h3>
+        <span className="h-px flex-1 bg-gradient-to-r from-brand-200 to-transparent dark:from-white/15" />
+      </div>
+      <div className="mt-4 sm:pl-12">{children}</div>
+    </section>
   );
 
   const facts = [
@@ -295,20 +298,29 @@ function CourseDetailsModal({ course, onClose }) {
 
         {/* ---- Right content ---- */}
         <div className="flex min-h-0 min-w-0 flex-1 flex-col">
-          {/* Close */}
-          <button
-            onClick={onClose}
-            aria-label="Back to courses"
-            className="absolute right-4 top-4 z-20 grid h-10 w-10 place-items-center rounded-full bg-white/90 text-slate-500 shadow-soft ring-1 ring-slate-200 backdrop-blur transition-all duration-300 hover:rotate-90 hover:bg-white hover:text-brand-700 dark:bg-white/10 dark:text-slate-300 dark:ring-white/15"
-          >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
-              <path d="M18 6 6 18M6 6l12 12" />
-            </svg>
-          </button>
+          {/* Top strip */}
+          <div className="relative flex shrink-0 items-center justify-between border-b border-slate-100 px-6 py-4 sm:px-8 dark:border-white/10">
+            <p className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.24em] text-brand-400 dark:text-blue-300/80">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+              </span>
+              Program Details
+            </p>
+            <button
+              onClick={onClose}
+              aria-label="Back to courses"
+              className="grid h-9 w-9 place-items-center rounded-full bg-slate-100 text-slate-500 transition-all duration-300 hover:rotate-90 hover:bg-brand-600 hover:text-white dark:bg-white/10 dark:text-slate-300"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
+                <path d="M18 6 6 18M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
 
           {/* Mobile identity header */}
           <div className="relative shrink-0 overflow-hidden bg-gradient-to-r from-brand-500 to-brand-600 px-6 py-5 md:hidden">
-            <div className="flex items-center gap-3.5 pr-10">
+            <div className="flex items-center gap-3.5">
               <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-white/15 text-white ring-1 ring-white/25">
                 <Icon className="h-5 w-5" />
               </span>
@@ -320,19 +332,22 @@ function CourseDetailsModal({ course, onClose }) {
           </div>
 
           {/* Scrollable body */}
-          <div className="min-h-0 flex-1 space-y-8 overflow-y-auto overscroll-contain p-6 sm:p-8">
-            <Section label="Course Overview" delay={80}>
-              <p className="leading-relaxed text-slate-600 dark:text-slate-300">{course.description}</p>
+          <div className="min-h-0 flex-1 space-y-9 overflow-y-auto overscroll-contain p-6 sm:p-8">
+            <Section icon={IconBook} label="Course Overview" delay={80}>
+              <div className="relative rounded-2xl bg-gradient-to-br from-brand-50/80 to-blue-50/50 p-5 ring-1 ring-brand-100/70 dark:from-white/5 dark:to-white/5 dark:ring-white/10">
+                <span className="absolute bottom-3 left-0 top-3 w-1 rounded-full bg-gradient-to-b from-brand-500 to-blue-400" />
+                <p className="pl-3 leading-relaxed text-slate-600 dark:text-slate-300">{course.description}</p>
+              </div>
             </Section>
 
-            <Section label="Skills You Will Learn" delay={160}>
-              <ul className="grid gap-2 sm:grid-cols-2">
-                {course.skills.map((s) => (
+            <Section icon={IconChart} label="Skills You Will Learn" delay={160}>
+              <ul className="grid gap-2.5 sm:grid-cols-2">
+                {course.skills.map((s, i) => (
                   <li
                     key={s}
-                    className="flex items-center gap-2.5 rounded-xl bg-brand-50/60 px-3.5 py-2.5 text-sm font-semibold text-slate-700 ring-1 ring-brand-100/60 transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-50 hover:shadow-soft dark:bg-white/5 dark:text-slate-200 dark:ring-white/10"
+                    className="group/skill flex items-center gap-3 rounded-xl bg-white px-3.5 py-2.5 text-sm font-semibold text-slate-700 shadow-soft ring-1 ring-slate-100 transition-all duration-300 ease-apple hover:-translate-y-0.5 hover:shadow-lift hover:ring-brand-200 dark:bg-white/5 dark:text-slate-200 dark:ring-white/10"
                   >
-                    <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-emerald-50 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-300">
+                    <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 text-white shadow-sm transition-transform duration-300 group-hover/skill:scale-110">
                       <IconCheck className="h-3 w-3" />
                     </span>
                     {s}
@@ -341,51 +356,56 @@ function CourseDetailsModal({ course, onClose }) {
               </ul>
             </Section>
 
-            <Section label="Course Schedule" delay={240}>
-              <div className="relative pl-6">
-                <span className="absolute bottom-2 left-[5px] top-2 w-px bg-gradient-to-b from-brand-400 via-brand-200 to-transparent dark:from-blue-400 dark:via-blue-400/30" />
-                {courseSchedule.map((s) => (
-                  <div key={s} className="relative pb-4 last:pb-0">
-                    <span className="absolute -left-6 top-1.5 h-2.5 w-2.5 rounded-full border-2 border-brand-400 bg-white dark:border-blue-400 dark:bg-brand-900" />
-                    <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-300">{s}</p>
+            <Section icon={IconClock} label="Course Schedule" delay={240}>
+              <div className="relative pl-8">
+                <span className="absolute bottom-4 left-[11px] top-2 w-px bg-gradient-to-b from-brand-400 via-brand-200 to-transparent dark:from-blue-400 dark:via-blue-400/30" />
+                {courseSchedule.map((s, i) => (
+                  <div key={s} className="relative pb-5 last:pb-0">
+                    <span className="absolute -left-8 top-0 grid h-6 w-6 place-items-center rounded-full bg-gradient-to-br from-brand-500 to-brand-600 text-[10px] font-bold text-white shadow-glow ring-4 ring-white dark:ring-brand-900">
+                      {i + 1}
+                    </span>
+                    <p className="pt-0.5 text-sm leading-relaxed text-slate-600 dark:text-slate-300">{s}</p>
                   </div>
                 ))}
               </div>
             </Section>
 
-            <Section label="Online / On-site Options" delay={320}>
+            <Section icon={IconGlobe} label="Online / On-site Options" delay={320}>
               <div className="grid gap-3.5 sm:grid-cols-2">
-                <div className="flex items-start gap-3 rounded-2xl bg-gradient-to-br from-brand-50/80 to-blue-50/60 p-4 ring-1 ring-brand-100 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-soft dark:from-white/5 dark:to-white/5 dark:ring-white/10">
-                  <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-white text-brand-600 shadow-soft ring-1 ring-brand-100 dark:bg-white/10 dark:text-blue-300">
-                    <IconMapPinSmall />
-                  </span>
-                  <div>
-                    <p className="text-sm font-bold text-slate-800 dark:text-white">On-site in Kigali</p>
-                    <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
-                      {rwf(course.monthlyFee)} per month, hands-on classes at our campus.
+                {[
+                  { icon: IconMapPinSmall, title: "On-site in Kigali", price: course.monthlyFee, note: "Hands-on classes at our campus." },
+                  { icon: () => <IconGlobe className="h-5 w-5" />, title: "Online / Self-coaching", price: ONLINE_MONTHLY_FEE, note: "Learn from anywhere with a coach." },
+                ].map((o) => (
+                  <div
+                    key={o.title}
+                    className="group/opt relative overflow-hidden rounded-2xl bg-white p-4 shadow-soft ring-1 ring-slate-100 transition-all duration-300 ease-apple hover:-translate-y-0.5 hover:shadow-lift hover:ring-brand-200 dark:bg-white/5 dark:ring-white/10"
+                  >
+                    <span className="absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-brand-500 to-blue-400 opacity-0 transition-opacity duration-300 group-hover/opt:opacity-100" />
+                    <div className="flex items-center gap-3">
+                      <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand-50 text-brand-600 ring-1 ring-brand-100 dark:bg-white/10 dark:text-blue-300">
+                        <o.icon />
+                      </span>
+                      <p className="text-sm font-bold text-slate-800 dark:text-white">{o.title}</p>
+                    </div>
+                    <p className="mt-3 text-lg font-extrabold text-brand-600 dark:text-blue-400">
+                      {rwf(o.price)}
+                      <span className="text-xs font-semibold text-slate-400"> /month</span>
                     </p>
+                    <p className="mt-1 text-xs leading-relaxed text-slate-500 dark:text-slate-400">{o.note}</p>
                   </div>
-                </div>
-                <div className="flex items-start gap-3 rounded-2xl bg-gradient-to-br from-blue-50/60 to-brand-50/80 p-4 ring-1 ring-brand-100 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-soft dark:from-white/5 dark:to-white/5 dark:ring-white/10">
-                  <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-white text-brand-600 shadow-soft ring-1 ring-brand-100 dark:bg-white/10 dark:text-blue-300">
-                    <IconGlobe className="h-5 w-5" />
-                  </span>
-                  <div>
-                    <p className="text-sm font-bold text-slate-800 dark:text-white">Online / Self-coaching</p>
-                    <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
-                      {rwf(ONLINE_MONTHLY_FEE)} per month, learn from anywhere with a coach.
-                    </p>
-                  </div>
-                </div>
+                ))}
               </div>
             </Section>
 
-            <Section label="Requirements" delay={400}>
-              <ul className="space-y-2.5 text-sm text-slate-600 dark:text-slate-300">
+            <Section icon={IconClipboard} label="Requirements" delay={400}>
+              <ul className="flex flex-wrap gap-2.5">
                 {course.requirements.map((r) => (
-                  <li key={r} className="flex items-start gap-2.5">
-                    <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-emerald-50 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-300">
-                      <IconCheck className="h-3 w-3" />
+                  <li
+                    key={r}
+                    className="inline-flex items-center gap-2 rounded-full border border-brand-200 bg-brand-50/60 px-4 py-2 text-sm font-semibold text-brand-700 transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-50 hover:shadow-soft dark:border-white/15 dark:bg-white/5 dark:text-blue-200"
+                  >
+                    <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 text-white">
+                      <IconCheck className="h-2.5 w-2.5" />
                     </span>
                     {r}
                   </li>
@@ -394,29 +414,36 @@ function CourseDetailsModal({ course, onClose }) {
             </Section>
 
             {/* Fee card (mobile only, sidebar covers desktop) */}
-            <div className="anim-rise rounded-2xl bg-gradient-to-br from-brand-50 to-blue-50 p-5 ring-1 ring-brand-100 md:hidden dark:from-white/5 dark:to-white/5 dark:ring-white/10" style={{ animationDelay: "480ms" }}>
-              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-brand-500 dark:text-blue-300">Fee</p>
-              <div className="mt-3 space-y-2 text-sm">
-                <div className="flex items-center justify-between">
-                  <span className="text-slate-500 dark:text-slate-400">Registration (one-time)</span>
-                  <span className="font-bold text-slate-800 dark:text-white">{rwf(REGISTRATION_FEE)}</span>
-                </div>
-                <div className="flex items-center justify-between border-t border-brand-100/70 pt-2 dark:border-white/10">
-                  <span className="text-slate-500 dark:text-slate-400">Program fee</span>
-                  <span className="text-base font-extrabold text-brand-600 dark:text-blue-400">
-                    {rwf(course.monthlyFee)}
-                    <span className="text-xs font-semibold text-slate-400"> /month</span>
-                  </span>
+            <Section icon={IconCertificate} label="Fee" delay={480}>
+              <div className="rounded-2xl bg-gradient-to-br from-brand-50 to-blue-50 p-5 ring-1 ring-brand-100 md:hidden dark:from-white/5 dark:to-white/5 dark:ring-white/10">
+                <div className="space-y-2 text-sm">
+                  <div className="flex items-center justify-between">
+                    <span className="text-slate-500 dark:text-slate-400">Registration (one-time)</span>
+                    <span className="font-bold text-slate-800 dark:text-white">{rwf(REGISTRATION_FEE)}</span>
+                  </div>
+                  <div className="flex items-center justify-between border-t border-brand-100/70 pt-2 dark:border-white/10">
+                    <span className="text-slate-500 dark:text-slate-400">Program fee</span>
+                    <span className="text-base font-extrabold text-brand-600 dark:text-blue-400">
+                      {rwf(course.monthlyFee)}
+                      <span className="text-xs font-semibold text-slate-400"> /month</span>
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
+              <p className="hidden items-center gap-2.5 text-sm text-slate-500 md:flex dark:text-slate-400">
+                <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 text-white">
+                  <IconCheck className="h-2.5 w-2.5" />
+                </span>
+                Full fees are shown on the left. A recognized certificate is awarded upon successful completion.
+              </p>
+            </Section>
           </div>
 
           {/* Scroll fade hint above the footer */}
           <div className="pointer-events-none relative z-10 -mt-8 h-8 shrink-0 bg-gradient-to-t from-white to-transparent dark:from-[#0f1830]" />
 
           {/* Footer actions */}
-          <div className="flex shrink-0 flex-col gap-3 border-t border-slate-100 px-6 py-4 sm:flex-row sm:px-8 dark:border-white/10">
+          <div className="flex shrink-0 flex-col gap-3 border-t border-slate-100 bg-gradient-to-r from-brand-50/60 via-white to-brand-50/60 px-6 py-4 sm:flex-row sm:px-8 dark:border-white/10 dark:from-transparent dark:via-transparent dark:to-transparent">
             <Link
               to="/register"
               className="btn-cta group/btn relative flex flex-1 items-center justify-between rounded-full p-1.5 pl-6 text-sm font-bold text-white shadow-glow transition-all duration-300 ease-apple hover:-translate-y-0.5 hover:shadow-lift active:scale-[0.97]"
@@ -430,13 +457,17 @@ function CourseDetailsModal({ course, onClose }) {
             </Link>
             <button
               onClick={downloadOutline}
-              className="group/dl flex flex-1 items-center justify-center gap-2.5 rounded-full border-2 border-brand-200 px-6 py-3 text-sm font-bold text-brand-600 transition-all duration-300 ease-apple hover:-translate-y-0.5 hover:border-brand-400 hover:bg-brand-50 dark:border-white/20 dark:text-blue-300 dark:hover:bg-white/5"
+              className="group/dl relative flex flex-1 items-center justify-between rounded-full border-2 border-brand-200 bg-white p-1.5 pl-6 text-sm font-bold text-brand-700 transition-all duration-300 ease-apple hover:-translate-y-0.5 hover:border-brand-400 hover:shadow-soft active:scale-[0.97] dark:border-white/20 dark:bg-transparent dark:text-blue-300"
             >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 transition-transform duration-300 group-hover/dl:translate-y-0.5">
-                <path d="M12 3v12m0 0 4-4m-4 4-4-4" />
-                <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" />
-              </svg>
-              Download Course Outline (PDF)
+              <span className="tracking-wide transition-transform duration-300 ease-apple group-hover/dl:translate-x-1">
+                Download Outline (PDF)
+              </span>
+              <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-brand-50 text-brand-600 transition-all duration-500 ease-apple group-hover/dl:bg-brand-600 group-hover/dl:text-white dark:bg-white/10 dark:text-blue-300">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 transition-transform duration-300 group-hover/dl:translate-y-0.5">
+                  <path d="M12 3v12m0 0 4-4m-4 4-4-4" />
+                  <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" />
+                </svg>
+              </span>
             </button>
           </div>
         </div>
