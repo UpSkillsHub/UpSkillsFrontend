@@ -331,9 +331,9 @@ function CourseDetailsModal({ course, onClose }) {
           <button
             onClick={onClose}
             aria-label="Back to courses"
-            className="btn-live-red group/x absolute right-4 top-4 z-20 grid h-10 w-10 place-items-center rounded-full bg-gradient-to-b from-red-500 to-red-600 text-white shadow-[0_4px_14px_-4px_rgba(220,38,38,0.8)] transition-all duration-300 ease-apple hover:scale-110 hover:from-red-400 hover:to-red-500 active:scale-95"
+            className="btn-live-red group/x absolute right-3.5 top-3.5 z-20 grid h-7 w-7 place-items-center rounded-full bg-gradient-to-b from-red-500 to-red-600 text-white shadow-[0_3px_10px_-3px_rgba(220,38,38,0.8)] transition-all duration-300 ease-apple hover:scale-110 hover:from-red-400 hover:to-red-500 active:scale-95"
           >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 transition-transform duration-300 ease-apple group-hover/x:rotate-90">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round" className="h-3 w-3 transition-transform duration-300 ease-apple group-hover/x:rotate-90">
               <path d="M18 6 6 18M6 6l12 12" />
             </svg>
           </button>
@@ -347,7 +347,7 @@ function CourseDetailsModal({ course, onClose }) {
           {/* Scrollable body */}
           <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-6 sm:px-10">
             {/* Eyebrow header (desktop) */}
-            <div className="anim-rise hidden items-baseline justify-between gap-4 border-b border-slate-200/70 pb-5 pt-7 md:flex dark:border-white/10">
+            <div className="anim-rise hidden items-baseline justify-between gap-4 border-b border-slate-200/70 pb-5 pr-9 pt-7 md:flex dark:border-white/10">
               <div>
                 <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-400">
                   Course details
@@ -447,7 +447,7 @@ function CourseDetailsModal({ course, onClose }) {
               {/* Secondary: outlined, icon slides down on hover */}
               <button
                 onClick={downloadOutline}
-                className="btn-live-soft group/dl inline-flex h-12 flex-1 items-center justify-center gap-2.5 whitespace-nowrap rounded-2xl border-2 border-blue-200 bg-white text-[14px] font-semibold text-blue-700 transition-all duration-300 ease-apple hover:-translate-y-0.5 hover:border-blue-400 hover:bg-blue-50 hover:shadow-soft active:scale-[0.98] sm:flex-none sm:px-7 dark:border-blue-400/30 dark:bg-white/5 dark:text-blue-200 dark:hover:bg-white/10"
+                className="btn-live-soft group/dl inline-flex h-12 flex-1 items-center justify-center gap-2.5 whitespace-nowrap rounded-2xl border-2 border-blue-600/35 bg-white text-[14px] font-semibold text-blue-600 transition-all duration-300 ease-apple hover:-translate-y-0.5 hover:border-blue-600 hover:bg-blue-50 hover:shadow-soft active:scale-[0.98] sm:flex-none sm:px-7 dark:border-blue-400/40 dark:bg-white/5 dark:text-blue-300 dark:hover:bg-white/10"
               >
                 <span className="relative grid h-5 w-5 shrink-0 place-items-center overflow-hidden">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" className="h-[18px] w-[18px] transition-transform duration-300 ease-apple group-hover/dl:translate-y-5">
@@ -463,7 +463,7 @@ function CourseDetailsModal({ course, onClose }) {
               {/* Primary: deep gradient, sheen sweep, arrow */}
               <Link
                 to="/register"
-                className="btn-live-blue group/ap relative inline-flex h-12 flex-1 items-center justify-center gap-2.5 overflow-hidden whitespace-nowrap rounded-2xl bg-gradient-to-b from-blue-500 to-blue-600 text-[14px] font-semibold text-white shadow-[0_6px_18px_-6px_rgba(59,130,246,0.7)] transition-all duration-300 ease-apple hover:-translate-y-0.5 hover:from-blue-400 hover:to-blue-500 hover:shadow-[0_12px_28px_-8px_rgba(59,130,246,0.8)] active:translate-y-0 active:scale-[0.98] sm:flex-none sm:px-9"
+                className="btn-live-blue group/ap relative inline-flex h-12 flex-1 items-center justify-center gap-2.5 overflow-hidden whitespace-nowrap rounded-2xl bg-blue-600 text-[14px] font-semibold text-white shadow-[0_6px_18px_-6px_rgba(37,99,235,0.65)] transition-all duration-300 ease-apple hover:-translate-y-0.5 hover:bg-blue-700 hover:shadow-[0_12px_28px_-8px_rgba(37,99,235,0.75)] active:translate-y-0 active:scale-[0.98] sm:flex-none sm:px-9"
               >
                 {/* top inner highlight */}
                 <span className="pointer-events-none absolute inset-x-0 top-0 h-px bg-white/35" />
