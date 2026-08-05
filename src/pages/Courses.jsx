@@ -207,11 +207,17 @@ function CourseDetailsModal({ course, onClose }) {
       rwf,
     });
 
-  const Label = ({ children }) => (
-    <p className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.22em] text-brand-500 dark:text-blue-300">
-      <span className="h-px w-5 bg-gradient-to-r from-brand-400 to-transparent" />
-      {children}
-    </p>
+  // Section wrapper: each block rises in one after another.
+  const Section = ({ label, delay, children }) => (
+    <div className="anim-rise" style={{ animationDelay: `${delay}ms` }}>
+      <p className="flex items-center gap-2.5 text-[11px] font-bold uppercase tracking-[0.22em] text-brand-500 dark:text-blue-300">
+        <span className="grid h-6 w-6 place-items-center rounded-lg bg-brand-50 ring-1 ring-brand-100 dark:bg-white/10 dark:ring-white/10">
+          <span className="h-1.5 w-1.5 rounded-full bg-brand-500 dark:bg-blue-400" />
+        </span>
+        {label}
+      </p>
+      <div className="mt-3">{children}</div>
+    </div>
   );
 
   const facts = [
@@ -222,36 +228,37 @@ function CourseDetailsModal({ course, onClose }) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-brand-900/75 p-4 backdrop-blur-md"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-brand-900/70 p-4 backdrop-blur-md"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
       aria-label={`${course.name} details`}
     >
       <div
-        className="anim-pop relative grid max-h-[92vh] w-full max-w-4xl overflow-hidden rounded-[2rem] bg-white shadow-lift md:grid-cols-[310px,1fr] dark:bg-[#0f1830]"
+        className="anim-pop relative flex h-[min(92vh,50rem)] w-full max-w-4xl flex-col overflow-hidden rounded-[2rem] bg-white shadow-lift md:flex-row dark:bg-[#0f1830]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* ---- Left identity panel (desktop) ---- */}
-        <aside className="relative hidden flex-col overflow-hidden bg-gradient-to-b from-brand-800 via-brand-700 to-brand-600 p-7 md:flex">
-          <div className="anim-drift pointer-events-none absolute -left-14 -top-14 h-44 w-44 rounded-full border border-white/10 bg-blue-400/20" />
+        <aside className="anim-slide-left relative hidden w-[300px] shrink-0 flex-col overflow-hidden bg-gradient-to-b from-brand-400 via-brand-500 to-brand-600 p-7 md:flex">
+          <div className="anim-drift pointer-events-none absolute -left-14 -top-14 h-44 w-44 rounded-full border border-white/15 bg-blue-300/25" />
           <div className="anim-drift-b pointer-events-none absolute -bottom-10 -right-12 h-40 w-40 rounded-full border border-white/10 bg-white/10" />
-          <div className="pointer-events-none absolute -bottom-6 -right-4 text-white/[0.05]">
+          <div className="orbit-ring pointer-events-none absolute -right-10 top-1/3 h-36 w-36 rounded-full border-2 border-dashed border-white/20" style={{ animationDuration: "16s" }} />
+          <div className="pointer-events-none absolute -bottom-6 -right-4 text-white/[0.07]">
             <Icon className="h-40 w-40" />
           </div>
 
-          <span className="relative inline-flex w-fit items-center rounded-full bg-white/10 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-blue-200 ring-1 ring-white/15">
+          <span className="relative inline-flex w-fit items-center rounded-full bg-white/15 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-white ring-1 ring-white/25">
             {course.category}
           </span>
-          <div className="relative mt-5 grid h-14 w-14 animate-float place-items-center rounded-2xl bg-white/12 bg-white/10 text-white ring-1 ring-white/20 backdrop-blur">
+          <div className="relative mt-5 grid h-14 w-14 animate-float place-items-center rounded-2xl bg-white/15 text-white shadow-soft ring-1 ring-white/25 backdrop-blur">
             <Icon className="h-7 w-7" />
           </div>
           <h2 className="relative mt-4 text-2xl font-extrabold leading-snug !text-white">{course.name}</h2>
 
           <ul className="relative mt-6 space-y-2.5">
             {facts.map((f) => (
-              <li key={f.label} className="flex items-center gap-2.5 text-sm font-medium text-blue-100/90">
-                <span className="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-white/10 ring-1 ring-white/15">
+              <li key={f.label} className="flex items-center gap-2.5 text-sm font-medium text-blue-50">
+                <span className="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-white/15 ring-1 ring-white/20">
                   <f.icon className="h-3.5 w-3.5" />
                 </span>
                 {f.label}
@@ -260,28 +267,28 @@ function CourseDetailsModal({ course, onClose }) {
           </ul>
 
           {/* Fee summary */}
-          <div className="relative mt-auto rounded-2xl bg-white/[0.08] p-4 ring-1 ring-white/15 backdrop-blur">
-            <div className="flex items-baseline justify-between text-xs text-blue-200/80">
+          <div className="relative mt-auto rounded-2xl bg-white/95 p-4 shadow-soft">
+            <div className="flex items-baseline justify-between text-xs text-slate-500">
               <span>Registration (one-time)</span>
-              <span className="font-bold text-white">{rwf(REGISTRATION_FEE)}</span>
+              <span className="font-bold text-slate-700">{rwf(REGISTRATION_FEE)}</span>
             </div>
-            <div className="mt-2 border-t border-white/10 pt-2">
-              <p className="text-[10px] font-bold uppercase tracking-widest text-blue-200/70">Program fee</p>
-              <p className="mt-0.5 bg-gradient-to-r from-white to-blue-300 bg-clip-text text-2xl font-extrabold text-transparent">
+            <div className="mt-2 border-t border-slate-100 pt-2">
+              <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Program fee</p>
+              <p className="mt-0.5 text-2xl font-extrabold text-brand-600">
                 {rwf(course.monthlyFee)}
-                <span className="text-sm font-semibold text-blue-200/70"> /month</span>
+                <span className="text-sm font-semibold text-slate-400"> /month</span>
               </p>
             </div>
           </div>
         </aside>
 
         {/* ---- Right content ---- */}
-        <div className="flex min-h-0 flex-col">
+        <div className="flex min-h-0 min-w-0 flex-1 flex-col">
           {/* Close */}
           <button
             onClick={onClose}
             aria-label="Back to courses"
-            className="absolute right-4 top-4 z-20 grid h-10 w-10 place-items-center rounded-full bg-white/80 text-slate-500 shadow-soft ring-1 ring-slate-200 backdrop-blur transition-all duration-300 hover:rotate-90 hover:bg-white hover:text-brand-700 dark:bg-white/10 dark:text-slate-300 dark:ring-white/15"
+            className="absolute right-4 top-4 z-20 grid h-10 w-10 place-items-center rounded-full bg-white/90 text-slate-500 shadow-soft ring-1 ring-slate-200 backdrop-blur transition-all duration-300 hover:rotate-90 hover:bg-white hover:text-brand-700 dark:bg-white/10 dark:text-slate-300 dark:ring-white/15"
           >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
               <path d="M18 6 6 18M6 6l12 12" />
@@ -289,28 +296,26 @@ function CourseDetailsModal({ course, onClose }) {
           </button>
 
           {/* Mobile identity header */}
-          <div className="relative shrink-0 overflow-hidden bg-gradient-to-r from-brand-800 to-brand-600 px-6 py-5 md:hidden">
+          <div className="relative shrink-0 overflow-hidden bg-gradient-to-r from-brand-500 to-brand-600 px-6 py-5 md:hidden">
             <div className="flex items-center gap-3.5 pr-10">
-              <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-white/12 bg-white/10 text-white ring-1 ring-white/20">
+              <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-white/15 text-white ring-1 ring-white/25">
                 <Icon className="h-5 w-5" />
               </span>
               <div>
-                <p className="text-[10px] font-bold uppercase tracking-widest text-blue-200/90">{course.category}</p>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-blue-100">{course.category}</p>
                 <h2 className="text-lg font-extrabold leading-snug !text-white">{course.name}</h2>
               </div>
             </div>
           </div>
 
           {/* Scrollable body */}
-          <div className="min-h-0 flex-1 space-y-8 overflow-y-auto p-6 sm:p-8">
-            <div>
-              <Label>Course Overview</Label>
-              <p className="mt-3 leading-relaxed text-slate-600 dark:text-slate-300">{course.description}</p>
-            </div>
+          <div className="min-h-0 flex-1 space-y-8 overflow-y-auto overscroll-contain p-6 sm:p-8">
+            <Section label="Course Overview" delay={80}>
+              <p className="leading-relaxed text-slate-600 dark:text-slate-300">{course.description}</p>
+            </Section>
 
-            <div>
-              <Label>Skills You Will Learn</Label>
-              <ul className="mt-3 grid gap-2 sm:grid-cols-2">
+            <Section label="Skills You Will Learn" delay={160}>
+              <ul className="grid gap-2 sm:grid-cols-2">
                 {course.skills.map((s) => (
                   <li
                     key={s}
@@ -323,11 +328,10 @@ function CourseDetailsModal({ course, onClose }) {
                   </li>
                 ))}
               </ul>
-            </div>
+            </Section>
 
-            <div>
-              <Label>Course Schedule</Label>
-              <div className="relative mt-4 pl-6">
+            <Section label="Course Schedule" delay={240}>
+              <div className="relative pl-6">
                 <span className="absolute bottom-2 left-[5px] top-2 w-px bg-gradient-to-b from-brand-400 via-brand-200 to-transparent dark:from-blue-400 dark:via-blue-400/30" />
                 {courseSchedule.map((s) => (
                   <div key={s} className="relative pb-4 last:pb-0">
@@ -336,12 +340,11 @@ function CourseDetailsModal({ course, onClose }) {
                   </div>
                 ))}
               </div>
-            </div>
+            </Section>
 
-            <div>
-              <Label>Online / On-site Options</Label>
-              <div className="mt-3 grid gap-3.5 sm:grid-cols-2">
-                <div className="group flex items-start gap-3 rounded-2xl bg-gradient-to-br from-brand-50/80 to-blue-50/60 p-4 ring-1 ring-brand-100 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-soft dark:from-white/5 dark:to-white/5 dark:ring-white/10">
+            <Section label="Online / On-site Options" delay={320}>
+              <div className="grid gap-3.5 sm:grid-cols-2">
+                <div className="flex items-start gap-3 rounded-2xl bg-gradient-to-br from-brand-50/80 to-blue-50/60 p-4 ring-1 ring-brand-100 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-soft dark:from-white/5 dark:to-white/5 dark:ring-white/10">
                   <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-white text-brand-600 shadow-soft ring-1 ring-brand-100 dark:bg-white/10 dark:text-blue-300">
                     <IconMapPinSmall />
                   </span>
@@ -352,7 +355,7 @@ function CourseDetailsModal({ course, onClose }) {
                     </p>
                   </div>
                 </div>
-                <div className="group flex items-start gap-3 rounded-2xl bg-gradient-to-br from-blue-50/60 to-brand-50/80 p-4 ring-1 ring-brand-100 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-soft dark:from-white/5 dark:to-white/5 dark:ring-white/10">
+                <div className="flex items-start gap-3 rounded-2xl bg-gradient-to-br from-blue-50/60 to-brand-50/80 p-4 ring-1 ring-brand-100 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-soft dark:from-white/5 dark:to-white/5 dark:ring-white/10">
                   <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-white text-brand-600 shadow-soft ring-1 ring-brand-100 dark:bg-white/10 dark:text-blue-300">
                     <IconGlobe className="h-5 w-5" />
                   </span>
@@ -364,11 +367,10 @@ function CourseDetailsModal({ course, onClose }) {
                   </div>
                 </div>
               </div>
-            </div>
+            </Section>
 
-            <div>
-              <Label>Requirements</Label>
-              <ul className="mt-3 space-y-2.5 text-sm text-slate-600 dark:text-slate-300">
+            <Section label="Requirements" delay={400}>
+              <ul className="space-y-2.5 text-sm text-slate-600 dark:text-slate-300">
                 {course.requirements.map((r) => (
                   <li key={r} className="flex items-start gap-2.5">
                     <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-emerald-50 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-300">
@@ -378,11 +380,11 @@ function CourseDetailsModal({ course, onClose }) {
                   </li>
                 ))}
               </ul>
-            </div>
+            </Section>
 
             {/* Fee card (mobile only, sidebar covers desktop) */}
-            <div className="rounded-2xl bg-gradient-to-br from-brand-50 to-blue-50 p-5 ring-1 ring-brand-100 md:hidden dark:from-white/5 dark:to-white/5 dark:ring-white/10">
-              <Label>Fee</Label>
+            <div className="anim-rise rounded-2xl bg-gradient-to-br from-brand-50 to-blue-50 p-5 ring-1 ring-brand-100 md:hidden dark:from-white/5 dark:to-white/5 dark:ring-white/10" style={{ animationDelay: "480ms" }}>
+              <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-brand-500 dark:text-blue-300">Fee</p>
               <div className="mt-3 space-y-2 text-sm">
                 <div className="flex items-center justify-between">
                   <span className="text-slate-500 dark:text-slate-400">Registration (one-time)</span>
@@ -399,8 +401,11 @@ function CourseDetailsModal({ course, onClose }) {
             </div>
           </div>
 
+          {/* Scroll fade hint above the footer */}
+          <div className="pointer-events-none relative z-10 -mt-8 h-8 shrink-0 bg-gradient-to-t from-white to-transparent dark:from-[#0f1830]" />
+
           {/* Footer actions */}
-          <div className="flex shrink-0 flex-col gap-3 border-t border-slate-100 bg-white/90 px-6 py-4 backdrop-blur sm:flex-row sm:px-8 dark:border-white/10 dark:bg-transparent">
+          <div className="flex shrink-0 flex-col gap-3 border-t border-slate-100 px-6 py-4 sm:flex-row sm:px-8 dark:border-white/10">
             <Link
               to="/register"
               className="btn-cta group/btn relative flex flex-1 items-center justify-between rounded-full p-1.5 pl-6 text-sm font-bold text-white shadow-glow transition-all duration-300 ease-apple hover:-translate-y-0.5 hover:shadow-lift active:scale-[0.97]"
